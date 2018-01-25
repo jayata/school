@@ -1,0 +1,23 @@
+school_pagamento:
+    resource: "@SchoolPagamentoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+school_curso:
+    resource: "@SchoolCursoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+school_matricula:
+    resource: "@SchoolMatriculaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+school_aluno:
+    resource: "@SchoolAlunoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+#app:
+#    resource: '@AppBundle/Controller/'
+#    type: annotation
