@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Cursos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Mensualidade</th>
+                <th>Valormatricula</th>
+                <th>Periodo</th>
+                <th>Mesesduracao</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for curso in cursos %}
+            <tr>
+                <td><a href="{{ path('curso_show', { 'id': curso.id }) }}">{{ curso.id }}</a></td>
+                <td>{{ curso.nome }}</td>
+                <td>{{ curso.mensualidade }}</td>
+                <td>{{ curso.valorMatricula }}</td>
+                <td>{{ curso.periodo }}</td>
+                <td>{{ curso.mesesDuracao }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('curso_show', { 'id': curso.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('curso_edit', { 'id': curso.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('curso_new') }}">Create a new curso</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,23 +1,29 @@
+school_curso_curso:
+    resource: "@SchoolCursoBundle/Controller/CursoController.php"
+    type:     annotation
+
+school_matricula_convocacao:
+    resource: "@SchoolMatriculaBundle/Controller/ConvocacaoController.php"
+    type:     annotation
+
+school_matricula_matricula:
+    resource: "@SchoolMatriculaBundle/Controller/MatriculaController.php"
+    type:     annotation
+
+school_geral:
+    resource: "@SchoolGeralBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 school_pagamento:
     resource: "@SchoolPagamentoBundle/Controller/"
     type:     annotation
-    prefix:   /
-
-school_curso:
-    resource: "@SchoolCursoBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-school_matricula:
-    resource: "@SchoolMatriculaBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    prefix:   /pagamento
 
 school_aluno:
     resource: "@SchoolAlunoBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /aluno
 
-#app:
-#    resource: '@AppBundle/Controller/'
-#    type: annotation
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

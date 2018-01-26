@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Matriculas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ano</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matricula in matriculas %}
+            <tr>
+                <td><a href="{{ path('matricula_show', { 'id': matricula.id }) }}">{{ matricula.id }}</a></td>
+                <td>{{ matricula.ano }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('matricula_show', { 'id': matricula.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('matricula_edit', { 'id': matricula.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('matricula_new') }}">Create a new matricula</a>
+        </li>
+    </ul>
+{% endblock %}
