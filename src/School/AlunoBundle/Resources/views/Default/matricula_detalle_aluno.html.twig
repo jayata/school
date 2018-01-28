@@ -5,13 +5,11 @@
         <div class="col-md-3">
             <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{{ path('matricula_index') }}"><img
+                    <li class="list-group-item"><a href="{{ path('dashboard_aluno') }}"><img
                                     src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a></li>
-                    <li class="list-group-item"><a href="{{ path('matricula_edit', { 'id': matricula.id }) }}"><img
-                                    src="{{ asset('svg/pencil.svg') }}"> Edit</a></li>
                     <li class="list-group-item">
                         <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
-                                    src="{{ asset('svg/trashcan.svg') }}"> Delete</a>
+                                    src="{{ asset('svg/x.svg') }}"> Desmatricular</a>
                     </li>
                 </ul>
             </div>
@@ -28,13 +26,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Esta seguro que desea eliminar esta matricula?
+                        Esta seguro que desea desmatricular?
+                        Lembrese que É cobrado 1% por mês não cumprido del curso.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        {{ form_start(delete_form) }}
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                        {{ form_end(delete_form) }}
+
+                        <button type="submit" class="btn btn-danger">Desmatricular</button>
+
                     </div>
                 </div>
             </div>
@@ -43,21 +42,23 @@
         <div class="col-md-6">
             <div class="card text-center">
                 <div class="card-header">
-                    <h3>Detalles da matricula {{ matricula.id }}</h3>
+                    <h3>Detalles da matricula</h3>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><b>Curso:</b> {{ matricula.curso }}</h5>
-                    <h6 class="card-title"><b>Ano:</b> {{ matricula.ano }}</h6>
-                    <h6 class="card-title"><b>Ativa:</b> {% if matricula.ativa %}Sim{% else %}Nao{% endif %}</h6>
-                    {% if matricula.alunosMatriculados | length > 0 %}
-                        <h6 class="card-title"><b>Listagem de alunos:</b></h6>
-                        {% for aluno in  matricula.alunosMatriculados %}
-                        {{ aluno.aluno.name }}
-                    {% endfor %}
-                    {% else %}No hay alunos matriculados aun{% endif %}
+                    <h5 class="card-title"><b>Curso:</b> {{ matricula.matricula.curso }}</h5>
+                    <h6 class="card-title"><b>Ano:</b> {{ matricula.matricula.ano }}</h6>
+                    <h6 class="card-title"><b>Periodo:</b> {{ matricula.matricula.curso.periodo}}</h6>
+                    <h6 class="card-title"><b>Duracao:</b> {{  matricula.matricula.curso.mesesDuracao }}</h6>
+                    <h6 class="card-title"><b>Cantidade de alunos matriculados:</b> {{ matricula.matricula.alunosMatriculados | length }}</h6>
+                    <h6 class="card-title"><b>Descripcion:</b> {{ matricula.matricula.curso.descripcao }}</h6>
+                    <h6 class="card-title"><b>Mensualidade:</b> {{ matricula.matricula.curso.mensualidade }}</h6>
+                    <h6 class="card-title"><b>Valor da matricula:</b> {{ matricula.matricula.curso.valorMatricula }}</h6>
                 </div>
                 <div class="card-footer text-muted">
-                    xxxx
+                    {% if matricula.paga %}Pagado
+                    {% else %}
+                        Ainda nao pago <a type="button" class="btn btn-primary">Pagar <img src="{{ asset('svg/arrow-right.svg') }}"></a>
+                    {% endif %}
                 </div>
             </div>
         </div>

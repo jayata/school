@@ -29,7 +29,7 @@ class Matricula
     private $ano;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": false})
+     * @ORM\Column(type="boolean")
      */
     private $ativa;
 

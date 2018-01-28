@@ -30,9 +30,11 @@
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{% if matricula.ativa  %}
-                                <img src="{{ asset('svg/verified.svg') }}"> (Desativar)
+                                <img src="{{ asset('svg/verified.svg') }}">
+                                (<a href="{{ path('matricula_activate',{'id':matricula.id}) }}">Desativar</a>)
                             {% else %}
-                                <img src="{{ asset('svg/x.svg') }}"> (Ativar)
+                                <img src="{{ asset('svg/x.svg') }}">
+                            (<a href="{{ path('matricula_activate',{'id':matricula.id} )}}">Ativar</a>)
                             {% endif %}</td>
                         <td>{{ matricula.ano }}</td>
                         <td>{{ matricula.curso }}</td>

@@ -5,14 +5,16 @@
         <div class="col-md-3">
             <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{{ path('curso_index') }}"><img
+                    <li class="list-group-item"><a href="{% if is_granted('ROLE_SUPER_ADMIN') %}{{ path('curso_index') }}{% else %}{{ path('dashboard_aluno') }} {% endif %}"> <img
                                     src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a></li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="list-group-item"><a href="{{ path('curso_edit', { 'id': curso.id }) }}"><img
                                     src="{{ asset('svg/pencil.svg') }}"> Edit</a></li>
                     <li class="list-group-item">
                         <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
                                     src="{{ asset('svg/trashcan.svg') }}"> Delete</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -52,9 +54,9 @@
                     <h6 class="card-title"><b>Mensualidade:</b> {{ curso.mensualidade }}</h6>
                     <p class="card-text">{{ curso.descripcao }}</p>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <a href="#" class="btn btn-primary">Matricular aluno</a>
+                        <a href="{{ path('matricular_form',{'curso':curso.id }) }}" class="btn btn-primary">Matricular aluno</a>
                     {% else %}
-                        <a href="#" class="btn btn-primary">Matricular</a>
+                        <a href="{{ path('matricular_action',{'curso': curso.id}) }}" class="btn btn-primary">Matricular</a>
                     {% endif %}
                 </div>
                 <div class="card-footer text-muted">

@@ -43,11 +43,7 @@ class MatriculaController extends Controller
      */
     public function newAction(Request $request)
     {
-
         $matricula = new Matricula();
-//        if (!$admin) {
-//            $matricula->addAluno($user);
-//        }
         $form = $this->createForm('School\MatriculaBundle\Form\MatriculaType', $matricula/* array('admin' => $admin,)*/);
         $form->handleRequest($request);
 
@@ -140,5 +136,24 @@ class MatriculaController extends Controller
             ->setAction($this->generateUrl('matricula_delete', array('id' => $matricula->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+    /**
+     * Activar o desactivar matricula
+     *
+     * @Route("/active/{id}", name="matricula_activate")
+     * @Method("GET")
+     */
+    public function matriculaActivateAction(Matricula $matricula)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($matricula->getAtiva()){
+            $matricula->setAtiva(false);
+        }else{
+            $matricula->setAtiva(true);
+        }
+        $em->persist($matricula);
+        $em->flush();
+        return $this->redirectToRoute('matricula_index');
     }
 }

@@ -35,35 +35,39 @@ class DefaultController extends Controller
      */
     public function matricularAction(Request $request)
     {
-        if ($request->getMethod() == 'POST') {
             $matriculaAluno = new MatriculaAluno();
-            $aluno = null;
-            $curso = null;
             $route = "dashboard_aluno";
+            if ($request->getMethod() == 'POST') {
+                $curso_id = $request->request->get('curso');
+            }else{
+                $curso_id = $request->query->get('curso');
+            }
+
+            $matr_rep = $this->getDoctrine()->getRepository(Matricula::class);
+            $matricula = $matr_rep->find($curso_id);
+
+
             if ($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $user = $this->container->get('security.token_storage')->getToken()->getUser();
                 if ($user->hasRole('ROLE_SUPER_ADMIN')) {
                     $route = "dashboard_admin";
                     $aluno_id = $request->request->get('aluno');
-                    $curso_id = $request->request->get('curso');
 
                     $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
                     $aluno = $aluno_rep->find($aluno_id);
 
-                    $matr_rep = $this->getDoctrine()->getRepository(Matricula::class);
-                    $matricula = $matr_rep->find($curso_id);
-
                     $matriculaAluno->setAluno($aluno);
-                    $matriculaAluno->setMatricula($matricula);
+
                 } else {
-                    print_r("sdfdf");
+                    $matriculaAluno->setAluno($user);
                 }
             }
+
+            $matriculaAluno->setMatricula($matricula);
             $em = $this->getDoctrine()->getManager();
             $em->persist($matriculaAluno);
             $em->flush();
 
             return $this->redirectToRoute($route);
-        }
     }
 }

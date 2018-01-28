@@ -2,28 +2,64 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-4">
-            <h3>Listagem de Convocatorias Ativas</h3>
-
-        </div>
-
-        <div class="col-md-8">
-            <h3>Listagem de Cursos matriculados</h3>
+        <div class="col-md-6">
+            <h3>Meus cursos</h3>
             <table class="table">
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Curso</th>
                     <th scope="col">Ano</th>
+                    <th scope="col">Paga</th>
+                    <th scope="col">Periodo</th>
+                    <th scope="col">Duracao</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for mat in matricula %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ mat.matricula.curso }}</td>
+                        <td>{{ mat.matricula.ano }}</td>
+                        <td>{% if mat.paga %}Sim{% else %}Nao{% endif %}</td>
+                        <td>{{ mat.matricula.curso.periodo }}</td>
+                        <td>{{ mat.matricula.curso.mesesDuracao }} meses</td>
+                        <td><a href="{{ path('marticula_detalle',{'id':mat.id}) }}">
+                                <img src="{{ asset('svg/eye.svg') }}"> Ver detalles</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>Cursos disponibles</h3>
+            <table class="table">
+                <thead class="thead-light">
                 <tr>
-                    <th scope="row">1</th>
-                    <td>{{ mat.curso }}</td>
-                    <td>{{ mat.ano }}</td>
+                    <th scope="col">#</th>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Periodo</th>
+                    <th scope="col">Duracao </th>
+
+                    <th scope="col"></th>
                 </tr>
+                </thead>
+                <tbody>
+                {% for curso in cursos %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ curso.curso.nome }}</td>
+                        <td>{{ curso.curso.periodo }}</td>
+                        <td>{{ curso.curso.mesesDuracao }} meses</td>
+
+                        <td><a href="{{ path('curso_show',{'id':curso.curso.id}) }}">
+                                <img src="{{ asset('svg/eye.svg') }}" title="Ver"></a>
+                            <a href="{{ path('matricular_action',{'curso': curso.id}) }}">
+                                <img src="{{ asset('svg/clippy.svg') }}" title="Matricularme"></a>
+                        </td>
+                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
