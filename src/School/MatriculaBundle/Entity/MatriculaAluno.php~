@@ -1,0 +1,46 @@
+<?php
+
+namespace School\MatriculaBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * MatriculaAluno
+ *
+ * @ORM\Table(name="matricula_aluno")
+ * @ORM\Entity(repositoryClass="School\MatriculaBundle\Repository\MatriculaAlunoRepository")
+ */
+class MatriculaAluno
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="School\AlunoBundle\Entity\Aluno")
+     * @ORM\JoinColumn(name="aluno_id", referencedColumnName="id")
+     */
+    private $aluno;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="School\MatriculaBundle\Entity\Matricula")
+     * @ORM\JoinColumn(name="matricula_id", referencedColumnName="id")
+     */
+    private $matricula;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

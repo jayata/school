@@ -1,23 +1,110 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    </head>
-    <body>
-    <div class="container-fluid">
-        {% block body %}{% endblock %}
-    </div>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-        {% block javascripts %}{% endblock %}
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/" style="padding-top: 2px;"><img src="{{ asset('svg/home.svg') }}"> Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <li class="nav-item" style="padding-right: 5px;">
+                        <div class="btn-group" >
+                            <a class="btn btn-secondary btn-sm" type="button" style="color: white" href="{{ path('admin_user_list') }}">
+                                Gerenciar Usuarios
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item" style="padding-right: 5px;">
+                        <div class="btn-group">
+                            <a class="btn btn-secondary btn-sm" type="button" style="color: white"
+                               href="{{ path('curso_index') }}">
+                                Cursos
+                            </a>
+                            <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Cursos</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ path('curso_new') }}">Adicionar Curso</a>
+                                <a class="dropdown-item" href="{{ path('curso_index') }}">Listagem</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item" style="padding-right: 5px;">
+                        <div class="btn-group">
+                            <a class="btn btn-secondary btn-sm" type="button" style="color: white"
+                               href="{{ path('matricula_index') }}">
+                                Matriculas
+                            </a>
+                            <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Matriculas</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ path('matricula_new') }}">Abrir nueva matricula</a>
+                                <a class="dropdown-item" href="{{ path('matricula_index') }}">Listagem</a>
+                                <a class="dropdown-item" href="{{ path('matricular_form') }}">Matricular aluno</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+
+            </ul>
+            <ul class="navbar-nav pull-right">
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Logged as {{ app.user }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}"><img
+                                        src="{{ asset('svg/person.svg') }}"> Profile</a>
+                            <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><img
+                                        src="{{ asset('svg/sign-out.svg') }}"> Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    {% endif %}
+</nav>
+<div class="container-fluid" style="margin-top: 15px">
+    {% block body %}{% endblock %}
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+{% block javascripts %}{% endblock %}
+</body>
 
 </html>

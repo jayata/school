@@ -1,39 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Matriculas list</h1>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h3>Listagem de Matriculas </h3>
+            <small class="float-right">(Total {{ total }}
+                 {% if is_granted('ROLE_SUPER_ADMIN') %}|
+                    {% if all %}
+                         <a href="{{ path('matricula_index') }}"> Ver so as ativas </a>)
+                    {% else %}
+                        <a href="{{ path('matricula_index',{'all':true}) }}"> Ver todas </a>)
+                    {% endif %}
+                {% endif %}
+            </small>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Ativa</th>
+                    <th scope="col">Ano</th>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Alunos</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for matricula in matriculas %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{% if matricula.ativa  %}
+                                <img src="{{ asset('svg/verified.svg') }}"> (Desativar)
+                            {% else %}
+                                <img src="{{ asset('svg/x.svg') }}"> (Ativar)
+                            {% endif %}</td>
+                        <td>{{ matricula.ano }}</td>
+                        <td>{{ matricula.curso }}</td>
+                        <td><span class="badge badge-primary">{{ matricula.alunosMatriculados | length }}</span></td>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Ano</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for matricula in matriculas %}
-            <tr>
-                <td><a href="{{ path('matricula_show', { 'id': matricula.id }) }}">{{ matricula.id }}</a></td>
-                <td>{{ matricula.ano }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('matricula_show', { 'id': matricula.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('matricula_edit', { 'id': matricula.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                        <td>
+                            <a href="{{ path('matricula_show', { 'id': matricula.id }) }}"><img
+                                        src="{{ asset('svg/eye.svg') }}" alt="icon name"></a>
+                            <a href="{{ path('matricula_edit', { 'id': matricula.id }) }}"><img
+                                        src="{{ asset('svg/pencil.svg') }}" alt="icon name"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ path('matricula_new') }}"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Abrir nueva matricula</a>
+        </div>
+        <div class="col-md-1"></div>
 
-    <ul>
-        <li>
-            <a href="{{ path('matricula_new') }}">Create a new matricula</a>
-        </li>
-    </ul>
+    </div>
 {% endblock %}

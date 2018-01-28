@@ -88,7 +88,7 @@ class CursoController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('curso_edit', array('id' => $curso->getId()));
+            return $this->redirectToRoute('curso_show', array('id' => $curso->getId()));
         }
 
         return $this->render('curso/edit.html.twig', array(

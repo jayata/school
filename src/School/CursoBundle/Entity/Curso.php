@@ -28,6 +28,11 @@ class Curso
     private $nome;
 
     /**
+     * @ORM\Column(type="string", length=250)
+     */
+    private $descripcao;
+
+    /**
      * @ORM\Column(type="integer", length=250)
      */
     private $mensualidade;
@@ -39,7 +44,7 @@ class Curso
 
     /**
      * @ORM\Column(type="string", length=250)
-     * @Assert\Choice({"matutino", "vespertino", "noturnoo"})
+     * @Assert\Choice({"matutino", "vespertino", "noturno"})
      */
     private $periodo;
 
@@ -81,6 +86,30 @@ class Curso
     public function getNome()
     {
         return $this->nome;
+    }
+
+    /**
+     * Set descripcao
+     *
+     * @param string $descripcao
+     *
+     * @return Curso
+     */
+    public function setDescripcao($descripcao)
+    {
+        $this->descripcao = $descripcao;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcao
+     *
+     * @return string
+     */
+    public function getDescripcao()
+    {
+        return $this->descripcao;
     }
 
     /**

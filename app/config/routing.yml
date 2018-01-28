@@ -1,14 +1,20 @@
+school_fo_schild:
+    resource: "@SchoolFOSchildBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 school_curso_curso:
     resource: "@SchoolCursoBundle/Controller/CursoController.php"
-    type:     annotation
-
-school_matricula_convocacao:
-    resource: "@SchoolMatriculaBundle/Controller/ConvocacaoController.php"
     type:     annotation
 
 school_matricula_matricula:
     resource: "@SchoolMatriculaBundle/Controller/MatriculaController.php"
     type:     annotation
+
+school_matricula_default:
+    resource: "@SchoolMatriculaBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 school_geral:
     resource: "@SchoolGeralBundle/Controller/"

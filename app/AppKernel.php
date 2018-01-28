@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             new School\CursoBundle\SchoolCursoBundle(),
             new School\PagamentoBundle\SchoolPagamentoBundle(),
             new School\GeralBundle\SchoolGeralBundle(),
-
+            new School\FOSchildBundle\SchoolFOSchildBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

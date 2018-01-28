@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+
+
+        </div>
+
+        <div class="col-md-8">
+            <h3>Listagem de Cursos</h3>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Mensualidade</th>
+                    <th scope="col">valorMatricula</th>
+                    <th scope="col">periodo</th>
+                    <th scope="col">mesesDuracao</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cur in curso %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ cur.nome }}</td>
+                    <td>{{ cur.mensualidade }}</td>
+                    <td>{{ cur.valorMatricula }}</td>
+                    <td>{{ cur.periodo }}</td>
+                    <td>{{ cur.mesesDuracao }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

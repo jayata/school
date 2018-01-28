@@ -1,47 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Cursos list</h1>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h3>Cursos list</h3>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Mensualidade</th>
+                    <th>Valormatricula</th>
+                    <th>Periodo</th>
+                    <th>Mesesduracao</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for curso in cursos %}
+                    <tr>
+                        <td><a href="{{ path('curso_show', { 'id': curso.id }) }}">{{ curso.id }}</a></td>
+                        <td>{{ curso.nome }}</td>
+                        <td>{{ curso.mensualidade }}</td>
+                        <td>{{ curso.valorMatricula }}</td>
+                        <td>{{ curso.periodo }}</td>
+                        <td>{{ curso.mesesDuracao }}</td>
+                        <td>
+                            <a href="{{ path('curso_show', { 'id': curso.id }) }}">
+                                <img src="{{ asset('svg/eye.svg') }}" alt="icon name">
+                            </a>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Mensualidade</th>
-                <th>Valormatricula</th>
-                <th>Periodo</th>
-                <th>Mesesduracao</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for curso in cursos %}
-            <tr>
-                <td><a href="{{ path('curso_show', { 'id': curso.id }) }}">{{ curso.id }}</a></td>
-                <td>{{ curso.nome }}</td>
-                <td>{{ curso.mensualidade }}</td>
-                <td>{{ curso.valorMatricula }}</td>
-                <td>{{ curso.periodo }}</td>
-                <td>{{ curso.mesesDuracao }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('curso_show', { 'id': curso.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('curso_edit', { 'id': curso.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                            <a href="{{ path('curso_edit', { 'id': curso.id }) }}">
+                                <img src="{{ asset('svg/pencil.svg') }}" alt="icon name">
+                            </a>
 
-    <ul>
-        <li>
-            <a href="{{ path('curso_new') }}">Create a new curso</a>
-        </li>
-    </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ path('curso_new') }}"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Criar novo
+                curso</a>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 {% endblock %}

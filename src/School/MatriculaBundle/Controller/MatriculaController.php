@@ -5,7 +5,8 @@ namespace School\MatriculaBundle\Controller;
 use School\MatriculaBundle\Entity\Matricula;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Matricula controller.
@@ -20,14 +21,17 @@ class MatriculaController extends Controller
      * @Route("/", name="matricula_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $all = $request->query->get('all');
         $em = $this->getDoctrine()->getManager();
-
         $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findAll();
-
+        $total = count($matriculas);
+        if ($all != 1) {
+            $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findBy(array('ativa'=>1));
+        }
         return $this->render('matricula/index.html.twig', array(
-            'matriculas' => $matriculas,
+            'matriculas' => $matriculas, 'all'=>$all, 'total'=>$total
         ));
     }
 
@@ -39,12 +43,17 @@ class MatriculaController extends Controller
      */
     public function newAction(Request $request)
     {
+
         $matricula = new Matricula();
-        $form = $this->createForm('School\MatriculaBundle\Form\MatriculaType', $matricula);
+//        if (!$admin) {
+//            $matricula->addAluno($user);
+//        }
+        $form = $this->createForm('School\MatriculaBundle\Form\MatriculaType', $matricula/* array('admin' => $admin,)*/);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($matricula);
             $em->flush();
 
@@ -53,7 +62,7 @@ class MatriculaController extends Controller
 
         return $this->render('matricula/new.html.twig', array(
             'matricula' => $matricula,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
 
@@ -88,7 +97,7 @@ class MatriculaController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('matricula_edit', array('id' => $matricula->getId()));
+            return $this->redirectToRoute('matricula_show', array('id' => $matricula->getId()));
         }
 
         return $this->render('matricula/edit.html.twig', array(
@@ -130,7 +139,6 @@ class MatriculaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('matricula_delete', array('id' => $matricula->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

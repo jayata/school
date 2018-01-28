@@ -24,9 +24,16 @@ class Matricula
     private $id;
 
     /**
-     * @ORM\Column(type="integer", length=250)
+     * @ORM\Column(type="integer", length=4)
      */
     private $ano;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $ativa;
+
+
 
     /**
      * @ORM\ManyToOne(targetEntity="\School\CursoBundle\Entity\Curso")
@@ -36,11 +43,13 @@ class Matricula
     private $curso;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\School\AlunoBundle\Entity\Aluno")
-     * @ORM\JoinColumn(name="aluno_id", referencedColumnName="id" ,nullable=false)
-     * @Assert\NotBlank
+     * @ORM\OneToMany(targetEntity="School\MatriculaBundle\Entity\MatriculaAluno", mappedBy="matricula")
      */
-    private $aluno;
+    private $alunosMatriculados;
+
+    public function __construct() {
+        $this->alunosMatriculados = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -100,31 +109,70 @@ class Matricula
         return $this->curso;
     }
 
+
+
+
+    public function __toString() {
+        return "".$this->ano."-".$this->curso;
+    }
+
     /**
-     * Set aluno
+     * Set ativa
      *
-     * @param \School\AlunoBundle\Entity\Aluno $aluno
+     * @param boolean $ativa
      *
      * @return Matricula
      */
-    public function setAluno(\School\AlunoBundle\Entity\Aluno $aluno = null)
+    public function setAtiva($ativa)
     {
-        $this->aluno = $aluno;
+        $this->ativa = $ativa;
 
         return $this;
     }
 
     /**
-     * Get aluno
+     * Get ativa
      *
-     * @return \School\AlunoBundle\Entity\Aluno
+     * @return boolean
      */
-    public function getAluno()
+    public function getAtiva()
     {
-        return $this->aluno;
+        return $this->ativa;
     }
 
-    public function __toString() {
-        return "".$this->ano."-".$this->curso;
+
+
+    /**
+     * Add alunosMatriculado
+     *
+     * @param \School\MatriculaBundle\Entity\MatriculaAluno $alunosMatriculado
+     *
+     * @return Matricula
+     */
+    public function addAlunosMatriculado(\School\MatriculaBundle\Entity\MatriculaAluno $alunosMatriculado)
+    {
+        $this->alunosMatriculados[] = $alunosMatriculado;
+
+        return $this;
+    }
+
+    /**
+     * Remove alunosMatriculado
+     *
+     * @param \School\MatriculaBundle\Entity\MatriculaAluno $alunosMatriculado
+     */
+    public function removeAlunosMatriculado(\School\MatriculaBundle\Entity\MatriculaAluno $alunosMatriculado)
+    {
+        $this->alunosMatriculados->removeElement($alunosMatriculado);
+    }
+
+    /**
+     * Get alunosMatriculados
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAlunosMatriculados()
+    {
+        return $this->alunosMatriculados;
     }
 }

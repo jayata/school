@@ -13,14 +13,25 @@ class MatriculaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('ano')->add('curso')->add('aluno');
-    }/**
+
+        $builder
+            ->add('curso')
+            ->add('ano')
+            ->add('ativa');
+//        if ($options['admin']) {
+//            $builder
+//                ->add('alunos');
+//        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'School\MatriculaBundle\Entity\Matricula'
+            'data_class' => 'School\MatriculaBundle\Entity\Matricula',
+//            'admin' => false,
         ));
     }
 

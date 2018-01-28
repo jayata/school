@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h3>Listagem de Usuarios</h3>
+
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Birthday</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">RG</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Role</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for aluno in alunos %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ aluno.name }}</td>
+                        <td>{{ aluno.username }}</td>
+                        <td>{{ aluno.dataNascimento |date("Y-m-d") }} </td>
+                        <td>{{ aluno.cpf }}</td>
+                        <td>{{ aluno.rg }}</td>
+                        <td>{{ aluno.email }}</td>
+                        <td>{{ aluno.telefone }}</td>
+                        <td>{% if aluno.hasRole("ROLE_SUPER_ADMIN") %}Admin {% else %} Aluno {% endif %}</td>
+                        <td>
+                            {% if aluno.hasRole("ROLE_SUPER_ADMIN") %}
+                                <img src="{{ asset('svg/trashcan.svg') }}">
+                            {% else %}
+                                <a href="#" data-toggle="modal" data-target="#modal{{ aluno.id }}" class="text-danger">
+                                    <img src="{{ asset('svg/trashcan.svg') }}"></a>
+                            {% endif %}
+                            <a href="#"><img src="{{ asset('svg/book.svg') }}" alt="icon name"></a>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="modal{{ aluno.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Confirmar accion</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Esta seguro que desea excluir a estealuno?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+                                    <a href="{{ path('remove_user',{'id':aluno.id}) }}" class="btn btn-danger">Excluir</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+ {% block body %}
+     <div class="row">
+     <div class="col-md-4"></div>
+     <div class="col-md-4">
+
+         <h3> Registre un novo aluno</h3>
+         <form action="{{ path('admin_user_registration') }}"  method="POST">
+             <div class="form-group" id="fos_user_registration_form">
+                 <div class="form-group">
+                     <label for="exampleInputEmail1">Nome</label><code class="highlighter-red">*</code>
+                     {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'Enter your name'|trans } }) }}
+                     {{ form_errors(form.name) }}
+                 </div>
+
+                 <div class="form-group">
+                     <label for="exampleInputEmail1">CPF</label><code class="highlighter-red">*</code>
+                     {{ form_widget(form.cpf, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a valid cpf'|trans } }) }}
+                     {{ form_errors(form.cpf) }}
+                 </div>
+                 <div class="form-group">
+                     <label for="exampleInputEmail1">Telefone</label><code class="highlighter-red">*</code>
+                     {{ form_widget(form.telefone, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a valid telefone'|trans } }) }}
+                     {{ form_errors(form.telefone) }}
+                 </div>
+                 <div class="form-group">
+                     <label for="exampleInputEmail1">Usuario</label><code class="highlighter-red">*</code>
+                     {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a Username'|trans } }) }}
+                     {{ form_errors(form.username) }}
+                 </div>
+                 <div class="form-group">
+                     <label for="exampleInputEmail1">Email</label><code class="highlighter-red">*</code>
+                     {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Enter an Email'|trans } }) }}
+                     {{ form_errors(form.email) }}
+                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
+                     </small>
+                 </div>
+                 <div class="form-group">
+                     <label for="exampleInputEmail1">Password</label><code class="highlighter-red">*</code>
+                     {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a Password'|trans } }) }}
+                     {{ form_errors(form.plainPassword.first) }}
+                 </div>
+                 <div class="form-group">
+                     <label for="exampleInputEmail1">Repeat password</label><code class="highlighter-red">*</code>
+                     {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'Repeat the Password'|trans } }) }}
+                     {{ form_errors(form.plainPassword.second) }}
+                 </div>
+                 {{ form_rest(form) }}
+
+             </div>
+             <div>
+                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="Cadastrarse">
+             </div>
+         </form>
+
+     </div>
+     <div class="col-md-4"></div>
+ {% endblock %}

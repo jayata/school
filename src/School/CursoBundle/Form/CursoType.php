@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CursoType extends AbstractType
 {
@@ -17,6 +18,9 @@ class CursoType extends AbstractType
         $builder
             ->add('nome')
             ->add('mensualidade')
+            ->add('descripcao', TextareaType::class, array(
+                'attr' => array('class' => 'tinymce'),
+            ))
             ->add('valorMatricula')
             ->add('periodo', ChoiceType::class, array(
             'choices'  => array(

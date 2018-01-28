@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+     {% block stylesheets %}
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+     {% endblock %}
+ {% block body %}
+     <div class="row">
+         <div class="col-md-3"></div>
+         <div class="col-md-6">
+
+             <h3> Registre se para acceder a los cursos</h3>
+             <form action="{{ path('fos_user_registration_register') }}" method="POST">
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">Nome<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.name, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter your name'|trans } }) }}
+                         {{ form_errors(form.name) }}
+                     </div>
+
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">CPF<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.cpf, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a valid cpf'|trans } }) }}
+                         {{ form_errors(form.cpf) }}
+                     </div>
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">Telefone<code class="highlighter-red">*</code></label><code class="highlighter-red">*</code>
+                         {{ form_widget(form.telefone, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a valid telefone'|trans } }) }}
+                         {{ form_errors(form.telefone) }}
+                     </div>
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">Data nascimento<code class="highlighter-red">*</code></label><code class="highlighter-red">*</code>
+                         {{ form_widget(form.dataNascimento, { 'attr': {'class': 'form-control col-md-10' } }) }}
+                         {{ form_errors(form.dataNascimento) }}
+                     </div>
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">Usuario<code class="highlighter-red">*</code></label><code class="highlighter-red">*</code>
+                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a Username'|trans } }) }}
+                         {{ form_errors(form.username) }}
+                     </div>
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">Email<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter an Email'|trans } }) }}
+                         {{ form_errors(form.email) }}
+                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                             else.
+                         </small>
+                     </div>
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">Password<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a Password'|trans } }) }}
+                         {{ form_errors(form.plainPassword.first) }}
+                     </div>
+                     <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-2">Repeat password<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Repeat the Password'|trans } }) }}
+                         {{ form_errors(form.plainPassword.second) }}
+                     </div>
+                     {{ form_rest(form) }}
+
+                 <div>
+                     <input class="btn btn-lg btn-primary btn-block" type="submit" value="Cadastrarse">
+                 </div>
+             </form>
+             <hr>
+             <h6> Si ya tiene una cuenta <a class="" href="{{ path('fos_user_security_login') }}">Acceda aqui</a></h6>
+         </div>
+     </div>
+     <div class="col-md-3"></div>
+ {% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+{% endblock %}

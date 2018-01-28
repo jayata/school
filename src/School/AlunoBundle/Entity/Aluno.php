@@ -28,9 +28,10 @@ class Aluno extends BaseUser
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=250, unique = true,nullable=True)
+     * @ORM\Column(type="string", length=250, unique = true, nullable=True)
      *
      * @Assert\NotBlank()
+     * @Assert\Regex("/^(\d{3}\.\d{3}\.\d{3}\-\d{2})$/",message="Inserte un CPF valido")
      *
      */
     private $cpf;
@@ -41,23 +42,28 @@ class Aluno extends BaseUser
     private $rg;
 
     /**
-     * @ORM\Column(type="date", length=250,nullable=True)
-     *
-     * @Assert\Date()
+     * @ORM\Column(type="datetime")
+     * @Assert\Type(type="\DateTime")
      *
      */
     private $dataNascimento;
 
     /**
-     * @ORM\Column(type="string", length=250,nullable=True)
+     * @ORM\OneToMany(targetEntity="School\MatriculaBundle\Entity\MatriculaAluno", mappedBy="aluno")
      */
-    private $nome;
+    private $cursosMatriculados;
 
     /**
      * @ORM\Column(type="string", length=250,nullable=True)
      */
     private $telefone;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->dataNascimento = new \DateTime();
+        $this->cursosMatriculados = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     /**
      * Get id
      *
@@ -164,29 +170,7 @@ class Aluno extends BaseUser
         return $this->dataNascimento;
     }
 
-    /**
-     * Set nome
-     *
-     * @param string $nome
-     *
-     * @return Aluno
-     */
-    public function setNome($nome)
-    {
-        $this->nome = $nome;
 
-        return $this;
-    }
-
-    /**
-     * Get nome
-     *
-     * @return string
-     */
-    public function getNome()
-    {
-        return $this->nome;
-    }
 
     /**
      * Set telefone
@@ -212,5 +196,40 @@ class Aluno extends BaseUser
         return $this->telefone;
     }
 
-    
+
+    /**
+     * Add cursosMatriculado
+     *
+     * @param \School\MatriculaBundle\Entity\MatriculaAluno $cursosMatriculado
+     *
+     * @return Aluno
+     */
+    public function addCursosMatriculado(\School\MatriculaBundle\Entity\MatriculaAluno $cursosMatriculado)
+    {
+        $this->cursosMatriculados[] = $cursosMatriculado;
+
+        return $this;
+    }
+
+    /**
+     * Remove cursosMatriculado
+     *
+     * @param \School\MatriculaBundle\Entity\MatriculaAluno $cursosMatriculado
+     */
+    public function removeCursosMatriculado(\School\MatriculaBundle\Entity\MatriculaAluno $cursosMatriculado)
+    {
+        $this->cursosMatriculados->removeElement($cursosMatriculado);
+    }
+
+    /**
+     * Get cursosMatriculados
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCursosMatriculados()
+    {
+        return $this->cursosMatriculados;
+    }
+
+
 }
