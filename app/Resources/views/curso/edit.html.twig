@@ -10,34 +10,76 @@
             <form action="{{ path('curso_edit',{ 'id': curso.id}) }}" method="POST">
                 {{ form_row(edit_form._token) }}
                     <div class="form-group row">
-                        <label for="exampleInputEmail1" class="col-md-2">Nome<code class="highlighter-red">*</code></label>
-                        {{ form_widget(edit_form.nome, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter the name of the course'|trans } }) }}
-                        {{ form_errors(edit_form.nome) }}
+                        <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
+                        {{ form_widget(edit_form.nome, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the name of the course'|trans } }) }}
+                        {% if form_errors(edit_form.nome)  %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ form_errors(edit_form.nome)}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
                     </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-sm-2">Mensualidade<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.mensualidade, { 'attr': {'class': 'form-control col-sm-10', 'placeholder': 'Enter the amount to pay monthly'|trans } }) }}
-                    {{ form_errors(edit_form.mensualidade) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Mensualidade<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.mensualidade, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay monthly'|trans } }) }}
+                    {% if form_errors(edit_form.mensualidade)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(edit_form.mensualidade) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-sm-2">Valor da matricula<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.valorMatricula, { 'attr': {'class': 'form-control col-sm-10', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
-                    {{ form_errors(edit_form.valorMatricula) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Valor da matricula<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.valorMatricula, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
+                    {% if form_errors(edit_form.valorMatricula)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(edit_form.valorMatricula) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-sm-2">Periodo<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.periodo, { 'attr': {'class': 'form-control col-sm-10', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
-                    {{ form_errors(edit_form.periodo) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Periodo<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.periodo, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
+                    {% if form_errors(edit_form.periodo)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(edit_form.periodo) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-sm-2">Duracao (meses)<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.mesesDuracao, { 'attr': {'class': 'form-control col-sm-10', 'placeholder': 'How many months does this course last?'|trans } }) }}
-                    {{ form_errors(edit_form.mesesDuracao) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Duracao (meses)<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.mesesDuracao, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'How many months does this course last?'|trans } }) }}
+                    {% if form_errors(edit_form.mesesDuracao)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(edit_form.mesesDuracao) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-sm-2">Descripcao<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.descripcao, { 'attr': {'class': 'form-control col-sm-10', 'placeholder': 'Enter the descripcao of the course'|trans } }) }}
-                    {{ form_errors(edit_form.descripcao) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Descripcao<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.descripcao, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the descripcao of the course'|trans } }) }}
+                    {% if form_errors(edit_form.descripcao)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(edit_form.descripcao) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 {#</div>#}
                 <div class="form-group row">

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Curso controller.
  *
- * @Route("/curso")
+ * @Route("/admin/curso")
  */
 class CursoController extends Controller
 {

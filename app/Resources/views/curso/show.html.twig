@@ -19,6 +19,7 @@
             </div>
         </div>
         <!-- Modal -->
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -41,9 +42,9 @@
                 </div>
             </div>
         </div>
-
+        {% endif %}
         <div class="col-md-6">
-            <div class="card text-center">
+            <div class="card text-left">
                 <div class="card-header">
                     <h3>Detalles do curso {{ curso.id }}</h3>
                 </div>
@@ -52,12 +53,8 @@
                     <h6 class="card-title"><b>Duracao:</b> {{ curso.mesesDuracao }}</h6>
                     <h6 class="card-title"><b>Periodo:</b> {{ curso.periodo }}</h6>
                     <h6 class="card-title"><b>Mensualidade:</b> {{ curso.mensualidade }}</h6>
-                    <p class="card-text">{{ curso.descripcao }}</p>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <a href="{{ path('matricular_form',{'curso':curso.id }) }}" class="btn btn-primary">Matricular aluno</a>
-                    {% else %}
-                        <a href="{{ path('matricular_action',{'curso': curso.id}) }}" class="btn btn-primary">Matricular</a>
-                    {% endif %}
+                    <h6 class="card-title"><b>Descripcao:</b> <p class="card-text">{{ curso.descripcao }}</p></h6>
+
                 </div>
                 <div class="card-footer text-muted">
                     Preco da matricula: {{ curso.valorMatricula }}

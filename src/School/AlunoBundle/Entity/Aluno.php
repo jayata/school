@@ -23,6 +23,7 @@ class Aluno extends BaseUser
     protected $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=250, nullable=True)
      */
     private $name;
@@ -37,11 +38,13 @@ class Aluno extends BaseUser
     private $cpf;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=250,nullable=True)
      */
     private $rg;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="datetime")
      * @Assert\Type(type="\DateTime")
      *
@@ -49,11 +52,13 @@ class Aluno extends BaseUser
     private $dataNascimento;
 
     /**
-     * @ORM\OneToMany(targetEntity="School\MatriculaBundle\Entity\MatriculaAluno", mappedBy="aluno")
+     * @Assert\NotBlank()
+     * @ORM\OneToMany(targetEntity="School\MatriculaBundle\Entity\MatriculaAluno", mappedBy="aluno",cascade={"remove"})
      */
     private $cursosMatriculados;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=250,nullable=True)
      */
     private $telefone;

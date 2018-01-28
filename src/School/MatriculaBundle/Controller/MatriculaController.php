@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Matricula controller.
  *
- * @Route("/matricula")
+ * @Route("/admin/matricula")
  */
 class MatriculaController extends Controller
 {

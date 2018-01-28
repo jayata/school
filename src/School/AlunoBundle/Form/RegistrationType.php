@@ -18,7 +18,8 @@ class RegistrationType extends AbstractType
                 'placeholder' => 'Select a value',
                 'attr' =>[ 'data-provide'=> "datepicker","data-date-format"=>"yyyy-mm-dd" ]
                 ])
-            ->add('cpf');
+            ->add('cpf')
+            ->add('rg');
     }
 
     public function getParent()

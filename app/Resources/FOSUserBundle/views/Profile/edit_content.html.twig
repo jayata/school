@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
@@ -9,42 +7,96 @@
             <form action="{{ path('fos_user_profile_edit') }}" method="POST">
                 {{ form_row(form._token) }}
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Nome<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.name, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter your name'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.name, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter your name'|trans } }) }}
                     {{ form_errors(form.name) }}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">CPF<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.cpf, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a valid cpf'|trans } }) }}
-                    {{ form_errors(form.cpf) }}
+                    <label for="exampleInputEmail1" class="col-md-3">CPF<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.cpf, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid CPF'|trans } }) }}
+                    {% if form_errors(form.cpf)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(form.cpf) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Telefone<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.telefone, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a valid telefone'|trans } }) }}
-                    {{ form_errors(form.telefone) }}
+                    <label for="exampleInputEmail1" class="col-md-3">RG<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.rg, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid RG'|trans } }) }}
+                    {% if form_errors(form.rg) %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(form.rg) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Data nascimento<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.dataNascimento, { 'attr': {'class': 'form-control col-md-10' } }) }}
-                    {{ form_errors(form.dataNascimento) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Telefone<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.telefone, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid telefone'|trans } }) }}
+                    {% if form_errors(form.telefone) %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(form.telefone) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Usuario<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a Username'|trans } }) }}
-                    {{ form_errors(form.username) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Data nascimento<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.dataNascimento, { 'attr': {'class': 'form-control col-md-9' } }) }}
+                    {% if form_errors(form.dataNascimento) %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(form.dataNascimento) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Email<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter an Email'|trans } }) }}
-                    {{ form_errors(form.email) }}
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    <label for="exampleInputEmail1" class="col-md-3">Usuario<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a Username'|trans } }) }}
+                    {% if form_errors(form.username)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(form.username) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail1" class="col-md-3">Email<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter an Email'|trans } }) }}
+                    <small id="emailHelp" class="form-text text-muted hidden-sm hidden-xs">We'll never share your email with anyone
                         else.
                     </small>
+                    {% if form_errors(form.email)  %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(form.email) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Current Password<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.current_password, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter the current Password'|trans } }) }}
-                    {{ form_errors(form.current_password) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Current Password<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.current_password, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the current Password'|trans } }) }}
+                    {% if form_errors(form.current_password) %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ form_errors(form.current_password) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="form-group row">
                     <input class="btn btn-lg btn-primary btn-block" type="submit" value="Savar cambios">
@@ -53,16 +105,5 @@
         </div>
         <div class="col-md-3"></div>
     </div>
-
-
-
-
-
-        {#{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}#}
-        {#{{ form_widget(form) }}#}
-        {#<div>#}
-            {#<input type="submit" value="Salvar cambios" class="btn btn-primary"/>#}
-        {#</div>#}
-        {#{{ form_end(form) }}#}
 
 {% endblock %}

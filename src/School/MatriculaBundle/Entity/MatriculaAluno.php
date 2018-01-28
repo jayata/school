@@ -3,6 +3,7 @@
 namespace School\MatriculaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MatriculaAluno
@@ -24,12 +25,16 @@ class MatriculaAluno
     /**
      * @ORM\ManyToOne(targetEntity="School\AlunoBundle\Entity\Aluno")
      * @ORM\JoinColumn(name="aluno_id", referencedColumnName="id")
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $aluno;
 
     /**
      * @ORM\ManyToOne(targetEntity="School\MatriculaBundle\Entity\Matricula")
      * @ORM\JoinColumn(name="matricula_id", referencedColumnName="id")
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $matricula;
 

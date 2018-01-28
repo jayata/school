@@ -2,12 +2,8 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-4">
-
-
-        </div>
-
-        <div class="col-md-8">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
             <h3>Listagem de Cursos</h3>
             <table class="table">
                 <thead class="thead-light">
@@ -15,9 +11,9 @@
                     <th scope="col">#</th>
                     <th scope="col">Curso</th>
                     <th scope="col">Mensualidade</th>
-                    <th scope="col">valorMatricula</th>
+                    <th scope="col">Preco Matricula</th>
                     <th scope="col">periodo</th>
-                    <th scope="col">mesesDuracao</th>
+                    <th scope="col">Duracao</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -28,11 +24,12 @@
                     <td>{{ cur.mensualidade }}</td>
                     <td>{{ cur.valorMatricula }}</td>
                     <td>{{ cur.periodo }}</td>
-                    <td>{{ cur.mesesDuracao }}</td>
+                    <td>{{ cur.mesesDuracao }} meses</td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+        <div class="col-md-1"></div>
     </div>
 {% endblock %}

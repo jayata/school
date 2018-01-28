@@ -8,40 +8,38 @@
             <table class="table">
                 <thead class="thead-light">
                 <tr>
-                    <th>Id</th>
+                    <th>#</th>
                     <th>Nome</th>
                     <th>Mensualidade</th>
-                    <th>Valormatricula</th>
+                    <th>Preco matricula</th>
                     <th>Periodo</th>
-                    <th>Mesesduracao</th>
+                    <th>Duracao</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for curso in cursos %}
                     <tr>
-                        <td><a href="{{ path('curso_show', { 'id': curso.id }) }}">{{ curso.id }}</a></td>
+                        <td>{{ loop.index }}</td>
                         <td>{{ curso.nome }}</td>
                         <td>{{ curso.mensualidade }}</td>
                         <td>{{ curso.valorMatricula }}</td>
                         <td>{{ curso.periodo }}</td>
-                        <td>{{ curso.mesesDuracao }}</td>
+                        <td>{{ curso.mesesDuracao }} meses</td>
                         <td>
                             <a href="{{ path('curso_show', { 'id': curso.id }) }}">
                                 <img src="{{ asset('svg/eye.svg') }}" alt="icon name">
                             </a>
-
                             <a href="{{ path('curso_edit', { 'id': curso.id }) }}">
                                 <img src="{{ asset('svg/pencil.svg') }}" alt="icon name">
                             </a>
-
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <a href="{{ path('curso_new') }}"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Criar novo
-                curso</a>
+            <a href="{{ path('curso_new') }}">
+                <img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Criar novo curso</a>
         </div>
         <div class="col-md-1"></div>
     </div>

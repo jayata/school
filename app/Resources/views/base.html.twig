@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -63,7 +63,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ path('matricula_new') }}">Abrir nueva matricula</a>
                                 <a class="dropdown-item" href="{{ path('matricula_index') }}">Listagem</a>
-                                <a class="dropdown-item" href="{{ path('matricular_form') }}">Matricular aluno</a>
+                                <a class="dropdown-item" href="{{ path('matricular_form',{'id': -1}) }}">Matricular aluno</a>
                             </div>
                         </div>
                     </li>

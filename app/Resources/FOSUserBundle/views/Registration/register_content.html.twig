@@ -10,51 +10,118 @@
              <h3> Registre se para acceder a los cursos</h3>
              <form action="{{ path('fos_user_registration_register') }}" method="POST">
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">Nome<code class="highlighter-red">*</code></label>
-                         {{ form_widget(form.name, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter your name'|trans } }) }}
-                         {{ form_errors(form.name) }}
+                         <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.name, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter your name'|trans } }) }}
+                         {% if form_errors(form.name)  %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.name) }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
                      </div>
 
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">CPF<code class="highlighter-red">*</code></label>
-                         {{ form_widget(form.cpf, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a valid cpf'|trans } }) }}
-                         {{ form_errors(form.cpf) }}
+                         <label for="exampleInputEmail1" class="col-md-3">CPF<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.cpf, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid cpf'|trans } }) }}
+                         {% if form_errors(form.cpf)  %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.cpf) }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
+                     </div>
+                 <div class="form-group row">
+                         <label for="exampleInputEmail1" class="col-md-3">RG<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.rg, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid rg'|trans } }) }}
+                     {% if form_errors(form.rg) %}
+                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                             {{ form_errors(form.rg) }}
+                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+                     {% endif %}
                      </div>
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">Telefone<code class="highlighter-red">*</code></label><code class="highlighter-red">*</code>
-                         {{ form_widget(form.telefone, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a valid telefone'|trans } }) }}
-                         {{ form_errors(form.telefone) }}
+                         <label for="exampleInputEmail1" class="col-md-3">Telefone<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.telefone, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid telefone'|trans } }) }}
+                         {% if form_errors(form.telefone) %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.telefone) }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
                      </div>
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">Data nascimento<code class="highlighter-red">*</code></label><code class="highlighter-red">*</code>
-                         {{ form_widget(form.dataNascimento, { 'attr': {'class': 'form-control col-md-10' } }) }}
-                         {{ form_errors(form.dataNascimento) }}
+                         <label for="exampleInputEmail1" class="col-md-3">Data nascimento<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.dataNascimento, { 'attr': {'class': 'form-control col-md-9' } }) }}
+                         {% if form_errors(form.dataNascimento) %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.dataNascimento) }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
                      </div>
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">Usuario<code class="highlighter-red">*</code></label><code class="highlighter-red">*</code>
-                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a Username'|trans } }) }}
-                         {{ form_errors(form.username) }}
+                         <label for="exampleInputEmail1" class="col-md-3">Usuario<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a Username'|trans } }) }}
+                         {% if form_errors(form.username)  %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.username) }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
                      </div>
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">Email<code class="highlighter-red">*</code></label>
-                         {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter an Email'|trans } }) }}
-                         {{ form_errors(form.email) }}
-                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                         <label for="exampleInputEmail1" class="col-md-3">Email<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter an Email'|trans } }) }}
+                         {% if form_errors(form.email)  %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.email) }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
+                         <small id="emailHelp" class="form-text text-muted hidden-xs hidden-sm">We'll never share your email with anyone
                              else.
                          </small>
                      </div>
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">Password<code class="highlighter-red">*</code></label>
-                         {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Enter a Password'|trans } }) }}
-                         {{ form_errors(form.plainPassword.first) }}
+                         <label for="exampleInputEmail1" class="col-md-3">Password<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a Password'|trans } }) }}
+                         {% if form_errors(form.plainPassword.first)  %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.plainPassword.first) }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
                      </div>
                      <div class="form-group row">
-                         <label for="exampleInputEmail1" class="col-md-2">Repeat password<code class="highlighter-red">*</code></label>
-                         {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control col-md-10', 'placeholder': 'Repeat the Password'|trans } }) }}
-                         {{ form_errors(form.plainPassword.second) }}
+                         <label for="exampleInputEmail1" class="col-md-3">Repeat password<code class="highlighter-red">*</code></label>
+                         {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Repeat the Password'|trans } }) }}
+                         {% if form_errors(form.plainPassword.second) %}
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ form_errors(form.plainPassword.second)  }}
+                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                         {% endif %}
                      </div>
                      {{ form_rest(form) }}
-
                  <div>
                      <input class="btn btn-lg btn-primary btn-block" type="submit" value="Cadastrarse">
                  </div>

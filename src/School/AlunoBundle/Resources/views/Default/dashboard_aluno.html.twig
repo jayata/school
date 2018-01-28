@@ -3,7 +3,7 @@
 {% block body %}
     <div class="row">
         <div class="col-md-6">
-            <h3>Meus cursos</h3>
+            <h3>Meus cursos </h3>
             <table class="table">
                 <thead class="thead-light">
                 <tr>
@@ -42,7 +42,6 @@
                     <th scope="col">Curso</th>
                     <th scope="col">Periodo</th>
                     <th scope="col">Duracao </th>
-
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -53,10 +52,9 @@
                         <td>{{ curso.curso.nome }}</td>
                         <td>{{ curso.curso.periodo }}</td>
                         <td>{{ curso.curso.mesesDuracao }} meses</td>
-
-                        <td><a href="{{ path('curso_show',{'id':curso.curso.id}) }}">
+                        <td><a href="{{ path('aluno_curso_show',{'id':curso.curso.id}) }}">
                                 <img src="{{ asset('svg/eye.svg') }}" title="Ver"></a>
-                            <a href="{{ path('matricular_action',{'curso': curso.id}) }}">
+                            <a href="{{ path('matricular_aluno_action',{'matricula': curso.id}) }}">
                                 <img src="{{ asset('svg/clippy.svg') }}" title="Matricularme"></a>
                         </td>
                     </tr>

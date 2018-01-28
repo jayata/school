@@ -31,9 +31,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-
-                        <button type="submit" class="btn btn-danger">Desmatricular</button>
-
+                        <a href="{{ path('marticula_cancelar', {'id': matricula.id}) }}" type="submit" class="btn btn-danger">Desmatricular</a>
                     </div>
                 </div>
             </div>

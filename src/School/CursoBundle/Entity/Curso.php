@@ -24,21 +24,30 @@ class Curso
 
     /**
      * @ORM\Column(type="string", length=250)
+     * @Assert\NotBlank()
+     *
      */
     private $nome;
 
     /**
      * @ORM\Column(type="string", length=250)
+     * @Assert\NotBlank()
      */
     private $descripcao;
 
     /**
      * @ORM\Column(type="integer", length=250)
+     * @Assert\NotEqualTo(
+     *     value = 0
+     * )
      */
     private $mensualidade;
 
     /**
      * @ORM\Column(type="integer", length=250)
+     *  @Assert\NotEqualTo(
+     *     value = 0
+     * )
      */
     private $valorMatricula;
 
@@ -51,6 +60,9 @@ class Curso
 
     /**
      * @ORM\Column(type="integer", length=250)
+     *  @Assert\NotEqualTo(
+     *     value = 0
+     * )
      */
     private $mesesDuracao;
 

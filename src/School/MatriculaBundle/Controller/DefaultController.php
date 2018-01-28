@@ -2,6 +2,7 @@
 
 namespace School\MatriculaBundle\Controller;
 
+use School\CursoBundle\Entity\Curso;
 use School\MatriculaBundle\Entity\MatriculaAluno;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use School\MatriculaBundle\Entity\Matricula;
@@ -13,61 +14,85 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/admin/matricular/form", name="matricular_form")
+     * @Route("/admin/matricular/form/{id}", name="matricular_form")
      *
      */
-    public function matricularFormAction()
+    public function matricularFormAction($id)
     {
         $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
         $alunos = $aluno_rep->findAll();
         $matr_rep = $this->getDoctrine()->getRepository(Matricula::class);
-        $matriculas = $matr_rep->findBy(array("ativa" => true));
+        if($id == -1){
+            $matriculas = $matr_rep->findBy(array("ativa" => true));
 
-        return $this->render('SchoolMatriculaBundle:Default:matricular_form.html.twig', array(
-            'alunos' => $alunos, 'matriculas' => $matriculas
+            return $this->render('SchoolMatriculaBundle:Default:matricular_form.html.twig', array(
+                'alunos' => $alunos, 'matriculas' => $matriculas
+            ));
+        }
+
+        $matricula = $matr_rep->findOneBy(array("id" => $id));
+        return $this->render('SchoolMatriculaBundle:Default:matricular_neste_form.html.twig', array(
+            'alunos' => $alunos, 'matricula' => $matricula
         ));
     }
 
     /**
-     * @Route("/matricular/", name="matricular_action")
+     * @Route("/matricular/check", name="matricular_check")
+     * @Method("POST")
+     *
+     */
+    public function matricularCheckAction(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+            $curso_id = $request->request->get('curso');
+
+        }
+    }
+
+    /**
+     * @Route("/aluno/matricular/{matricula}", name="matricular_aluno_action")
      * @Method({"GET", "POST"})
      *
      */
-    public function matricularAction(Request $request)
+    public function matricularAlunoAction(Matricula $matricula)
     {
-            $matriculaAluno = new MatriculaAluno();
-            $route = "dashboard_aluno";
-            if ($request->getMethod() == 'POST') {
-                $curso_id = $request->request->get('curso');
-            }else{
-                $curso_id = $request->query->get('curso');
-            }
+        $matriculaAluno = new MatriculaAluno();
 
-            $matr_rep = $this->getDoctrine()->getRepository(Matricula::class);
-            $matricula = $matr_rep->find($curso_id);
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $matriculaAluno->setAluno($user);
+        $matriculaAluno->setMatricula($matricula);
 
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($matriculaAluno);
+        $em->flush();
 
-            if ($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-                $user = $this->container->get('security.token_storage')->getToken()->getUser();
-                if ($user->hasRole('ROLE_SUPER_ADMIN')) {
-                    $route = "dashboard_admin";
-                    $aluno_id = $request->request->get('aluno');
+        return $this->redirectToRoute("dashboard_aluno");
+    }
 
-                    $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
-                    $aluno = $aluno_rep->find($aluno_id);
+    /**
+     * @Route("/admin/matricular", name="matricular_admin_action")
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function matricularAdminAction(Request $request)
+    {
+        $matriculaAluno = new MatriculaAluno();
 
-                    $matriculaAluno->setAluno($aluno);
+        $aluno_id = $request->request->get('aluno');
+        $matricula_id = $request->request->get('matricula');
 
-                } else {
-                    $matriculaAluno->setAluno($user);
-                }
-            }
+        $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
+        $aluno = $aluno_rep->findOneBy(array('id'=>$aluno_id));
 
-            $matriculaAluno->setMatricula($matricula);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($matriculaAluno);
-            $em->flush();
+        $matr_rep = $this->getDoctrine()->getRepository(Matricula::class);
+        $matricula = $matr_rep->findOneBy(array("id" => $matricula_id));
 
-            return $this->redirectToRoute($route);
+        $matriculaAluno->setAluno($aluno);
+        $matriculaAluno->setMatricula($matricula);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($matriculaAluno);
+        $em->flush();
+
+        return $this->redirectToRoute("dashboard_admin");
     }
 }
