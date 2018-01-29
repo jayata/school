@@ -20,6 +20,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Ativa</th>
                     <th scope="col">Ano</th>
+                    <th scope="col">Periodo</th>
                     <th scope="col">Curso</th>
                     <th scope="col">Alunos</th>
                     <th scope="col"></th>
@@ -36,7 +37,8 @@
                                 <img src="{{ asset('svg/x.svg') }}">
                             (<a href="{{ path('matricula_activate',{'id':matricula.id} )}}">Ativar</a>)
                             {% endif %}</td>
-                        <td>{{ matricula.ano }}</td>
+                        <td>{{ matricula.ano | date("Y")}}</td>
+                        <td>{{ matricula.curso.periodo }}</td>
                         <td>{{ matricula.curso }}</td>
                         <td><span class="badge badge-primary">{{ matricula.alunosMatriculados | length }}</span></td>
 

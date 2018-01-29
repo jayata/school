@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+     {% block stylesheets %}
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+     {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-3"></div>
@@ -52,5 +54,7 @@
         </div>
         <div class="col-md-3"></div>
     </div>
-
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 {% endblock %}

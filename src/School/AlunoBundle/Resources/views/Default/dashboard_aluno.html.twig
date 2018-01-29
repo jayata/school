@@ -21,7 +21,7 @@
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ mat.matricula.curso }}</td>
-                        <td>{{ mat.matricula.ano }}</td>
+                        <td>{{ mat.matricula.ano | date("Y") }}</td>
                         <td>{% if mat.paga %}Sim{% else %}Nao{% endif %}</td>
                         <td>{{ mat.matricula.curso.periodo }}</td>
                         <td>{{ mat.matricula.curso.mesesDuracao }} meses</td>

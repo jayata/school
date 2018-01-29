@@ -11,7 +11,9 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="{{ path('matricula_edit', { 'id': matricula.id }) }}"><img
                                     src="{{ asset('svg/pencil.svg') }}"> Edit</a></li>
-                    <li class="list-group-item"><a href="{{ path('matricular_form',{'id': matricula.id}) }}"><img
+                    <li class="list-group-item"><a {% if matricula.ativa %}
+                        href="{{ path('matricular_form',{'id': matricula.id}) }}"{% else %}
+                                href="#" data-toggle="modal" data-target="#naoAtiva"{% endif %}><img
                                     src="{{ asset('svg/book.svg') }}"> Matricular aluno neste curso</a></li>
                     <li class="list-group-item">
                         <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
@@ -43,6 +45,27 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="naoAtiva" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Informacao</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Esta matricula esta inactiva.<br>
+                        Activela para matricular alunos.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="col-md-6">
             <div class="card text-left">
@@ -51,7 +74,8 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><b>Curso:</b> {{ matricula.curso }}</h5>
-                    <h6 class="card-title"><b>Ano:</b> {{ matricula.ano }}</h6>
+                    <h6 class="card-title"><b>Ano:</b> {{ matricula.ano | date("Y") }}</h6>
+                    <h6 class="card-title"><b>Periodo:</b> {{ matricula.curso.periodo }}</h6>
                     <h6 class="card-title"><b>Ativa:</b> {% if matricula.ativa %}Sim{% else %}Nao{% endif %}</h6>
                     {% if matricula.alunosMatriculados | length > 0 %}
                         <h6 class="card-title"><b>Listagem de alunos:</b></h6>

@@ -5,6 +5,7 @@ namespace School\MatriculaBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class MatriculaType extends AbstractType
 {
@@ -16,12 +17,13 @@ class MatriculaType extends AbstractType
 
         $builder
             ->add('curso')
-            ->add('ano')
+            ->add('ano', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'placeholder' => 'Select a value',
+                'attr' => ['data-provide' => "datepicker", "data-date-format" => "yyyy-mm-dd"]
+            ])
             ->add('ativa');
-//        if ($options['admin']) {
-//            $builder
-//                ->add('alunos');
-//        }
     }
 
     /**

@@ -1,18 +1,19 @@
 {% extends 'base.html.twig' %}
-
+     {% block stylesheets %}
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+     {% endblock %}
 {% block body %}
-
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <a href="{{ path('curso_index') }}">
                 <img src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a>
             <h3>Matricular aluno</h3>
-            <form action="{{ path('matricular_admin_action') }}" method="POST">
+            <form action="{{ path('matricular_admin_action') }}" method="POST" id="form_matricula_aluno">
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Aluno<code class="highlighter-red">*</code></label>
-                    <div class="col-sm-10">
-                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="aluno" required>
+                    <label for="exampleInputEmail1" class="col-md-3">Aluno<code class="highlighter-red">*</code></label>
+                    <div class="col-sm-9">
+                        <select class="custom-select mr-sm-2" id="matricula_aluno" name="aluno" required>
                             <option value="">Choose...</option>
                             {% for aluno in alunos %}
                                 <option value="{{ aluno.id }}">{{ aluno.name }}</option>
@@ -21,22 +22,91 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-2">Curso<code class="highlighter-red">*</code></label>
-                    <div class="col-sm-10">
-                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="matricula" required>
+                    <label for="exampleInputEmail1" class="col-md-3">Curso<code class="highlighter-red">*</code></label>
+                    <div class="col-md-9">
+                        <select class="custom-select mr-sm-2" id="matricula_curso" name="matricula_curso" required>
                             <option value="">Choose...</option>
                             {% for matricula in matriculas%}
-                                <option value="{{ matricula.id }}">{{ matricula.curso }}</option>
+                                <option value="{{ matricula.curso.id }}">{{ matricula.curso }}</option>
                             {% endfor %}
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Matricular">
+                    <label for="anoleitivo" class="col-md-3 col-form-label">Ano leitivo<code class="highlighter-red">*</code></label>
+                    <div class="col-md-9">
+                        <input data-provide="datepicker" data-date-format="yyyy" type="number" maxlength="4" class="form-control" required id="anoleitivo" placeholder="Ano leitivo">
+                        <div style="display:none" class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-anoleitivo">
+                            <ul><li>This value should have exactly 4 characters.</li></ul>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail1" class="col-md-3">Periodo<code class="highlighter-red">*</code></label>
+                    <div class="col-md-9">
+                        <select class="custom-select mr-sm-2" id="periodo" name="periodo">
+                            <option value="matutino">Matutino</option>
+                            <option value="vespertino">Vespertino</option>
+                            <option value="noturno">Noturno</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Matricular" id="matricula_submit">
                 </div>
             </form>
         </div>
         <div class="col-md-3"></div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="modal_form_matricula" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Informacao</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        Este alumno ya se esta matriculado en este curso, en el mismo ano y período.
+                        <hr>
+                        Por favor erevise si es el alumno que desea matricular o el curso.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_form_matricula_available" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Informacao</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        Este curso no tiene matricula abierta para este ano o periodo.
+                        <hr>
+                        Por favor revise que exista una matricula abierta que coincida con sus deseos.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 {% endblock %}

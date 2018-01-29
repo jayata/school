@@ -24,13 +24,9 @@ class Matricula
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Length(
-     *      min = 4,
-     *      max = 4,
-     *      minMessage = "Year must be at least {{ limit }} characters long",
-     *      maxMessage = "Year must be at least cannot be longer than {{ limit }} characters"
-     * )
+     * @Assert\NotBlank()
+     * @ORM\Column(type="datetime")
+     * @Assert\Type(type="\DateTime")
      */
     private $ano;
 
