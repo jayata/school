@@ -4,12 +4,14 @@ namespace School\CursoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Curso
  *
  * @ORM\Table(name="curso")
  * @ORM\Entity(repositoryClass="School\CursoBundle\Repository\CursoRepository")
+ * @UniqueEntity("nome")
  */
 class Curso
 {
@@ -23,7 +25,7 @@ class Curso
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=250)
+     * @ORM\Column(type="string", length=250,unique = true)
      * @Assert\NotBlank()
      *
      */
@@ -37,16 +39,18 @@ class Curso
 
     /**
      * @ORM\Column(type="integer", length=250)
-     * @Assert\NotEqualTo(
-     *     value = 0
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Must be an a value bigger than 0",
      * )
      */
     private $mensualidade;
 
     /**
      * @ORM\Column(type="integer", length=250)
-     *  @Assert\NotEqualTo(
-     *     value = 0
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Must be an a value bigger than 0",
      * )
      */
     private $valorMatricula;
@@ -60,11 +64,20 @@ class Curso
 
     /**
      * @ORM\Column(type="integer", length=250)
-     *  @Assert\NotEqualTo(
-     *     value = 0
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 12,
+     *      minMessage = "Must be at least {{ limit }} month",
+     *      maxMessage = "Must be no more than {{ limit }} months",
      * )
      */
     private $mesesDuracao;
+
+    /**
+     * @ORM\OneToMany(targetEntity="School\MatriculaBundle\Entity\Matricula", mappedBy="curso", orphanRemoval=true, cascade={"remove"})
+     *
+     */
+    protected $matriculasAbiertas;
 
     /**
      * Get id
@@ -222,5 +235,46 @@ class Curso
 
     public function __toString() {
         return $this->nome;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->matriculasAbiertas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add matriculasAbierta
+     *
+     * @param \School\MatriculaBundle\Entity\Matricula $matriculasAbierta
+     *
+     * @return Curso
+     */
+    public function addMatriculasAbierta(\School\MatriculaBundle\Entity\Matricula $matriculasAbierta)
+    {
+        $this->matriculasAbiertas[] = $matriculasAbierta;
+
+        return $this;
+    }
+
+    /**
+     * Remove matriculasAbierta
+     *
+     * @param \School\MatriculaBundle\Entity\Matricula $matriculasAbierta
+     */
+    public function removeMatriculasAbierta(\School\MatriculaBundle\Entity\Matricula $matriculasAbierta)
+    {
+        $this->matriculasAbiertas->removeElement($matriculasAbierta);
+    }
+
+    /**
+     * Get matriculasAbiertas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatriculasAbiertas()
+    {
+        return $this->matriculasAbiertas;
     }
 }

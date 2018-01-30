@@ -10,4 +10,5 @@ namespace School\MatriculaBundle\Repository;
  */
 class MatriculaAlunoRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

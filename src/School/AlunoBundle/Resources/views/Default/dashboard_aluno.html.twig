@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Dashboard{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-6">
@@ -22,7 +22,8 @@
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ mat.matricula.curso }}</td>
                         <td>{{ mat.matricula.ano | date("Y") }}</td>
-                        <td>{% if mat.paga %}Sim{% else %}Nao{% endif %}</td>
+                        <td>{% if mat.paga %}<span class="badge badge-success">Sim</span>
+                            {% else %}<span class="badge badge-danger">Nao</span>{% endif %}</td>
                         <td>{{ mat.matricula.curso.periodo }}</td>
                         <td>{{ mat.matricula.curso.mesesDuracao }} meses</td>
                         <td><a href="{{ path('marticula_detalle',{'id':mat.id}) }}">

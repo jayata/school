@@ -4,12 +4,14 @@ namespace School\AlunoBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Aluno
  *
  * @ORM\Table(name="aluno")
  * @ORM\Entity(repositoryClass="School\AlunoBundle\Repository\AlunoRepository")
+ * @UniqueEntity("cpf")
  */
 class Aluno extends BaseUser
 {

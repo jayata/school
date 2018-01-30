@@ -4,6 +4,7 @@ namespace School\MatriculaBundle\Controller;
 
 use School\MatriculaBundle\Entity\Matricula;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use School\MatriculaBundle\Entity\MatriculaAluno;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,12 +27,13 @@ class MatriculaController extends Controller
         $all = $request->query->get('all');
         $em = $this->getDoctrine()->getManager();
         $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findAll();
+        $cursos = $em->getRepository('SchoolCursoBundle:Curso')->findAll();
         $total = count($matriculas);
         if ($all != 1) {
-            $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findBy(array('ativa'=>1));
+            $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findBy(array('ativa' => 1));
         }
         return $this->render('matricula/index.html.twig', array(
-            'matriculas' => $matriculas, 'all'=>$all, 'total'=>$total
+            'matriculas' => $matriculas, 'all' => $all, 'total' => $total,'cursos' =>$cursos
         ));
     }
 
@@ -72,8 +74,12 @@ class MatriculaController extends Controller
     {
         $deleteForm = $this->createDeleteForm($matricula);
 
+        $matrAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
+        $matriculaAluno = $matrAluno_rep->findBy(array("matricula" => $matricula));
+
         return $this->render('matricula/show.html.twig', array(
             'matricula' => $matricula,
+            'matriculaAluno' => $matriculaAluno,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -147,13 +153,15 @@ class MatriculaController extends Controller
     public function matriculaActivateAction(Matricula $matricula)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($matricula->getAtiva()){
+        if ($matricula->getAtiva()) {
             $matricula->setAtiva(false);
-        }else{
+        } else {
             $matricula->setAtiva(true);
         }
         $em->persist($matricula);
         $em->flush();
         return $this->redirectToRoute('matricula_index');
     }
+
+
 }

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Detalles de la matricula{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-3">
@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card text-center">
+            <div class="card text-left">
                 <div class="card-header">
                     <h3>Detalles da matricula</h3>
                 </div>
@@ -53,13 +53,49 @@
                     <h6 class="card-title"><b>Valor da matricula:</b> {{ matricula.matricula.curso.valorMatricula }}</h6>
                 </div>
                 <div class="card-footer text-muted">
-                    {% if matricula.paga %}Pagado
+                    <h6 class="card-title"><b> Estatus de la matricula:</b></h6>
+                    {% if matricula.paga %}Pagado.
+                        {% if change is defined %}Troco: {{ change }}{% endif %}
                     {% else %}
-                        Ainda nao pago <a type="button" class="btn btn-primary">Pagar <img src="{{ asset('svg/arrow-right.svg') }}"></a>
+                        Ainda nao pago <a href="#" data-toggle="modal" data-target="#modal_pago">Pagar aqui <img src="{{ asset('svg/arrow-right.svg') }}"></a>
                     {% endif %}
                 </div>
             </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    {% for mes in range(0, matricula.matricula.curso.mesesDuracao | length) %}
+                    <li class="list-group-item"><a href="{{ path('dashboard_aluno') }}">
+                            <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidad</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal_pago" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar matricula</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ path('marticula_pagar') }}" method="post">
+                <div class="modal-body">
+                    Introduzca la cantidad a pagar
+                   <input type="number" name="matricula_payment" class="small" placeholder="{{ matricula.matricula.curso.valorMatricula }}"/>
+                    <input type="hidden" value="{{ matricula.id }}" name="matricula_id"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}

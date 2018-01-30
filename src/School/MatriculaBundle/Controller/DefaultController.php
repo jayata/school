@@ -30,7 +30,6 @@ class DefaultController extends Controller
                 'alunos' => $alunos, 'matriculas' => $matriculas
             ));
         }
-
         $matricula = $matr_rep->findOneBy(array("id" => $id));
         return $this->render('SchoolMatriculaBundle:Default:matricular_neste_form.html.twig', array(
             'alunos' => $alunos, 'matricula' => $matricula

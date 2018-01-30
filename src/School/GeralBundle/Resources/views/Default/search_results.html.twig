@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Listagem de matriculas{% endblock %}
+{% block title %}Resultados de la busqueda{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-1"></div>
@@ -15,7 +15,7 @@
                                 <div class="col-md-3">
                                     <label class="inline_label" for="filter_pago">
                                         <input type="checkbox" class="form-control" name="filter_pago" id="filter_pago">
-                                        Pagamento pendiente</label>
+                                        Pagada</label>
                                 </div>
                                 <div class="col-md-3">
                                     <select name="filter_curso" id="filter_curso" class="custom-select">
@@ -34,13 +34,6 @@
                             </div>
                         </form>
                     </div>
-                    (Total {{ total }} |
-                    {% if all %}
-                        <a href="{{ path('matricula_index') }}"> Ver so as ativas </a>)
-                    {% else %}
-                        <a href="{{ path('matricula_index',{'all':true}) }}"> Ver todas </a>)
-                    {% endif %}
-
                 </div>
             </div>
             <table class="table">
@@ -48,36 +41,45 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Ativa</th>
+                    <th scope="col">Paga</th>
                     <th scope="col">Ano</th>
                     <th scope="col">Periodo</th>
                     <th scope="col">Curso</th>
-                    <th scope="col">Alunos</th>
+                    <th scope="col">Aluno</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for matricula in matriculas %}
-                    <tr {% if matricula.ativa %} class="table-active">{% endif %}>
+                    <tr {% if matricula.matricula.ativa %} class="table-active">{% endif %}>
                         <th scope="row">{{ loop.index }}</th>
-                        <td>{% if matricula.ativa %}
+                        <td>{% if matricula.matricula.ativa %}
                                 <img src="{{ asset('svg/verified.svg') }}">
-                                (<a href="{{ path('matricula_activate',{'id':matricula.id}) }}">Desativar</a>)
+                                (<a href="{{ path('matricula_activate',{'id':matricula.matricula.id}) }}">Desativar</a>)
                             {% else %}
                                 <img src="{{ asset('svg/x.svg') }}">
-                                (<a href="{{ path('matricula_activate',{'id':matricula.id} ) }}">Ativar</a>)
+                                (<a href="{{ path('matricula_activate',{'id':matricula.matricula.id} ) }}">Ativar</a>)
                             {% endif %}</td>
-                        <td>{{ matricula.ano | date("Y") }}</td>
-                        <td>{{ matricula.curso.periodo }}</td>
-                        <td>{{ matricula.curso }}</td>
-                        <td><span class="badge badge-primary">{{ matricula.alunosMatriculados | length }}</span></td>
+                        <td>{% if matricula.paga %}
+                                <span class="badge badge-success">Sim</span>
+                            {% else %}
+                                <span class="badge badge-danger">Nao</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ matricula.matricula.ano | date("Y") }}</td>
+                        <td>{{ matricula.matricula.curso.periodo }}</td>
+                        <td>{{ matricula.matricula.curso }}</td>
+                        <td><span class="badge badge-primary">{{ matricula.aluno.name }}</span></td>
 
                         <td>
-                            <a href="{{ path('matricula_show', { 'id': matricula.id }) }}"><img
+                            <a href="{{ path('matricula_show', { 'id': matricula.matricula.id }) }}"><img
                                         src="{{ asset('svg/eye.svg') }}" alt="icon name"></a>
-                            <a href="{{ path('matricula_edit', { 'id': matricula.id }) }}"><img
+                            <a href="{{ path('matricula_edit', { 'id': matricula.matricula.id }) }}"><img
                                         src="{{ asset('svg/pencil.svg') }}" alt="icon name"></a>
                         </td>
                     </tr>
+                {% else %}
+                    No hay resultados
                 {% endfor %}
                 </tbody>
             </table>

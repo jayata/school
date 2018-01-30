@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Adicionar curso{% endblock %}
 {% block body %}
 
     <div class="row">
@@ -12,6 +12,9 @@
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
                     {{ form_widget(form.nome, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the name of the course'|trans } }) }}
+                    <small id="emailHelp" class="form-text text-muted hidden-xs hidden-sm">
+                        Escoja un nombre para el curso que sea representativo e unico.
+                    </small>
                     {% if form_errors(form.nome)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.nome)}}
@@ -47,7 +50,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Periodo<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.periodo, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
+                    {{ form_widget(form.periodo, { 'attr': {'class': 'form-control col-md-9 custom-select', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
                     {% if form_errors(form.periodo)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.periodo) }}
