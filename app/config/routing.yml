@@ -24,7 +24,7 @@ school_geral:
 school_pagamento:
     resource: "@SchoolPagamentoBundle/Controller/"
     type:     annotation
-    prefix:   /pagamento
+    prefix:   /
 
 school_aluno:
     resource: "@SchoolAlunoBundle/Controller/"

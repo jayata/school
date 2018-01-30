@@ -25,6 +25,14 @@ class Aluno extends BaseUser
     protected $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id_imported", type="integer",nullable=True)
+     *
+     */
+    private $idImported;
+
+    /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=250, nullable=True)
      */
@@ -79,6 +87,25 @@ class Aluno extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdImported()
+    {
+        return $this->idImported;
+    }
+
+    /**
+     * @param mixed $idImported
+     *
+     * * @return Curso
+     */
+    public function setIdImported($idImported)
+    {
+        $this->idImported = $idImported;
+        return $this;
     }
 
     /**

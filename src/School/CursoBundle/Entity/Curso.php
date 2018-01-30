@@ -11,7 +11,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="curso")
  * @ORM\Entity(repositoryClass="School\CursoBundle\Repository\CursoRepository")
- * @UniqueEntity("nome")
  */
 class Curso
 {
@@ -25,7 +24,15 @@ class Curso
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=250,unique = true)
+     * @var int
+     *
+     * @ORM\Column(name="id_imported", type="integer",nullable=True)
+     *
+     */
+    private $idImported;
+
+    /**
+     * @ORM\Column(type="string", length=250)
      * @Assert\NotBlank()
      *
      */
@@ -88,6 +95,28 @@ class Curso
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdImported()
+    {
+        return $this->idImported;
+    }
+
+    /**
+     * @param mixed $idImported
+     *
+     * * @return Curso
+     */
+    public function setIdImported($idImported)
+    {
+        $this->idImported = $idImported;
+        return $this;
+    }
+
+    /**
+
 
     /**
      * Set nome
