@@ -78,7 +78,7 @@ class DefaultController extends Controller
     /**
      * Pagar matricula
      *
-     * @Route("/pagar", name="marticula_pagar")
+     * @Route("/pagar/matricula", name="marticula_pagar")
      * @Method("POST")
      */
     public function matriculaPagarAction(Request $request)
@@ -91,35 +91,65 @@ class DefaultController extends Controller
 
         $matrAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
         $matricula = $matrAluno_rep->findOneBy(array('id' => $id));
+
         if ($matricula->getMatricula()->getCurso()->getValorMatricula() == $value) {
-            $matricula->setPaga(true);
-            $em->persist($matricula);
-            $em->flush();
             $change=0;
         } elseif ($matricula->getMatricula()->getCurso()->getValorMatricula() < $value) {
-            $change = $this->change($value);
+            $change = $this->change($value - $matricula->getMatricula()->getCurso()->getValorMatricula());
+//            echo"<pre>";
+//            print_r($change);die();
         }
-        return $this->redirectToRoute('marticula_detalle', array('id' => $matricula->getId(), 'change' => $change));
+        $matricula->setPaga(true);
+        $em->persist($matricula);
+        $em->flush();
+        return $this->render('SchoolAlunoBundle:Default:operaciones_aluno.html.twig',
+            array('pago' => $value,'debe'=>$matricula->getMatricula()->getCurso()->getValorMatricula(),'change' => $change));
+    }
+
+    /**
+     * Pagar mensualidad
+     *
+     * @Route("/pagar/mensualidad", name="marticula_pagar_mensualidad")
+     * @Method("POST")
+     */
+    public function mensualidadPagarAction(Request $request)
+    {
+        $id = $request->request->get('matricula_id');
+        $value = $request->request->get('mensualidad_payment');
+        $change = null;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $matrAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
+        $matricula = $matrAluno_rep->findOneBy(array('id' => $id));
+        if ($matricula->getMatricula()->getCurso()->getMensualidade() == $value) {
+            $change=0;
+        } elseif ($matricula->getMatricula()->getCurso()->getMensualidade() < $value) {
+            $change = $this->change($value - $matricula->getMatricula()->getCurso()->getMensualidade());
+
+        }
+        $matricula->setMesesPagos($matricula->getMesesPagos()+1);
+        $em->persist($matricula);
+        $em->flush();
+        return $this->render('SchoolAlunoBundle:Default:operaciones_aluno.html.twig',
+            array('pago' => $value,'debe'=>$matricula->getMatricula()->getCurso()->getMensualidade(),'change' => $change));
     }
 
     function change($value)
     {
-
+        //cédulas de R$100,00, R$50,00, R$10,00, R$5,00;
+        //moedas de R$0,50, R$1,00, R$0,10, R$0,05 e R$0,01.
         $coins = [100, 50, 10, 5, 1, 0.5, 0.1, 0.05, 0.01];
         $change = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         $sum = 0;
         if ($value === 0)
             return 0;
-///    cédulas de R$100,00, R$50,00, R$10,00, R$5,00;
-//moedas de R$0,50, R$1,00, R$0,10, R$0,05 e R$0,01.
         for ($i = 0; $i < count($coins); $i++) {
 
             while (bccomp($value, ($sum + $coins[$i]), 2) >= 0) {
                 $sum += $coins[$i];
                 $change[$i] = $change[$i] + 1;
-
             }
-
             if (bccomp($value, ($sum + $coins[$i]), 2) === 0) {
                 return $change;
             }

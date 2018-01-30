@@ -28,10 +28,14 @@
                     <div class="modal-body">
                         Esta seguro que desea desmatricular?
                         Lembrese que É cobrado 1% por mês não cumprido del curso.
+                        <hr>
+
+                        Multa a pagar
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <a href="{{ path('marticula_cancelar', {'id': matricula.id}) }}" type="submit" class="btn btn-danger">Desmatricular</a>
+                        <a href="{{ path('marticula_cancelar', {'id': matricula.id}) }}" type="submit"
+                           class="btn btn-danger">Desmatricular</a>
                     </div>
                 </div>
             </div>
@@ -44,20 +48,23 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><b>Curso:</b> {{ matricula.matricula.curso }}</h5>
-                    <h6 class="card-title"><b>Ano:</b> {{ matricula.matricula.ano | date("Y")}}</h6>
-                    <h6 class="card-title"><b>Periodo:</b> {{ matricula.matricula.curso.periodo}}</h6>
-                    <h6 class="card-title"><b>Duracao:</b> {{  matricula.matricula.curso.mesesDuracao }}</h6>
-                    <h6 class="card-title"><b>Cantidade de alunos matriculados:</b> {{ matricula.matricula.alunosMatriculados | length }}</h6>
+                    <h6 class="card-title"><b>Ano:</b> {{ matricula.matricula.ano | date("Y") }}</h6>
+                    <h6 class="card-title"><b>Periodo:</b> {{ matricula.matricula.curso.periodo }}</h6>
+                    <h6 class="card-title"><b>Duracao:</b> {{ matricula.matricula.curso.mesesDuracao }}</h6>
+                    <h6 class="card-title"><b>Cantidade de alunos
+                            matriculados:</b> {{ matricula.matricula.alunosMatriculados | length }}</h6>
                     <h6 class="card-title"><b>Descripcion:</b> {{ matricula.matricula.curso.descripcao }}</h6>
                     <h6 class="card-title"><b>Mensualidade:</b> {{ matricula.matricula.curso.mensualidade }}</h6>
-                    <h6 class="card-title"><b>Valor da matricula:</b> {{ matricula.matricula.curso.valorMatricula }}</h6>
+                    <h6 class="card-title"><b>Meses pagos:</b> {{ matricula.mesesPagos }}</h6>
+                    <h6 class="card-title"><b>Valor da matricula:</b> {{ matricula.matricula.curso.valorMatricula }}
+                    </h6>
                 </div>
                 <div class="card-footer text-muted">
-                    <h6 class="card-title"><b> Estatus de la matricula:</b></h6>
-                    {% if matricula.paga %}Pagado.
-                        {% if change is defined %}Troco: {{ change }}{% endif %}
+                    <b> Estatus de la matricula:</b>
+                    {% if matricula.paga %}<span class="badge-success"> Pagado. </span>
                     {% else %}
-                        Ainda nao pago <a href="#" data-toggle="modal" data-target="#modal_pago">Pagar aqui <img src="{{ asset('svg/arrow-right.svg') }}"></a>
+                        Ainda nao pago, <a href="#" data-toggle="modal" data-target="#modal_pago">pagar aqui <img
+                                src="{{ asset('svg/arrow-right.svg') }}"></a>
                     {% endif %}
                 </div>
             </div>
@@ -65,10 +72,23 @@
         <div class="col-md-3">
             <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
-                    {% for mes in range(0, matricula.matricula.curso.mesesDuracao | length) %}
-                    <li class="list-group-item"><a href="{{ path('dashboard_aluno') }}">
-                            <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidad</a></li>
-                    {% endfor %}
+                    {% set total =  matricula.matricula.curso.mesesDuracao %}
+                    {% set faltan =  total - matricula.mesesPagos %}
+                    {% if matricula.paga %}
+                        {% if faltan != 0 %}
+                            {% for mes in range(1, faltan) %}
+                                <li class="list-group-item">{% if loop.index == 1 %}<a href="#" data-toggle="modal"
+                                                               data-target="#modal_pago_mensualidad">
+                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidad</a>{% else %}
+                                    <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidad{% endif %}
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <span class="alert-success">Todas as mensualidades pagas</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="alert-info">Page a matricula para acceder a las mensualidades</span>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -85,15 +105,41 @@
                     </button>
                 </div>
                 <form action="{{ path('marticula_pagar') }}" method="post">
-                <div class="modal-body">
-                    Introduzca la cantidad a pagar
-                   <input type="number" name="matricula_payment" class="small" placeholder="{{ matricula.matricula.curso.valorMatricula }}"/>
-                    <input type="hidden" value="{{ matricula.id }}" name="matricula_id"/>
+                    <div class="modal-body">
+                        Introduzca la cantidad a pagar
+                        <input type="number" name="matricula_payment" id="matricula_payment" class="small"
+                               placeholder="{{ matricula.matricula.curso.valorMatricula }}"/>
+                        <input type="hidden" value="{{ matricula.id }}" name="matricula_id" id="matricula_id"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_pago_mensualidad" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar mensualidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </div>
+                <form action="{{ path('marticula_pagar_mensualidad') }}" method="post">
+                    <div class="modal-body">
+                        Introduzca la cantidad a pagar
+                        <input type="number" name="mensualidad_payment" class="small"
+                               placeholder="{{ matricula.matricula.curso.mensualidade }}"/>
+                        <input type="hidden" value="{{ matricula.id }}" name="matricula_id"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
                 </form>
             </div>
         </div>

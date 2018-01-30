@@ -57,13 +57,13 @@
                 </thead>
                 <tbody>
                 {% for matricula in matriculas %}
-                    <tr {% if matricula.ativa %} class="table-active">{% endif %}>
+                    <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{% if matricula.ativa %}
-                                <img src="{{ asset('svg/verified.svg') }}">
+                                <span class="badge badge-success">Sim</span>
                                 (<a href="{{ path('matricula_activate',{'id':matricula.id}) }}">Desativar</a>)
                             {% else %}
-                                <img src="{{ asset('svg/x.svg') }}">
+                                <span class="badge badge-secondary">Nao</span>
                                 (<a href="{{ path('matricula_activate',{'id':matricula.id} ) }}">Ativar</a>)
                             {% endif %}</td>
                         <td>{{ matricula.ano | date("Y") }}</td>

@@ -44,6 +44,13 @@ class MatriculaAluno
     private $paga = false;
 
     /**
+     * @var int
+     *
+     * @ORM\Column( type="integer")
+     */
+    private $mesesPagos = 0;
+
+    /**
      * Get id
      *
      * @return int
@@ -124,6 +131,22 @@ class MatriculaAluno
     public function getPaga()
     {
         return $this->paga;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMesesPagos()
+    {
+        return $this->mesesPagos;
+    }
+
+    /**
+     * @param int $mesesPagos
+     */
+    public function setMesesPagos($mesesPagos)
+    {
+        $this->mesesPagos = $mesesPagos;
     }
 
     function __toString()

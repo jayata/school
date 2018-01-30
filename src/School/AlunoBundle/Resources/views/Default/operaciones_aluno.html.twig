@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}Detalles de las operaciones{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="{{ path('dashboard_aluno') }}"><img
+                                src="{{ asset('svg/arrow-left.svg') }}"> Back to home</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-left">
+            <div class="card-header">
+                <h3>Detalles da opreacao</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"><b>Precio:</b> {{ debe }}</h5>
+                <h6 class="card-title"><b>Pago:</b> {{ pago }}</h6>
+                {% if change == 0 %}
+                    <h6 class="card-title"><b>Troco:</b> {{ change }}</h6>
+                {% else %}
+                    <h6><b>Total a devolver: </b>{{ pago-debe }}</h6>
+                    <h6 class="card-title"><b>Temos calculado para voce o melhor troco:</b></h6>
+                    {% set values = [100, 50, 10, 5, 1, 0.5, 0.1, 0.05, 0.01] %}
+
+                    {% for ch in change %}
+                        {% if ch != 0 %}
+                            {{ ch }} {% if loop.index <= 5 %}cedulas {% else %}moedas {% endif %}de {{ values[loop.index - 1] }}<br>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="card-footer text-muted">
+                <b>Data:</b> {{ "now"|date("m/d/Y") }} |
+                <small><a href="/">Print recipe</a></small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+{% endblock %}
