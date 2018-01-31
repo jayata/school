@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
+use Symfony\Component\Console\Input\InputArgument;
 
 class ImportCursosCommand extends Command
 {
@@ -30,46 +31,59 @@ class ImportCursosCommand extends Command
     {
         $this
             ->setName('school:import:courses')
+            ->addArgument('file', InputArgument::REQUIRED, 'The file to input')
             ->setDescription('Imports courses from csv')
-            ->setHelp('This command allows you to import courses to the system')
-        ;
+            ->setHelp('This command allows you to import courses to the system');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      $io = new SymfonyStyle($input, $output);
-      $io-> title("Atempting to upload the courses");
+        $io = new SymfonyStyle($input, $output);
+        $io->title("Atempting to upload the courses");
 
-        $csv = Reader::createFromPath('%kernel.root_dir%/../src/School/GeralBundle/Data/courses_file.csv');
-        $csv->setHeaderOffset(0);
-        $csv->setDelimiter(',');
-        $records = $csv->getRecords();
+        $file = $input->getArgument('file');
+        if (file_exists($file) && is_file($file) &&  pathinfo($file)['extension'] == 'csv') {
 
-        foreach ($records as $row) {
-            $curso = (new Curso())
-                ->setNome($row['course_name'])
-                ->setMensualidade($row['monthly_amount'])
-                ->setValorMatricula($row['registration_tax'])
-                ->setPeriodo($row['period'])
-                ->setMesesDuracao(1)
-                ->setIdImported($row['id'])
-                ->setDescripcao("Imported via command")
-                ;
-            $this->em->persist($curso);
+            $csv = Reader::createFromPath($file);
+            $csv->setHeaderOffset(0);
+            $csv->setDelimiter(',');
+            $records = $csv->getRecords();
+
+            foreach ($records as $key => $row) {
+                $curso = (new Curso())
+                    ->setNome($row['course_name'])
+                    ->setMensualidade($row['monthly_amount'])
+                    ->setValorMatricula($row['registration_tax'])
+                    ->setPeriodo($row['period'])
+                    ->setMesesDuracao(1)
+                    ->setIdImported($row['id'])
+                    ->setDescripcao("Imported via command");
+                $this->em->persist($curso);
+                if (($key % 25) === 0) {
+                    $this->em->flush();
+                    $this->em->clear(); // Detaches all objects from Doctrine!
+                }
+            }
+
+            $this->em->flush(); //Persist objects that did not make up an entire batch
+            $this->em->clear();
+
+            $cursos = $this->em->getRepository('SchoolCursoBundle:Curso')->findAll();
+            foreach ($cursos as $key => $curso1) {
+                $matricula = (new Matricula())
+                    ->setCurso($curso1)
+                    ->setAtiva(true)
+                    ->setAno(new \DateTime('now'));
+                $this->em->persist($matricula);
+                if (($key % 25) === 0) {
+                    $this->em->flush();
+                }
+            }
+            $this->em->flush(); //Persist objects that did not make up an entire batch
+            $this->em->clear();
+            $io->success('Cursos imported!');
+        }else{
+            $io->error("No such a csv file");
         }
-
-        $this->em->flush();
-
-        $cursos = $this->em->getRepository('SchoolCursoBundle:Curso')->findAll();
-        foreach ($cursos as $curso){
-            $matricula = (new Matricula())
-                ->setCurso($curso)
-                ->setAtiva(true)
-                ->setAno(new \DateTime('now'))
-            ;
-            $this->em->persist($matricula);
-        }
-        $this->em->flush();
-        $io->success('Cursos imported!');
     }
 }
