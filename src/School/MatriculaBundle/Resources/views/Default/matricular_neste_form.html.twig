@@ -17,7 +17,9 @@
                         <select class="custom-select mr-sm-2" id="matricula_aluno" name="aluno" required>
                             <option value="">Choose...</option>
                             {% for aluno in alunos %}
+                            {% if not aluno.hasRole("ROLE_SUPER_ADMIN") %}
                                 <option value="{{ aluno.id }}">{{ aluno.name }}</option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>
@@ -25,15 +27,14 @@
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Curso<code class="highlighter-red">*</code></label>
                     <div class="col-md-9">
-                        <select class="custom-select mr-sm-2" id="matricula_curso" name="matricula_curso">
-                                <option value="{{ matricula.curso.id }}">{{ matricula.curso }}</option>
-                        </select>
+                        <input value="{{ matricula.curso.nome  }}" readonly class="form-control" required>
+                        <input value="{{ matricula.curso.id  }}" type="hidden" name="matricula_curso" id="matricula_curso">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="anoleitivo" class="col-md-3 col-form-label">Ano leitivo<code class="highlighter-red">*</code></label>
                     <div class="col-md-9">
-                        <input data-provide="datepicker" data-date-format="yyyy" type="number" maxlength="4" class="form-control" required id="anoleitivo" placeholder="Ano leitivo">
+                        <input value="{{ matricula.ano | date('Y') }}" readonly class="form-control" required id="anoleitivo" placeholder="Ano leitivo">
                         <div style="display:none" class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-anoleitivo">
                             <ul><li>This value should have exactly 4 characters.</li></ul>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -45,11 +46,7 @@
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Periodo<code class="highlighter-red">*</code></label>
                     <div class="col-md-9">
-                        <select class="custom-select mr-sm-2" id="periodo" name="periodo">
-                            <option value="matutino">Matutino</option>
-                            <option value="vespertino">Vespertino</option>
-                            <option value="noturno">Noturno</option>
-                        </select>
+                        <input value="{{ matricula.curso.periodo  }}" name="periodo" readonly class="form-control" required id="periodo" placeholder="Ano leitivo">
                     </div>
                 </div>
                 <div class="form-group row">

@@ -107,7 +107,7 @@
                 <form action="{{ path('marticula_pagar') }}" method="post">
                     <div class="modal-body">
                         Introduzca la cantidad a pagar
-                        <input type="number" name="matricula_payment" id="matricula_payment" class="small"
+                        <input type="number" step="0.01" name="matricula_payment" id="matricula_payment" class="small"
                                placeholder="{{ matricula.matricula.curso.valorMatricula }}"/>
                         <input type="hidden" value="{{ matricula.id }}" name="matricula_id" id="matricula_id"/>
                     </div>
@@ -132,7 +132,7 @@
                 <form action="{{ path('marticula_pagar_mensualidad') }}" method="post">
                     <div class="modal-body">
                         Introduzca la cantidad a pagar
-                        <input type="number" name="mensualidad_payment" class="small"
+                        <input type="number" step="0.01" name="mensualidad_payment" class="small"
                                placeholder="{{ matricula.matricula.curso.mensualidade }}"/>
                         <input type="hidden" value="{{ matricula.id }}" name="matricula_id"/>
                     </div>

@@ -29,19 +29,20 @@ class DefaultController extends Controller
 
         $matrAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
         $matricula = $matrAluno_rep->findOneBy(array('id' => $id));
+        $valorMatricula = $matricula->getMatricula()->getCurso()->getValorMatricula();
 
-        if ($matricula->getMatricula()->getCurso()->getValorMatricula() == $value) {
+        if ($valorMatricula == $value) {
             $change=0;
-        } elseif ($matricula->getMatricula()->getCurso()->getValorMatricula() < $value) {
-            $change = $this->change($value - $matricula->getMatricula()->getCurso()->getValorMatricula());
-//            echo"<pre>";
-//            print_r($change);die();
+        } elseif ($valorMatricula < $value) {
+            $change = $this->change($value - $valorMatricula);
         }
         $matricula->setPaga(true);
         $em->persist($matricula);
         $em->flush();
+        $troco = $value - $valorMatricula;
+        $troco = number_format($troco,2);
         return $this->render('SchoolAlunoBundle:Default:operaciones_aluno.html.twig',
-            array('pago' => $value,'debe'=>$matricula->getMatricula()->getCurso()->getValorMatricula(),'change' => $change));
+            array('pago' => $value,'debe'=>$valorMatricula,'change' => $change,'troco'=> $troco));
     }
 
     /**
@@ -60,17 +61,20 @@ class DefaultController extends Controller
 
         $matrAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
         $matricula = $matrAluno_rep->findOneBy(array('id' => $id));
-        if ($matricula->getMatricula()->getCurso()->getMensualidade() == $value) {
-            $change=0;
-        } elseif ($matricula->getMatricula()->getCurso()->getMensualidade() < $value) {
-            $change = $this->change($value - $matricula->getMatricula()->getCurso()->getMensualidade());
+        $mensualidad=$matricula->getMatricula()->getCurso()->getMensualidade();
 
+        if ($mensualidad == $value) {
+            $change=0;
+        } elseif ($mensualidad < $value) {
+            $change = $this->change($value - $mensualidad);
         }
         $matricula->setMesesPagos($matricula->getMesesPagos()+1);
         $em->persist($matricula);
         $em->flush();
+        $troco = $value - $mensualidad;
+        $troco = number_format($troco,2);
         return $this->render('SchoolAlunoBundle:Default:operaciones_aluno.html.twig',
-            array('pago' => $value,'debe'=>$matricula->getMatricula()->getCurso()->getMensualidade(),'change' => $change));
+            array('pago' => $value,'debe'=>$mensualidad,'change' => $change,'troco'=> $troco));
     }
 
     function change($value)

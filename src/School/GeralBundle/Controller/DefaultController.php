@@ -107,16 +107,11 @@ class DefaultController extends Controller
             $criteria = array();
 
             if ($pago) {
-                $criteria['paga'] = true;
+                $criteria['paga'] = 0;
             }
-//            if ($curso_id) {
-//                $curso_rep = $this->getDoctrine()->getRepository(Curso::class);
-//                $curso = $curso_rep->findOneBy(array('id'=>$curso_id));
-//
-//                $matricula_rep = $this->getDoctrine()->getRepository(Matricula::class);
-//                $matricula = $matricula_rep->findBy(array('curso'=>$curso));
-//                $criteria['matricula'] = $matricula;
-//            }
+            if ($curso_id) {
+                $criteria['curso'] = $curso_id;
+            }
 
             if ($aluno_nome) {
                 $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
@@ -125,34 +120,38 @@ class DefaultController extends Controller
                     $criteria['aluno'] = $aluno;
                 }
             }
-
-            $matriculaAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
             $em = $this->getDoctrine()->getManager();
             $mat = $em->getRepository('SchoolMatriculaBundle:Matricula')->findAll();
             $cursos = $em->getRepository('SchoolCursoBundle:Curso')->findAll();
             $total = count($mat);
 
-
             if (count($criteria) > 0) {
-                $query = $matriculaAluno_rep->createQueryBuilder('ma');
-                foreach ($criteria as $field => $value) {
-                    if (!$value) {
-                        continue;
-                    }
-                    $query->andWhere('ma.' . $field . ' =:' . $field)
-                        ->setParameter($field, $value);
-                }
-                $matriculas = $query->getQuery()->getResult();
+                $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+                $qb
+                    ->select('ma')
+                    ->from('School\MatriculaBundle\Entity\MatriculaAluno', 'ma');
 
+                foreach ($criteria as $field => $value) {
+                    if ($field == 'curso') {
+                        $qb->innerJoin('ma.matricula', 'm')
+                            ->andWhere('m.curso = :curso');
+                    }
+                    if ($field == 'paga') {
+                        $qb->andWhere('ma.paga = :paga');
+                    }
+                    if ($field == 'aluno') {
+                            $qb ->andWhere('ma.aluno = :aluno');
+                    }
+                }
+                $qb->setParameters($criteria);
+                }
+//                echo $qb->getDQL();die();
+                $matriculas = $qb->getQuery()->getResult();
                 return $this->render('SchoolGeralBundle:Default:search_results.html.twig',
                     array('matriculas' => $matriculas, 'total' => $total, 'cursos' => $cursos));
+
             }
-            return $this->render('SchoolGeralBundle:Default:search_results.html.twig',
-                array('matriculas' => null, 'total' => $total, 'cursos' => $cursos));
+            return $this->redirectToRoute('dashboard_admin');
         }
-        return $this->redirectToRoute('dashboard_admin');
-    }
-
-
 
 }

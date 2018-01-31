@@ -54,6 +54,7 @@ class ImportAlunosCommand extends Command
 
                 $aluno = (new Aluno())
                     ->setName($row['name'])
+                    ->setEnabled(true)
                     ->setPlainPassword("password")
                     ->setUsername($username)
                     ->setEmail($username . '@portabilis.com')

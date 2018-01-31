@@ -9,13 +9,12 @@
                     <h3>Listagem de Matriculas </h3></div>
                 <div class="col-md-6">
                     <div class="row">
-
                         <form action="{{ path('filter') }}" method="POST" id="filter_form">
                             <div class="form-row">
                                 <div class="col-md-3">
                                     <label class="inline_label" for="filter_pago">
                                         <input type="checkbox" class="form-control" name="filter_pago" id="filter_pago">
-                                        Pagada</label>
+                                        Pagamento pendiente</label>
                                 </div>
                                 <div class="col-md-3">
                                     <select name="filter_curso" id="filter_curso" class="custom-select">
@@ -51,14 +50,12 @@
                 </thead>
                 <tbody>
                 {% for matricula in matriculas %}
-                    <tr {% if matricula.matricula.ativa %} class="table-active">{% endif %}>
+                    <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{% if matricula.matricula.ativa %}
-                                <img src="{{ asset('svg/verified.svg') }}">
-                                (<a href="{{ path('matricula_activate',{'id':matricula.matricula.id}) }}">Desativar</a>)
+                                <span class="badge badge-success">Sim</span>
                             {% else %}
-                                <img src="{{ asset('svg/x.svg') }}">
-                                (<a href="{{ path('matricula_activate',{'id':matricula.matricula.id} ) }}">Ativar</a>)
+                                <span class="badge badge-secondary">Nao</span>
                             {% endif %}</td>
                         <td>{% if matricula.paga %}
                                 <span class="badge badge-success">Sim</span>

@@ -17,7 +17,9 @@
                         <select class="custom-select mr-sm-2" id="matricula_aluno" name="aluno" required>
                             <option value="">Choose...</option>
                             {% for aluno in alunos %}
-                                <option value="{{ aluno.id }}">{{ aluno.name }}</option>
+                                {% if not aluno.hasRole("ROLE_SUPER_ADMIN") %}
+                                    <option value="{{ aluno.id }}">{{ aluno.name }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
