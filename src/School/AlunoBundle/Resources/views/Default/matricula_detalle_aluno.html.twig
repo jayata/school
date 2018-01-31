@@ -66,6 +66,14 @@
                         Ainda nao pago, <a href="#" data-toggle="modal" data-target="#modal_pago">pagar aqui <img
                                 src="{{ asset('svg/arrow-right.svg') }}"></a>
                     {% endif %}
+                    {% for message in app.flashes('error-taxa') %}
+                        <div class="alert alert-danger alert-dismissible fade show alert-login" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -90,6 +98,14 @@
                         <span class="alert-info">Page a matricula para acceder a las mensualidades</span>
                     {% endif %}
                 </ul>
+                {% for message in app.flashes('error-mensual') %}
+                    <div class="alert alert-danger alert-dismissible fade show alert-login" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

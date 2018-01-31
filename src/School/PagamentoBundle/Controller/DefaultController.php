@@ -5,6 +5,7 @@ namespace School\PagamentoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use School\AlunoBundle\Entity\Aluno;
 use School\CursoBundle\Entity\Curso;
@@ -35,6 +36,9 @@ class DefaultController extends Controller
             $change=0;
         } elseif ($valorMatricula < $value) {
             $change = $this->change($value - $valorMatricula);
+        }else{
+            $this->addFlash("error-taxa", "El valor a pagar debe ser mayor que la taxa de inscripcao");
+            return $this->redirectToRoute('marticula_detalle',array('id'=>$matricula->getId()));
         }
         $matricula->setPaga(true);
         $em->persist($matricula);
@@ -67,6 +71,9 @@ class DefaultController extends Controller
             $change=0;
         } elseif ($mensualidad < $value) {
             $change = $this->change($value - $mensualidad);
+        }else{
+            $this->addFlash("error-mensual", "El valor a pagar debe ser mayor que el valor de la menusalidad");
+            return $this->redirectToRoute('marticula_detalle',array('id'=>$matricula->getId()));
         }
         $matricula->setMesesPagos($matricula->getMesesPagos()+1);
         $em->persist($matricula);

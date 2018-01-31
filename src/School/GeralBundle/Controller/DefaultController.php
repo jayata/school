@@ -19,7 +19,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-//        return $this->render('@SchoolGeral/Default/index.html.twig');
         if ($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $user = $this->container->get('security.token_storage')->getToken()->getUser();
             if ($user->hasRole('ROLE_SUPER_ADMIN')) {
