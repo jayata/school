@@ -49,6 +49,7 @@ class ImportCursosCommand extends Command
             $csv->setDelimiter(',');
             $records = $csv->getRecords();
 
+            //create courses
             foreach ($records as $key => $row) {
                 $curso = (new Curso())
                     ->setNome($row['course_name'])
@@ -68,6 +69,8 @@ class ImportCursosCommand extends Command
             $this->em->flush(); //Persist objects that did not make up an entire batch
             $this->em->clear();
 
+            //opens a matricula for each course
+            //active but not payed
             $cursos = $this->em->getRepository('SchoolCursoBundle:Curso')->findAll();
             foreach ($cursos as $key => $curso1) {
                 $matricula = (new Matricula())

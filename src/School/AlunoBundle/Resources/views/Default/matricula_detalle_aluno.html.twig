@@ -30,7 +30,7 @@
                         Lembrese que É cobrado 1% por mês não cumprido del curso.
                         <hr>
 
-                        Multa a pagar
+                        Multa a pagar <b>{{ multa }}</b> Reais.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -50,7 +50,7 @@
                     <h5 class="card-title"><b>Curso:</b> {{ matricula.matricula.curso }}</h5>
                     <h6 class="card-title"><b>Ano:</b> {{ matricula.matricula.ano | date("Y") }}</h6>
                     <h6 class="card-title"><b>Periodo:</b> {{ matricula.matricula.curso.periodo }}</h6>
-                    <h6 class="card-title"><b>Duracao:</b> {{ matricula.matricula.curso.mesesDuracao }}</h6>
+                    <h6 class="card-title"><b>Duracao:</b> {{ matricula.matricula.curso.mesesDuracao }} meses</h6>
                     <h6 class="card-title"><b>Cantidade de alunos
                             matriculados:</b> {{ matricula.matricula.alunosMatriculados | length }}</h6>
                     <h6 class="card-title"><b>Descripcion:</b> {{ matricula.matricula.curso.descripcao }}</h6>

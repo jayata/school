@@ -60,12 +60,11 @@ class ImportMatriculasCommand extends Command
             $csv->setDelimiter(';');
             $records = $csv->getRecords();
 
-            foreach ($records as $key => $row) {
-                $aluno = $this->em->getRepository('SchoolAlunoBundle:Aluno')
-                    ->findOneBy([
-                        'idImported' => $row['student_id'],
-                    ]);
+            $batchSize = 25;
+            $currentSize = 0;
+            foreach ($records as $row) {
 
+                //finds the course(matricula)
                 $qb = $this->em->createQueryBuilder();
                 $qb
                     ->select('m', 'c')
@@ -75,18 +74,24 @@ class ImportMatriculasCommand extends Command
                     ->setParameter('id', $row['course_id']);
 
                 $matricula = $qb->getQuery()->getSingleResult();
-
                 if (is_null($matricula)) {
-                    echo "ddfddf";
-                    die();
                     continue;
                 }
 
+                //finds the studnet
+                $aluno = $this->em->getRepository('SchoolAlunoBundle:Aluno')
+                    ->findOneBy([
+                        'idImported' => $row['student_id'],
+                    ]);
+                if (is_null($aluno)) {
+                    continue;
+                }
                 $matriculaAluno = (new MatriculaAluno())
                     ->setAluno($aluno)
                     ->setMatricula($matricula);
                 $this->em->persist($matriculaAluno);
-                if (($key % 25) === 0) {
+                $currentSize++;
+                if (( $currentSize % $batchSize) === 0) {
                     $this->em->flush();
                     $this->em->clear(); // Detaches all objects from Doctrine!
                 }

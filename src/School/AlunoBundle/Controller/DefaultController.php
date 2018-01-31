@@ -46,8 +46,17 @@ class DefaultController extends Controller
      */
     public function matriculaDetalleAction(MatriculaAluno $matriculaAluno)
     {
+        $mesesPagos = $matriculaAluno->getMesesPagos();
+        $totalMeses = $matriculaAluno->getMatricula()->getCurso()->getMesesDuracao();
+        $valorMensual = $matriculaAluno->getMatricula()->getCurso()->getMensualidade();
+
+        $multa = (1*$valorMensual)/100;
+
+        $mesesPorCumplir = $totalMeses - $mesesPagos;
+        $multa=$multa*$mesesPorCumplir;
+
         return $this->render('SchoolAlunoBundle:Default:matricula_detalle_aluno.html.twig',
-            array('matricula' => $matriculaAluno,));
+            array('matricula' => $matriculaAluno,'multa'=>$multa));
     }
 
     /**
