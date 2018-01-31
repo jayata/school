@@ -118,6 +118,8 @@ class DefaultController extends Controller
                 $aluno = $aluno_rep->findOneByName($aluno_nome);
                 if (!is_null($aluno)) {
                     $criteria['aluno'] = $aluno;
+                }else{
+                    $criteria['aluno'] = null;
                 }
             }
             $em = $this->getDoctrine()->getManager();
@@ -145,6 +147,7 @@ class DefaultController extends Controller
                 }
                 $qb->setParameters($criteria);
                 }
+//                var_dump($criteria);
 //                echo $qb->getDQL();die();
                 $matriculas = $qb->getQuery()->getResult();
                 return $this->render('SchoolGeralBundle:Default:search_results.html.twig',

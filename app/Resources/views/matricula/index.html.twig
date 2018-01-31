@@ -11,10 +11,11 @@
                     <div class="row">
                         <form action="{{ path('filter') }}" method="POST" id="filter_form">
                             <div class="form-row">
-                                <div class="col-md-3">
+                                <div class="col-md-5 filter-div">
                                     <label class="inline_label" for="filter_pago">
+                                        <span>Pagamento pendiente</span>
                                         <input type="checkbox" class="form-control" name="filter_pago" id="filter_pago">
-                                        Pagamento pendiente</label>
+                                        </label>
                                 </div>
                                 <div class="col-md-3">
                                     <select name="filter_curso" id="filter_curso" class="custom-select">
