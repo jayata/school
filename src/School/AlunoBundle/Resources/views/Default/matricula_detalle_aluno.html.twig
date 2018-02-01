@@ -6,7 +6,7 @@
             <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="{{ path('dashboard_aluno') }}"><img
-                                    src="{{ asset('svg/arrow-left.svg') }}"> Voltar à lista</a></li>
+                                    src="{{ asset('svg/arrow-left.svg') }}"> Voltar à listagem</a></li>
                     <li class="list-group-item">
                         <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
                                     src="{{ asset('svg/x.svg') }}"> Cancelar a matrícula</a>
@@ -32,9 +32,9 @@
                         <b>Multa </b> {{ multa }} Reais.
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <a href="{{ path('marticula_cancelar', {'id': matricula.id}) }}" type="submit"
-                           class="btn btn-danger">Desmatricular</a>
+                           class="btn btn-danger">Cancelar matrícula</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     </h6>
                 </div>
                 <div class="card-footer text-muted">
-                    <b> Estado da matricula:</b>
+                    <b> Estado da matrícula:</b>
                     {% if matricula.paga %}<span class="badge-success"> Paga. </span>
                     {% else %}
                         Não paga, <a href="#" data-toggle="modal" data-target="#modal_pago">pague aqui <img
@@ -86,9 +86,9 @@
                                 <li class="list-group-item">
                                     {% if loop.index == 1 %}
                                         <a href="#" data-toggle="modal" data-target="#modal_pago_mensualidad">
-                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidade</a>
+                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensalidade</a>
                                     {% else %}
-                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidade
+                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensalidade
                                     {% endif %}
                                 </li>
                             {% endfor %}
@@ -130,7 +130,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="submit" class="btn btn-primary">Pagar</button>
                     </div>
                 </form>
             </div>
@@ -141,7 +141,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar mensalidad</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar mensalidade</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -155,7 +155,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="submit" class="btn btn-primary">Pagar</button>
                     </div>
                 </form>
             </div>

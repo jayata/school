@@ -4,7 +4,7 @@
     <h6><b>Total de cursos:</b> {{ cursos | length }}</h6>
     {% if percentage %}
         <h6>{{ percentage }}% dos cursos têm inscrições abertas agora
-            <small>&nbsp; | &nbsp;<a href="{{ path('matricula_index') }}">Ver matriculas</a></small>
+            <small>&nbsp; | &nbsp;<a href="{{ path('matricula_index') }}">Ver matrículas</a></small>
         </h6>
         <div class="progress" style="height: 35px;">
             <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%;"

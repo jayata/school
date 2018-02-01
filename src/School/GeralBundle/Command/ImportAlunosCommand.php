@@ -103,13 +103,12 @@ class ImportAlunosCommand extends Command
                 $progress->advance();
             }
             unset($cpfs);
-            $this->em->flush(); //Persist objects that did not make up an entire batch
+            $this->em->flush();
             $this->em->clear();
             $progress->finish();
             $io->success('Students imported!');
         } else {
             $io->error("No such a csv file");
         }
-
     }
 }
