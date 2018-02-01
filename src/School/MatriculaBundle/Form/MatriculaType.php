@@ -21,7 +21,8 @@ class MatriculaType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'placeholder' => 'Select a value',
-                'attr' => ['data-provide' => "datepicker", "data-date-format" => "yyyy-mm-dd"]
+                'format' => 'y',
+                'attr' => ['data-provide' => "datepicker", "data-date-format" => "yyyy"]
             ])
             ->add('ativa');
     }

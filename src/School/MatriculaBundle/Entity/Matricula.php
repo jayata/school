@@ -6,11 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use School\CursoBundle\Entity\Curso;
 use School\AlunoBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Matricula
  *
- * @ORM\Table(name="matricula")
+ * @ORM\Table(name="matricula",uniqueConstraints={@ORM\UniqueConstraint(name="IDX_ANO_CURSO", columns={"ano", "curso_id"})})
  * @ORM\Entity(repositoryClass="School\MatriculaBundle\Repository\MatriculaRepository")
+ * @UniqueEntity(fields={"ano", "curso"})
  */
 class Matricula
 {
@@ -36,7 +38,7 @@ class Matricula
     private $ativa;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\School\CursoBundle\Entity\Curso")
+     * @ORM\ManyToOne(targetEntity="\School\CursoBundle\Entity\Curso",)
      * @ORM\JoinColumn(name="curso_id", referencedColumnName="id",nullable=false)
      * @Assert\NotBlank
      */

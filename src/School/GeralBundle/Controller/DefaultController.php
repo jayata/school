@@ -36,11 +36,41 @@ class DefaultController extends Controller
     public function dashboardAdminAction()
     {
         $curso_rep = $this->getDoctrine()->getRepository(Curso::class);
+        $cursos = $curso_rep->findAll();
+        $percentage=null;
+        if (count($cursos) > 0) {
+            $counter = 0;
+            foreach ($cursos as $item) {
+                if (count($item->getMatriculasAbiertas()) > 0) {
+                    $counter++;
+                }
+            }
+            $percentage = ($counter * 100) / count($cursos);
+        }
 
-        $curso = $curso_rep->findAll();
+        $matricula_rep = $this->getDoctrine()->getRepository(Matricula::class);
+        $matriculas = $matricula_rep->findAll();
 
+        $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
+        $alunos = $aluno_rep->findAll();
+
+        $matriculaAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
+        $matriculaAlunos = $matriculaAluno_rep->findAll();
+        $percentagePaga=null;
+
+        if (count($matriculaAlunos) > 0) {
+            $counterMatriculasAlumno = 0;
+            foreach ($matriculaAlunos as $item) {
+                if ($item->getPaga()) {
+                    $counterMatriculasAlumno++;
+                }
+            }
+            $percentagePaga = ($counterMatriculasAlumno * 100) / count($matriculaAlunos);
+        }
+//        echo ($percentagePaga);die();
         return $this->render('SchoolAlunoBundle:Default:dashboard_admin.html.twig',
-            array('curso' => $curso,));
+            array('cursos' => $cursos, 'matriculas' => $matriculas, 'matriculasAlunos' => $matriculaAlunos, 'alunos' => $alunos,
+                'percentage' => $percentage, 'percentagePaga' => $percentagePaga));
     }
 
     /**
@@ -117,7 +147,7 @@ class DefaultController extends Controller
                 $aluno = $aluno_rep->findOneByName($aluno_nome);
                 if (!is_null($aluno)) {
                     $criteria['aluno'] = $aluno;
-                }else{
+                } else {
                     $criteria['aluno'] = null;
                 }
             }
@@ -141,19 +171,63 @@ class DefaultController extends Controller
                         $qb->andWhere('ma.paga = :paga');
                     }
                     if ($field == 'aluno') {
-                            $qb ->andWhere('ma.aluno = :aluno');
+                        $qb->andWhere('ma.aluno = :aluno');
                     }
                 }
                 $qb->setParameters($criteria);
-                }
+            }
 //                var_dump($criteria);
 //                echo $qb->getDQL();die();
-                $matriculas = $qb->getQuery()->getResult();
-                return $this->render('SchoolGeralBundle:Default:search_results.html.twig',
-                    array('matriculas' => $matriculas, 'total' => $total, 'cursos' => $cursos));
+            $matriculas = $qb->getQuery()->getResult();
+            return $this->render('SchoolGeralBundle:Default:search_results.html.twig',
+                array('matriculas' => $matriculas, 'total' => $total, 'cursos' => $cursos));
 
-            }
-            return $this->redirectToRoute('dashboard_admin');
         }
+        return $this->redirectToRoute('dashboard_admin');
+    }
 
+    /**
+     * Admin user registrationn.
+     *
+     * @Route("/admin/register/form", name="admin_user_registration_form")
+     * @Method("GET")
+     */
+    public function adminRegisterFormAction()
+    {
+        return $this->render('SchoolAlunoBundle:Default:register_user_admin.html.twig');
+    }
+
+    /**
+     * Admin user registrationn.
+     *
+     * @Route("/admin/register", name="admin_user_registration")
+     * @Method({"GET", "POST"})
+     */
+    public function adminRegisterAction(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+            $pattern = '/^(\d{3}\.\d{3}\.\d{3}\-\d{2})$/';
+            $success = preg_match($pattern, $request->request->get('cpf'), $match);
+            if ($success) {
+                $em = $this->getDoctrine()->getManager();
+                $aluno = (new Aluno())
+                    ->setName($request->request->get('name'))
+                    ->setEnabled(true)
+                    ->setPlainPassword($request->request->get('plainPassword'))
+                    ->setUsername($request->request->get('username'))
+                    ->setEmail($request->request->get('email'))
+                    ->setCpf($request->request->get('cpf'))
+                    ->setRg($request->request->get('rg'))
+                    ->setTelefone($request->request->get('telefone'))
+                    ->setDataNascimento(new \DateTime($request->request->get('dataNascimento')));
+                $em->persist($aluno);
+                $em->flush();
+                return $this->redirectToRoute('admin_user_list');
+            } else {
+                $this->addFlash("error-input-cpf", "Entre un CPF valido");
+                return $this->redirectToRoute('admin_user_registration_form');
+            }
+        }
+        return $this->redirectToRoute('admin_user_registration_form');
+    }
 }

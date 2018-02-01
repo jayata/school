@@ -33,3 +33,7 @@
 .filter-div{
     padding-left: 60px!important;
 }
+
+.small-right{
+    float: right;
+}

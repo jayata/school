@@ -1,59 +1,123 @@
 {% extends 'base.html.twig' %}
-{% block title %}{% endblock %}
+{% block title %}Cadastro{% endblock %}
+     {% block stylesheets %}
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+     {% endblock %}
  {% block body %}
      <div class="row">
-     <div class="col-md-4"></div>
-     <div class="col-md-4">
+     <div class="col-md-3"></div>
+     <div class="col-md-6">
 
          <h3> Registre un novo aluno</h3>
          <form action="{{ path('admin_user_registration') }}"  method="POST">
-             <div class="form-group" id="fos_user_registration_form">
-                 <div class="form-group">
-                     <label for="exampleInputEmail1">Nome</label><code class="highlighter-red">*</code>
-                     {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'Enter your name'|trans } }) }}
-                     {{ form_errors(form.name) }}
+                 <div class="form-group row">
+                    <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
+                     <input  name="name" required="required" maxlength="250" class="form-control col-md-9" placeholder="Enter a name" type="text">
+                        {% for message in app.flashes('error-input-name') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                 </div>
+                 <div class="form-group row">
+                     <label for="exampleInputEmail1" class="col-md-3">CPF<code class="highlighter-red">*</code></label>
+                     <input name="cpf" required="required" maxlength="250" pattern="(\d{3}\.\d{3}\.\d{3}\-\d{2})" class="form-control col-md-9" placeholder="Enter a valid cpf" type="text">
+                       {% for message in app.flashes('error-input-cpf') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                 </div>
+                 <div class="form-group row">
+                     <label for="exampleInputEmail1" class="col-md-3">RG<code class="highlighter-red">*</code></label>
+                     <input name="rg" required="required" maxlength="250" class="form-control col-md-9" placeholder="Enter a valid rg" type="text">
+                {% for message in app.flashes('error-input-rg') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                 </div>
+                 <div class="form-group row">
+                    <label for="exampleInputEmail1" class="col-md-3">Telefone<code class="highlighter-red">*</code></label>
+                     <input name="telefone" required="required" maxlength="250" class="form-control col-md-9" placeholder="Enter a valid telefone" type="text">
+                {% for message in app.flashes('error-input-telefone') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                 </div>
+                 <div class="form-group row">
+                     <label for="exampleInputEmail1" class="col-md-3">Data de nascimento<code class="highlighter-red">*</code></label>
+                     <input name="dataNascimento" required="required" data-provide="datepicker" data-date-format="yyyy-mm-dd"
+                      class="form-control col-md-9" value="{{ "now"|date("Y-m-d")  }}" type="text">
+                {% for message in app.flashes('error-input-dataNascimento') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                 </div>
+                 <div class="form-group row">
+                     <label for="exampleInputEmail1" class="col-md-3">Username<code class="highlighter-red">*</code></label>
+                     <input name="username" required="required" class="form-control col-md-9" type="text" placeholder="Enter an username">
+                {% for message in app.flashes('error-input-username') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
                  </div>
 
-                 <div class="form-group">
-                     <label for="exampleInputEmail1">CPF</label><code class="highlighter-red">*</code>
-                     {{ form_widget(form.cpf, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a valid cpf'|trans } }) }}
-                     {{ form_errors(form.cpf) }}
-                 </div>
-                 <div class="form-group">
-                     <label for="exampleInputEmail1">Telefone</label><code class="highlighter-red">*</code>
-                     {{ form_widget(form.telefone, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a valid telefone'|trans } }) }}
-                     {{ form_errors(form.telefone) }}
-                 </div>
-                 <div class="form-group">
-                     <label for="exampleInputEmail1">Usuario</label><code class="highlighter-red">*</code>
-                     {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a Username'|trans } }) }}
-                     {{ form_errors(form.username) }}
-                 </div>
-                 <div class="form-group">
-                     <label for="exampleInputEmail1">Email</label><code class="highlighter-red">*</code>
-                     {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Enter an Email'|trans } }) }}
-                     {{ form_errors(form.email) }}
+                 <div class="form-group row">
+                      <label for="exampleInputEmail1" class="col-md-3">Email<code class="highlighter-red">*</code></label>
+                     <input name="email" required="required" class="form-control col-md-9" placeholder="Enter an Email" type="email">
                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
                      </small>
+                     {% for message in app.flashes('error-input-email') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
                  </div>
-                 <div class="form-group">
-                     <label for="exampleInputEmail1">Password</label><code class="highlighter-red">*</code>
-                     {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'Enter a Password'|trans } }) }}
-                     {{ form_errors(form.plainPassword.first) }}
+                 <div class="form-group row">
+                     <label for="exampleInputEmail1" class="col-md-3">Password<code class="highlighter-red">*</code></label>
+                     <input name="plainPassword" required="required" class="form-control col-md-9" placeholder="Enter a Password" type="password">
+                {% for message in app.flashes('error-input-plainPassword') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
                  </div>
-                 <div class="form-group">
-                     <label for="exampleInputEmail1">Repeat password</label><code class="highlighter-red">*</code>
-                     {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'Repeat the Password'|trans } }) }}
-                     {{ form_errors(form.plainPassword.second) }}
+                 <div>
+                     <input class="btn btn-lg btn-primary btn-block" type="submit" value="Cadastrar">
                  </div>
-                 {{ form_rest(form) }}
-
-             </div>
-             <div>
-                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="Cadastrarse">
-             </div>
          </form>
 
      </div>
-     <div class="col-md-4"></div>
+     <div class="col-md-3"></div>
  {% endblock %}
+         {% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+{% endblock %}

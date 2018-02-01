@@ -46,7 +46,7 @@ class MatriculaController extends Controller
     public function newAction(Request $request)
     {
         $matricula = new Matricula();
-        $form = $this->createForm('School\MatriculaBundle\Form\MatriculaType', $matricula/* array('admin' => $admin,)*/);
+        $form = $this->createForm('School\MatriculaBundle\Form\MatriculaType', $matricula);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
