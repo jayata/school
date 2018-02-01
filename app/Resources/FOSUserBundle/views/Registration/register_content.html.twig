@@ -73,7 +73,7 @@
                      </div>
                      <div class="form-group row">
                          <label for="exampleInputEmail1" class="col-md-3">Usuário<code class="highlighter-red">*</code></label>
-                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Digite um nome de usário'|trans } }) }}
+                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Digite um nome de usuário'|trans } }) }}
                          {% if form_errors(form.username)  %}
                              <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                  {{ form_errors(form.username) }}

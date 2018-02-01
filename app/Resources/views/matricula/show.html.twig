@@ -6,7 +6,7 @@
         <div class="card " style="width: 18rem;">
             <div class="card-header">
                 <a href="{{ path('matricula_index') }}"><img
-                            src="{{ asset('svg/arrow-left.svg') }}"> Volta à listagem</a>
+                            src="{{ asset('svg/arrow-left.svg') }}"> Voltar à listagem</a>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="{{ path('matricula_edit', { 'id': matricula.id }) }}"><img
@@ -70,7 +70,7 @@
     <div class="col-md-6">
         <div class="card text-left">
             <div class="card-header">
-                <h3>Detalhes da matricula {{ matricula.id }}</h3>
+                <h3>Detalhes da matrícula {{ matricula.id }}</h3>
             </div>
             <div class="card-body">
                 <h5 class="card-title"><b>Curso:</b> {{ matricula.curso }}</h5>

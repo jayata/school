@@ -8,7 +8,7 @@
                      <li class="list-group-item">
                          <a href="{% if is_granted('ROLE_SUPER_ADMIN') %}
                             {{ path('dashboard_admin') }} {% else %} {{ path('dashboard_aluno') }} {% endif %}">
-                             <img src="{{ asset('svg/arrow-left.svg') }}"> Volta à dashboard</a></li>
+                             <img src="{{ asset('svg/arrow-left.svg') }}"> Voltar à dashboard</a></li>
                      <li class="list-group-item"><a href="{{ path('fos_user_profile_edit',{'id':user.id}) }}"><img
                                      src="{{ asset('svg/pencil.svg') }}"> Editar</a></li>
                  </ul>
@@ -18,7 +18,7 @@
          <div class="col-md-6">
              <div class="card text-left">
                  <div class="card-header">
-                     <h3>Detalhes do usuário #{{ user.id }}</h3>
+                     <h3>Dados do usuário #{{ user.id }}</h3>
                  </div>
                  <div class="card-body">
                      <h5 class="card-title"><b>Nome:</b> {{ user.name }}</h5>

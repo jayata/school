@@ -6,7 +6,7 @@
             <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="{% if is_granted('ROLE_SUPER_ADMIN') %}{{ path('curso_index') }}{% else %}{{ path('dashboard_aluno') }} {% endif %}"> <img
-                                    src="{{ asset('svg/arrow-left.svg') }}"> Volta à listagem</a></li>
+                                    src="{{ asset('svg/arrow-left.svg') }}"> Voltar à listagem</a></li>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="list-group-item"><a href="{{ path('curso_edit', { 'id': curso.id }) }}"><img
                                     src="{{ asset('svg/pencil.svg') }}"> Editar</a></li>
