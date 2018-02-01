@@ -1,23 +1,23 @@
 {% extends 'base.html.twig' %}
-{% block title %}Detalle de matricula{% endblock %}
+{% block title %}Detalhe da matrícula{% endblock %}
 {% block body %}
 <div class="row">
     <div class="col-md-3">
         <div class="card " style="width: 18rem;">
             <div class="card-header">
                 <a href="{{ path('matricula_index') }}"><img
-                            src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a>
+                            src="{{ asset('svg/arrow-left.svg') }}"> Volta à listagem</a>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="{{ path('matricula_edit', { 'id': matricula.id }) }}"><img
-                                src="{{ asset('svg/pencil.svg') }}"> Edit</a></li>
+                                src="{{ asset('svg/pencil.svg') }}"> Editar</a></li>
                 <li class="list-group-item"><a {% if matricula.ativa %}
                     href="{{ path('matricular_form',{'id': matricula.id}) }}"{% else %}
                         href="#" data-toggle="modal" data-target="#naoAtiva"{% endif %}><img
                                 src="{{ asset('svg/book.svg') }}"> Matricular aluno neste curso</a></li>
                 <li class="list-group-item">
                     <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
-                                src="{{ asset('svg/trashcan.svg') }}"> Delete</a>
+                                src="{{ asset('svg/trashcan.svg') }}"> Eliminar</a>
                 </li>
             </ul>
         </div>
@@ -28,13 +28,13 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Confirmar accion</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirmar ação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Esta seguro que desea eliminar esta matricula?
+                    Tem certeza de que deseja eliminar?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -51,14 +51,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Informacao</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Informação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Esta matricula esta inactiva.<br>
-                    Activela para matricular alunos.
+                    Esta matrícula está inativa.<br>
+                    Ativar para inscrever alunos.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -70,13 +70,13 @@
     <div class="col-md-6">
         <div class="card text-left">
             <div class="card-header">
-                <h3>Detalles da matricula {{ matricula.id }}</h3>
+                <h3>Detalhes da matricula {{ matricula.id }}</h3>
             </div>
             <div class="card-body">
                 <h5 class="card-title"><b>Curso:</b> {{ matricula.curso }}</h5>
                 <h6 class="card-title"><b>Ano:</b> {{ matricula.ano | date("Y") }}</h6>
-                <h6 class="card-title"><b>Periodo:</b> {{ matricula.curso.periodo }}</h6>
-                <h6 class="card-title"><b>Ativa:</b> {% if matricula.ativa %}Sim{% else %}Nao{% endif %}</h6>
+                <h6 class="card-title"><b>Período:</b> {{ matricula.curso.periodo }}</h6>
+                <h6 class="card-title"><b>Ativa:</b> {% if matricula.ativa %}Sim{% else %}Não{% endif %}</h6>
                 {% if matricula.alunosMatriculados | length > 0 %}
                 <h6 class="card-title"><b>Listagem de alunos:</b></h6>
                     {% for aluno in matriculaAluno %}
@@ -86,16 +86,16 @@
                         </div>
                         {% else %}
                         <div class="alert alert-danger" role="alert" id="aluno-alert">
-                            {{ aluno.aluno.name }} - Nao paga
+                            {{ aluno.aluno.name }} - Não paga
                         </div>
                         {% endif %}
                     {% endfor %}
 
-            {% else %}No hay alunos matriculados aun{% endif %}
+            {% else %}Nenhum aluno matriculado ainda{% endif %}
             </div>
             <div class="card-footer text-muted">
-                <h6 class="card-title"><b>Preco da matricula:</b>  {{ matricula.curso.valorMatricula }}</h6>
-                <h6 class="card-title"><b>Preco da mensualidade :</b>  {{ matricula.curso.mensualidade }}</h6>
+                <h6 class="card-title"><b>Valor da matrícula:</b>  {{ matricula.curso.valorMatricula }}</h6>
+                <h6 class="card-title"><b>Valor da mensalidade :</b>  {{ matricula.curso.mensualidade }}</h6>
             </div>
         </div>
     </div>

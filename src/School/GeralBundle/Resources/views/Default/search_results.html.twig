@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}Resultados de la busqueda{% endblock %}
+{% block title %}Resultados da pesquisa{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-6">
-                    <h3>Listagem de Matriculas </h3></div>
+                    <h3>Resultados da pesquisa </h3></div>
                 <div class="col-md-6">
                     <div class="row">
                         <form action="{{ path('filter') }}" method="POST" id="filter_form">
@@ -43,7 +43,7 @@
                     <th scope="col">Ativa</th>
                     <th scope="col">Paga</th>
                     <th scope="col">Ano</th>
-                    <th scope="col">Periodo</th>
+                    <th scope="col">Período</th>
                     <th scope="col">Curso</th>
                     <th scope="col">Aluno</th>
                     <th scope="col"></th>
@@ -56,12 +56,12 @@
                         <td>{% if matricula.matricula.ativa %}
                                 <span class="badge badge-success">Sim</span>
                             {% else %}
-                                <span class="badge badge-secondary">Nao</span>
+                                <span class="badge badge-secondary">Não</span>
                             {% endif %}</td>
                         <td>{% if matricula.paga %}
                                 <span class="badge badge-success">Sim</span>
                             {% else %}
-                                <span class="badge badge-danger">Nao</span>
+                                <span class="badge badge-danger">Não</span>
                             {% endif %}
                         </td>
                         <td>{{ matricula.matricula.ano | date("Y") }}</td>
@@ -77,12 +77,13 @@
                         </td>
                     </tr>
                 {% else %}
-                    No hay resultados
+                    <div class="alert alert-secondary" role="alert">
+                        Nenhum resultado encontrado
+                    </div>
                 {% endfor %}
                 </tbody>
             </table>
-            <a href="{{ path('matricula_new') }}"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Abrir nueva
-                matricula</a>
+            <a href="{{ path('matricular_form',{'id':-1}) }}"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Matricular novo aluno</a>
         </div>
         <div class="col-md-1"></div>
     </div>
@@ -91,13 +92,13 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Informacion</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Informação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Debe seleccionar al menos un critero para filtrar
+                    Você deve selecionar pelo menos um critério para filtrar
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>

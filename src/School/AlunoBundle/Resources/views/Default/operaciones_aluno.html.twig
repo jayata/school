@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Detalles de las operaciones{% endblock %}
+{% block title %}Detalhes de operação{% endblock %}
 {% block body %}
 <div class="row">
     <div class="col-md-3">
@@ -14,16 +14,16 @@
     <div class="col-md-6">
         <div class="card text-left">
             <div class="card-header">
-                <h3>Detalles da opreacao</h3>
+                <h3>Detalhes de operação</h3>
             </div>
             <div class="card-body">
-                <h5 class="card-title"><b>Precio:</b> {{ debe }}</h5>
-                <h6 class="card-title"><b>Pago:</b> {{ pago }}</h6>
+                <h5 class="card-title"><b>Preço:</b> {{ debe }}</h5>
+                <h6 class="card-title"><b>Você pagou:</b> {{ pago }}</h6>
                 {% if change == 0 %}
                     <h6 class="card-title"><b>Troco:</b> {{ change }}</h6>
                 {% else %}
-                    <h6><b>Total a devolver: </b>{{ troco  }}</h6>
-                    <h6 class="card-title"><b>Temos calculado para voce o melhor troco:</b></h6>
+                    <h6><b>Total para retornar: </b>{{ troco  }}</h6>
+                    <h6 class="card-title"><b>Temos calculado para você o melhor troco:</b></h6>
                     {% set values = [100, 50, 10, 5, 1, 0.5, 0.1, 0.05, 0.01] %}
 
                     {% for ch in change %}
@@ -35,7 +35,7 @@
             </div>
             <div class="card-footer text-muted">
                 <b>Data:</b> {{ "now"|date("m/d/Y") }} |
-                <small><a href="/">Print recipe</a></small>
+                <small><a href="#">Imprimir nota</a></small>
             </div>
         </div>
     </div>

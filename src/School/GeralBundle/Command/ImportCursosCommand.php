@@ -17,13 +17,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class ImportCursosCommand extends Command
 {
     public function __construct(EntityManagerInterface $em)
     {
         parent::__construct();
-
         $this->em = $em;
     }
 
@@ -47,8 +47,11 @@ class ImportCursosCommand extends Command
             $csv = Reader::createFromPath($file);
             $csv->setHeaderOffset(0);
             $csv->setDelimiter(',');
+            $count = $csv->count();
             $records = $csv->getRecords();
 
+            $progress = new ProgressBar($output, $count);
+            $progress->start();
             //create courses
             foreach ($records as $key => $row) {
                 $curso = (new Curso())
@@ -60,15 +63,15 @@ class ImportCursosCommand extends Command
                     ->setIdImported($row['id'])
                     ->setDescripcao("Imported via command");
                 $this->em->persist($curso);
-                if (($key % 25) === 0) {
+                if (($key % 15) === 0) {
                     $this->em->flush();
                     $this->em->clear(); // Detaches all objects from Doctrine!
                 }
+                $progress->advance();
             }
 
             $this->em->flush(); //Persist objects that did not make up an entire batch
             $this->em->clear();
-
             //opens a matricula for each course
             //active but not payed
             $cursos = $this->em->getRepository('SchoolCursoBundle:Curso')->findAll();
@@ -84,6 +87,7 @@ class ImportCursosCommand extends Command
             }
             $this->em->flush(); //Persist objects that did not make up an entire batch
             $this->em->clear();
+            $progress->finish();
             $io->success('Cursos imported!');
         }else{
             $io->error("No such a csv file");

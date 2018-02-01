@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block title %}Edit curso{% endblock %}
+{% block title %}Editar curso{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
 
-            <a href="{{ path('curso_index') }}"><img src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a>
+            <a href="{{ path('curso_index') }}"><img src="{{ asset('svg/arrow-left.svg') }}"> Volta à listagem</a>
             <h1>Curso edit</h1>
             <form action="{{ path('curso_edit',{ 'id': curso.id}) }}" method="POST">
                 {{ form_row(edit_form._token) }}
                     <div class="form-group row">
                         <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
-                        {{ form_widget(edit_form.nome, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the name of the course'|trans } }) }}
+                        {{ form_widget(edit_form.nome, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Digite o nome do curso'|trans } }) }}
                         {% if form_errors(edit_form.nome)  %}
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 {{ form_errors(edit_form.nome)}}
@@ -22,8 +22,8 @@
                         {% endif %}
                     </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Mensualidade<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.mensualidade, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay monthly'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Mensalidade<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.mensualidade, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Digite o valor da mensalidade'|trans } }) }}
                     {% if form_errors(edit_form.mensualidade)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(edit_form.mensualidade) }}
@@ -34,8 +34,8 @@
                     {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Valor da matricula<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.valorMatricula, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Valor da matrícula<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.valorMatricula, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Digite o valor da taxa de inscrição'|trans } }) }}
                     {% if form_errors(edit_form.valorMatricula)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(edit_form.valorMatricula) }}
@@ -46,8 +46,8 @@
                     {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Periodo<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.periodo, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Período<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.periodo, { 'attr': {'class': 'form-control col-md-9', 'placeholder': ''|trans } }) }}
                     {% if form_errors(edit_form.periodo)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(edit_form.periodo) }}
@@ -58,8 +58,8 @@
                     {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Duracao (meses)<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.mesesDuracao, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'How many months does this course last?'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Duração (meses)<code class="highlighter-red">*</code></label>
+                        {{ form_widget(edit_form.mesesDuracao, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Quantos meses dura este curso?'|trans } }) }}
                     {% if form_errors(edit_form.mesesDuracao)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(edit_form.mesesDuracao) }}
@@ -70,8 +70,8 @@
                     {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Descripcao<code class="highlighter-red">*</code></label>
-                    {{ form_widget(edit_form.descripcao, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the descripcao of the course'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Descrição<code class="highlighter-red">*</code></label>
+                    {{ form_widget(edit_form.descripcao, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Digite uma descrição'|trans } }) }}
                     {% if form_errors(edit_form.descripcao)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(edit_form.descripcao) }}

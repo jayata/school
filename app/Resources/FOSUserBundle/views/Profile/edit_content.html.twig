@@ -3,17 +3,17 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <h3> Editar usuario</h3>
+            <h3> Editar usuário</h3>
             <form action="{{ path('fos_user_profile_edit') }}" method="POST">
                 {{ form_row(form._token) }}
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.name, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter your name'|trans } }) }}
+                    {{ form_widget(form.name, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Troque seu nome'|trans } }) }}
                     {{ form_errors(form.name) }}
                 </div>
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">CPF<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.cpf, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid CPF'|trans } }) }}
+                    {{ form_widget(form.cpf, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Troque seu CPF'|trans } }) }}
                     {% if form_errors(form.cpf)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.cpf) }}
@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">RG<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.rg, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid RG'|trans } }) }}
+                    {{ form_widget(form.rg, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Troque seu RG'|trans } }) }}
                     {% if form_errors(form.rg) %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.rg) }}
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Telefone<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.telefone, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a valid telefone'|trans } }) }}
+                    {{ form_widget(form.telefone, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Troque seu telefone'|trans } }) }}
                     {% if form_errors(form.telefone) %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.telefone) }}
@@ -60,8 +60,8 @@
                     {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Usuario<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter a Username'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Usuário<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Troque seu nome de usuário'|trans } }) }}
                     {% if form_errors(form.username)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.username) }}
@@ -72,9 +72,9 @@
                     {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Email<code class="highlighter-red">*</code></label>
+                    <label for="exampleInputEmail1" class="col-md-3">E-mail<code class="highlighter-red">*</code></label>
                     {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter an Email'|trans } }) }}
-                    <small id="emailHelp" class="form-text text-muted hidden-sm hidden-xs">We'll never share your email with anyone
+                    <small id="emailHelp" class="form-text text-muted hidden-sm hidden-xs">Nós nunca compartilharemos seu email com ninguém.
                         else.
                     </small>
                     {% if form_errors(form.email)  %}
@@ -87,8 +87,8 @@
                     {% endif %}
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Current Password<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.current_password, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the current Password'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Senha atual<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.current_password, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Senha sua senha atual'|trans } }) }}
                     {% if form_errors(form.current_password) %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.current_password) }}

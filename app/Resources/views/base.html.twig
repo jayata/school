@@ -30,14 +30,14 @@
                         <div class="btn-group">
                             <a class="btn btn-secondary btn-sm" type="button" style="color: white"
                                href="{{ path('admin_user_list') }}">
-                                Gerenciar Usuarios
+                                Gerenciar usuários
                             </a>
                             <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Usuarios</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ path('admin_user_registration_form') }}">Adicionar usuario</a>
+                                <a class="dropdown-item" href="{{ path('admin_user_registration_form') }}">Adicionar usuário</a>
                                 <a class="dropdown-item" href="{{ path('admin_user_list') }}">Listagem</a>
                             </div>
                         </div>
@@ -62,14 +62,14 @@
                         <div class="btn-group">
                             <a class="btn btn-secondary btn-sm" type="button" style="color: white"
                                href="{{ path('matricula_index') }}">
-                                Matriculas
+                                Matrículas
                             </a>
                             <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Matriculas</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ path('matricula_new') }}">Abrir nueva matricula</a>
+                                <a class="dropdown-item" href="{{ path('matricula_new') }}">Abrir nova matrícula</a>
                                 <a class="dropdown-item" href="{{ path('matricula_index') }}">Listagem</a>
                                 <a class="dropdown-item" href="{{ path('matricular_form',{'id': -1}) }}">Matricular
                                     aluno</a>
@@ -83,13 +83,13 @@
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Logged as {{ app.user }}
+                            Registrado como {{ app.user }}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}"><img
-                                        src="{{ asset('svg/person.svg') }}"> Profile</a>
+                                        src="{{ asset('svg/person.svg') }}"> Dados do usário</a>
                             <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><img
-                                        src="{{ asset('svg/sign-out.svg') }}"> Logout</a>
+                                        src="{{ asset('svg/sign-out.svg') }}"> Sair</a>
                         </div>
                     </div>
                 </li>

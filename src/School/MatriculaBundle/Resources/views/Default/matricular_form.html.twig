@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Matricualr aluno{% endblock %}
+{% block title %}Matricular aluno{% endblock %}
      {% block stylesheets %}
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
      {% endblock %}
@@ -8,14 +8,14 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <a href="{{ path('curso_index') }}">
-                <img src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a>
+                <img src="{{ asset('svg/arrow-left.svg') }}">Volta à listagem</a>
             <h3>Matricular aluno</h3>
             <form action="{{ path('matricular_admin_action') }}" method="POST" id="form_matricula_aluno">
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Aluno<code class="highlighter-red">*</code></label>
                     <div class="col-sm-9">
                         <select class="custom-select mr-sm-2" id="matricula_aluno" name="aluno" required>
-                            <option value="">Choose...</option>
+                            <option value="">Escolher...</option>
                             {% for aluno in alunos %}
                                 {% if not aluno.hasRole("ROLE_SUPER_ADMIN") %}
                                     <option value="{{ aluno.id }}">{{ aluno.name }}</option>
@@ -28,7 +28,7 @@
                     <label for="exampleInputEmail1" class="col-md-3">Curso<code class="highlighter-red">*</code></label>
                     <div class="col-md-9">
                         <select class="custom-select mr-sm-2" id="matricula_curso" name="matricula_curso" required>
-                            <option value="">Choose...</option>
+                            <option value="">Escolher...</option>
                             {% for matricula in matriculas%}
                                 <option value="{{ matricula.curso.id }}">{{ matricula.curso }}</option>
                             {% endfor %}
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Periodo<code class="highlighter-red">*</code></label>
+                    <label for="exampleInputEmail1" class="col-md-3">Período<code class="highlighter-red">*</code></label>
                     <div class="col-md-9">
                         <select class="custom-select mr-sm-2" id="periodo" name="periodo">
                             <option value="matutino">Matutino</option>
@@ -69,16 +69,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Informacao</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Informação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-info" role="alert">
-                        Este alumno ya se esta matriculado en este curso, en el mismo ano y período.
-                        <hr>
-                        Por favor erevise si es el alumno que desea matricular o el curso.
+                        Este aluno já está matriculado neste curso, no mesmo ano e período.
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -91,16 +89,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Informacao</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Informação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-info" role="alert">
-                        Este curso no tiene matricula abierta para este ano o periodo.
+                        Este curso não tem inscrição aberta para este ano ou período.
                         <hr>
-                        Por favor revise que exista una matricula abierta que coincida con sus deseos.
+                        Verifique se há uma inscrição aberta que corresponda às suas desejos.
                     </div>
                 </div>
                 <div class="modal-footer">

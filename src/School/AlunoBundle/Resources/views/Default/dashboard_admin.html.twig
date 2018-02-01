@@ -3,7 +3,7 @@
 {% block body %}
     <h6><b>Total de cursos:</b> {{ cursos | length }}</h6>
     {% if percentage %}
-        <h6>{{ percentage }}% dos cursos tem matriculas abertas agora
+        <h6>{{ percentage }}% dos cursos têm inscrições abertas agora
             <small>&nbsp; | &nbsp;<a href="{{ path('matricula_index') }}">Ver matriculas</a></small>
         </h6>
         <div class="progress" style="height: 35px;">
@@ -13,13 +13,13 @@
             </div>
         </div>
     {% else %}
-        <h6><a href="{{ path('curso_new') }}"><img src="{{ asset('svg/plus.svg') }}">Crear curso</a></h6>
+        <h6><a href="{{ path('curso_new') }}"><img src="{{ asset('svg/plus.svg') }}">Criar curso</a></h6>
     {% endif %}
     <br>
     <hr>
-    <h6><b>Total de matriculas feitas:</b> {{ matriculasAlunos | length }}</h6>
+    <h6><b>Total de inscrições feitas:</b> {{ matriculasAlunos | length }}</h6>
     {% if percentagePaga or percentagePaga== 0 %}
-        <h6>{{ percentagePaga }}% das matriculas estam pagas agora </h6>
+        <h6>{{ percentagePaga }}% das inscrições estão pagas agora </h6>
         <div class="progress" style="height: 35px;">
             <div class="progress-bar" role="progressbar" style="width: {{ percentagePaga }}%;"
                  aria-valuenow="{{ percentagePaga }}"
@@ -74,7 +74,7 @@
         </div>
         <div class="col-md-3 mx-auto">
             <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-header">Gerenciar matriculas</div>
+                <div class="card-header">Gerenciar matrículas</div>
                 <div class="card-body text-info">
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -89,7 +89,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <a href="{{ path('matricula_new') }}"><img src="{{ asset('svg/plus.svg') }}">
-                                Abrir nova matricula</a>
+                                Abrir nova matrícula</a>
                             <span class="badge badge-primary badge-pill"></span>
                         </li>
                     </ul>

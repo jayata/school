@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
-{% block title %}Detalle de curso{% endblock %}
+{% block title %}Detalhe de curso{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-3">
             <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="{% if is_granted('ROLE_SUPER_ADMIN') %}{{ path('curso_index') }}{% else %}{{ path('dashboard_aluno') }} {% endif %}"> <img
-                                    src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a></li>
+                                    src="{{ asset('svg/arrow-left.svg') }}"> Volta à listagem</a></li>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="list-group-item"><a href="{{ path('curso_edit', { 'id': curso.id }) }}"><img
-                                    src="{{ asset('svg/pencil.svg') }}"> Edit</a></li>
+                                    src="{{ asset('svg/pencil.svg') }}"> Editar</a></li>
                     <li class="list-group-item">
                         <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
-                                    src="{{ asset('svg/trashcan.svg') }}"> Delete</a>
+                                    src="{{ asset('svg/trashcan.svg') }}"> Eliminar</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -25,16 +25,16 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Confirmar accion</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Confirmar ação</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         {% if curso.matriculasAbiertas | length > 0 %}
-                            Esta curso posee actualmente una matricula abierta.
+                            Este curso atualmente possui inscrição aberta.
                         {% endif %}
-                        Esta seguro que desea eliminar este curso?
+                        Tem certeza de que deseja excluir este curso?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -49,18 +49,18 @@
         <div class="col-md-6">
             <div class="card text-left">
                 <div class="card-header">
-                    <h3>Detalles do curso {{ curso.id }}</h3>
+                    <h3>Detalhes do curso #{{ curso.id }}</h3>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><b>Nome:</b> {{ curso.nome }}</h5>
-                    <h6 class="card-title"><b>Duracao:</b> {{ curso.mesesDuracao }}</h6>
-                    <h6 class="card-title"><b>Periodo:</b> {{ curso.periodo }}</h6>
-                    <h6 class="card-title"><b>Mensualidade:</b> {{ curso.mensualidade }}</h6>
-                    <h6 class="card-title"><b>Descripcao:</b> <p class="card-text">{{ curso.descripcao }}</p></h6>
+                    <h6 class="card-title"><b>Duração:</b> {{ curso.mesesDuracao }}</h6>
+                    <h6 class="card-title"><b>Período:</b> {{ curso.periodo }}</h6>
+                    <h6 class="card-title"><b>Mensalidade:</b> {{ curso.mensualidade }}</h6>
+                    <h6 class="card-title"><b>Descrição:</b> <p class="card-text">{{ curso.descripcao }}</p></h6>
 
                 </div>
                 <div class="card-footer text-muted">
-                    Preco da matricula: {{ curso.valorMatricula }}
+                    Valor da matrícula: {{ curso.valorMatricula }}
                 </div>
             </div>
         </div>

@@ -5,13 +5,12 @@
          <div class="col-md-3">
              <div class="card" style="width: 18rem;">
                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item"><a href="{% if is_granted('ROLE_SUPER_ADMIN') %} {{ path('dashboard_admin') }} {% else %} {{ path('dashboard_aluno') }} {% endif %}"><img
-                                     src="{{ asset('svg/arrow-left.svg') }}"> Back to the dashboard</a></li>
+                     <li class="list-group-item">
+                         <a href="{% if is_granted('ROLE_SUPER_ADMIN') %}
+                            {{ path('dashboard_admin') }} {% else %} {{ path('dashboard_aluno') }} {% endif %}">
+                             <img src="{{ asset('svg/arrow-left.svg') }}"> Volta à dashboard</a></li>
                      <li class="list-group-item"><a href="{{ path('fos_user_profile_edit',{'id':user.id}) }}"><img
-                                     src="{{ asset('svg/pencil.svg') }}"> Edit</a></li>
-                     {#<li class="list-group-item">#}
-
-                     {#</li>#}
+                                     src="{{ asset('svg/pencil.svg') }}"> Editar</a></li>
                  </ul>
              </div>
          </div>
@@ -19,17 +18,17 @@
          <div class="col-md-6">
              <div class="card text-left">
                  <div class="card-header">
-                     <h3>Detalles do usuario {{ user.id }}</h3>
+                     <h3>Detalhes do usuário #{{ user.id }}</h3>
                  </div>
                  <div class="card-body">
                      <h5 class="card-title"><b>Nome:</b> {{ user.name }}</h5>
-                     <h6 class="card-title"><b>User name:</b> {{ user.username }}</h6>
-                     <h6 class="card-title"><b>User email:</b> {{ user.email }}</h6>
+                     <h6 class="card-title"><b>Nome de usário:</b> {{ user.username }}</h6>
+                     <h6 class="card-title"><b>E-mail:</b> {{ user.email }}</h6>
                      <h6 class="card-title"><b>CPF:</b> {{ user.cpf }}</h6>
                      <h6 class="card-title"><b>RG:</b> {{ user.rg }}</h6>
                      <h6 class="card-title"><b>Telefone:</b> {{ user.telefone }}</h6>
                      <h6 class="card-title"><b>Data de nascimento:</b> {{ user.dataNascimento |date("Y-m-d")}}</h6>
-                     <h6 class="card-title"><b>Last login:</b> {{ user.lastLogin |date("F jS \\a\\t g:ia")}}</h6>
+                     <h6 class="card-title"><b>Último acesso:</b> {{ user.lastLogin |date("F jS \\a\\t g:ia")}}</h6>
                  </div>
                  <div class="card-footer text-muted">
                      <h6 class="card-title">

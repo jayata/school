@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %}Detalles de la matricula{% endblock %}
+{% block title %}Detalhes de la matrícula{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-3">
             <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="{{ path('dashboard_aluno') }}"><img
-                                    src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a></li>
+                                    src="{{ asset('svg/arrow-left.svg') }}"> Voltar à lista</a></li>
                     <li class="list-group-item">
                         <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
-                                    src="{{ asset('svg/x.svg') }}"> Desmatricular</a>
+                                    src="{{ asset('svg/x.svg') }}"> Cancelar a matrícula</a>
                     </li>
                 </ul>
             </div>
@@ -20,17 +20,16 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Confirmar accion</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Confirmar ação</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        Esta seguro que desea desmatricular?
-                        Lembrese que É cobrado 1% por mês não cumprido del curso.
+                        Está seguro que deseja cancelar a matrícula?
+                        Lembre se que é cobrado 1% por mês não cumprido del curso.
                         <hr>
-
-                        Multa a pagar <b>{{ multa }}</b> Reais.
+                        <b>Multa </b> {{ multa }} Reais.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -44,26 +43,25 @@
         <div class="col-md-6">
             <div class="card text-left">
                 <div class="card-header">
-                    <h3>Detalles da matricula</h3>
+                    <h3>Detalhes da matrícula</h3>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><b>Curso:</b> {{ matricula.matricula.curso }}</h5>
                     <h6 class="card-title"><b>Ano:</b> {{ matricula.matricula.ano | date("Y") }}</h6>
-                    <h6 class="card-title"><b>Periodo:</b> {{ matricula.matricula.curso.periodo }}</h6>
-                    <h6 class="card-title"><b>Duracao:</b> {{ matricula.matricula.curso.mesesDuracao }} meses</h6>
-                    <h6 class="card-title"><b>Cantidade de alunos
-                            matriculados:</b> {{ matricula.matricula.alunosMatriculados | length }}</h6>
-                    <h6 class="card-title"><b>Descripcion:</b> {{ matricula.matricula.curso.descripcao }}</h6>
+                    <h6 class="card-title"><b>Período:</b> {{ matricula.matricula.curso.periodo }}</h6>
+                    <h6 class="card-title"><b>Duração:</b> {{ matricula.matricula.curso.mesesDuracao }} meses</h6>
+                    <h6 class="card-title"><b>Quantidade de alunos matriculados:</b> {{ matricula.matricula.alunosMatriculados | length }}</h6>
+                    <h6 class="card-title"><b>Descrição:</b> {{ matricula.matricula.curso.descripcao }}</h6>
                     <h6 class="card-title"><b>Mensualidade:</b> {{ matricula.matricula.curso.mensualidade }}</h6>
                     <h6 class="card-title"><b>Meses pagos:</b> {{ matricula.mesesPagos }}</h6>
-                    <h6 class="card-title"><b>Valor da matricula:</b> {{ matricula.matricula.curso.valorMatricula }}
+                    <h6 class="card-title"><b>Preço da matrícula:</b> {{ matricula.matricula.curso.valorMatricula }}
                     </h6>
                 </div>
                 <div class="card-footer text-muted">
-                    <b> Estatus de la matricula:</b>
-                    {% if matricula.paga %}<span class="badge-success"> Pagado. </span>
+                    <b> Estado da matricula:</b>
+                    {% if matricula.paga %}<span class="badge-success"> Paga. </span>
                     {% else %}
-                        Ainda nao pago, <a href="#" data-toggle="modal" data-target="#modal_pago">pagar aqui <img
+                        Não paga, <a href="#" data-toggle="modal" data-target="#modal_pago">pague aqui <img
                                 src="{{ asset('svg/arrow-right.svg') }}"></a>
                     {% endif %}
                     {% for message in app.flashes('error-taxa') %}
@@ -88,17 +86,17 @@
                                 <li class="list-group-item">
                                     {% if loop.index == 1 %}
                                         <a href="#" data-toggle="modal" data-target="#modal_pago_mensualidad">
-                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidad</a>
+                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidade</a>
                                     {% else %}
-                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidad
+                                        <img src="{{ asset('svg/tasklist.svg') }}"> Pagar mensualidade
                                     {% endif %}
                                 </li>
                             {% endfor %}
                         {% else %}
-                            <span class="alert-success">Todas as mensualidades pagas</span>
+                            <span class="alert-success">Todas as mensalidades pagas</span>
                         {% endif %}
                     {% else %}
-                        <span class="alert-info">Page a matricula para acceder a las mensualidades</span>
+                        <span class="alert-info">Pague a matrícula para acceder a las mensalidades</span>
                     {% endif %}
                 </ul>
                 {% for message in app.flashes('error-mensual') %}
@@ -118,14 +116,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar matricula</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar matrícula</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form action="{{ path('marticula_pagar') }}" method="post">
                     <div class="modal-body">
-                        Introduzca la cantidad a pagar
+                        Insira o valor a pagar
                         <input type="number" step="0.01" name="matricula_payment" id="matricula_payment" class="small"
                                placeholder="{{ matricula.matricula.curso.valorMatricula }}"/>
                         <input type="hidden" value="{{ matricula.id }}" name="matricula_id" id="matricula_id"/>
@@ -143,14 +141,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar mensualidad</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pagar mensalidad</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form action="{{ path('marticula_pagar_mensualidad') }}" method="post">
                     <div class="modal-body">
-                        Introduzca la cantidad a pagar
+                        Insira o valor a pagar
                         <input type="number" step="0.01" name="mensualidad_payment" class="small"
                                placeholder="{{ matricula.matricula.curso.mensualidade }}"/>
                         <input type="hidden" value="{{ matricula.id }}" name="matricula_id"/>

@@ -11,21 +11,21 @@
              <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         </div>
          {% endif %}
-         <h2> Bem-vindo ao Sistema de control escolar <span class="badge badge-secondary">Icara</span></h2>
+         <h2> Bem-vindo ao Sistema de controle escolar <span class="badge badge-secondary">Portabilis</span></h2>
          <form action="{{ path("fos_user_security_check") }}" method="post">
              {% if csrf_token %}
                  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
              {% endif %}
 
              <div class="form-group">
-                 <label for="exampleInputEmail1">Usuario</label><code class="highlighter-red">*</code>
+                 <label for="exampleInputEmail1">Usuário</label><code class="highlighter-red">*</code>
                  <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Enter username" name="_username" value="{{ last_username }}" required="required">
+                        placeholder="Digite seu nome de usuário" name="_username" value="{{ last_username }}" required="required">
 
              </div>
              <div class="form-group">
-                 <label for="exampleInputPassword1">Password</label><code class="highlighter-red">*</code>
-                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password"
+                 <label for="exampleInputPassword1">Senha</label><code class="highlighter-red">*</code>
+                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Digite sua senha"
                         id="password" name="_password" required="required">
              </div>
 
@@ -33,7 +33,7 @@
              <button type="submit" class="btn btn-primary">Login</button>
          </form>
          <hr>
-         <h6> Si es nuevo aqui <a class="" href="{{ path('fos_user_registration_register') }}">Registrese</a></h6>
+         <h6> Não é cadastrado? <a class="" href="{{ path('fos_user_registration_register') }}">clique aqui</a></h6>
      </div>
      <div class="col-md-4">
      </div>

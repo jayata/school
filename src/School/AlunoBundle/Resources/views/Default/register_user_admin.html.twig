@@ -12,7 +12,7 @@
          <form action="{{ path('admin_user_registration') }}"  method="POST">
                  <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Nome<code class="highlighter-red">*</code></label>
-                     <input  name="name" required="required" maxlength="250" class="form-control col-md-9" placeholder="Enter a name" type="text">
+                     <input  name="name" required="required" maxlength="250" class="form-control col-md-9" placeholder="Digite um nome" type="text">
                         {% for message in app.flashes('error-input-name') %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ message }}
@@ -24,7 +24,7 @@
                  </div>
                  <div class="form-group row">
                      <label for="exampleInputEmail1" class="col-md-3">CPF<code class="highlighter-red">*</code></label>
-                     <input name="cpf" required="required" maxlength="250" pattern="(\d{3}\.\d{3}\.\d{3}\-\d{2})" class="form-control col-md-9" placeholder="Enter a valid cpf" type="text">
+                     <input name="cpf" required="required" maxlength="250" pattern="(\d{3}\.\d{3}\.\d{3}\-\d{2})" class="form-control col-md-9" placeholder="000.000.000-00" type="text">
                        {% for message in app.flashes('error-input-cpf') %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ message }}
@@ -36,7 +36,7 @@
                  </div>
                  <div class="form-group row">
                      <label for="exampleInputEmail1" class="col-md-3">RG<code class="highlighter-red">*</code></label>
-                     <input name="rg" required="required" maxlength="250" class="form-control col-md-9" placeholder="Enter a valid rg" type="text">
+                     <input name="rg" required="required" maxlength="250" class="form-control col-md-9" placeholder="Digite um RG" type="text">
                 {% for message in app.flashes('error-input-rg') %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ message }}
@@ -48,7 +48,7 @@
                  </div>
                  <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Telefone<code class="highlighter-red">*</code></label>
-                     <input name="telefone" required="required" maxlength="250" class="form-control col-md-9" placeholder="Enter a valid telefone" type="text">
+                     <input name="telefone" required="required" maxlength="250" class="form-control col-md-9" placeholder="Digite um telefone" type="text">
                 {% for message in app.flashes('error-input-telefone') %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ message }}
@@ -73,7 +73,7 @@
                  </div>
                  <div class="form-group row">
                      <label for="exampleInputEmail1" class="col-md-3">Username<code class="highlighter-red">*</code></label>
-                     <input name="username" required="required" class="form-control col-md-9" type="text" placeholder="Enter an username">
+                     <input name="username" required="required" class="form-control col-md-9" type="text" placeholder="Digite um nome de usuário">
                 {% for message in app.flashes('error-input-username') %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ message }}
@@ -85,9 +85,8 @@
                  </div>
 
                  <div class="form-group row">
-                      <label for="exampleInputEmail1" class="col-md-3">Email<code class="highlighter-red">*</code></label>
+                      <label for="exampleInputEmail1" class="col-md-3">E-mail<code class="highlighter-red">*</code></label>
                      <input name="email" required="required" class="form-control col-md-9" placeholder="Enter an Email" type="email">
-                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
                      </small>
                      {% for message in app.flashes('error-input-email') %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -99,8 +98,8 @@
                     {% endfor %}
                  </div>
                  <div class="form-group row">
-                     <label for="exampleInputEmail1" class="col-md-3">Password<code class="highlighter-red">*</code></label>
-                     <input name="plainPassword" required="required" class="form-control col-md-9" placeholder="Enter a Password" type="password">
+                     <label for="exampleInputEmail1" class="col-md-3">Senha<code class="highlighter-red">*</code></label>
+                     <input name="plainPassword" required="required" class="form-control col-md-9" placeholder="Digite uma senha" type="password">
                 {% for message in app.flashes('error-input-plainPassword') %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ message }}

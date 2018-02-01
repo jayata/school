@@ -17,6 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Input\InputArgument;
+use Doctrine\ORM\NoResultException;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class ImportMatriculasCommand extends Command
 {
@@ -43,7 +45,7 @@ class ImportMatriculasCommand extends Command
         $output->writeln('<info>Run first "bin/console school:import:students"</info>');
         $output->writeln('<info>and "bin/console school:import:courses"</info>');
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('Did  you already the imported students and courses? [enter to continue][CTRL+C to quit]', true);
+        $question = new ConfirmationQuestion('Did  you already imported the students and courses? Yes[ENTER] - No[CTRL+C]', true);
 
         if (!$helper->ask($input, $output, $question)) {
             return;
@@ -53,37 +55,42 @@ class ImportMatriculasCommand extends Command
         $io->title("Atempting to upload the registrations");
 
         $file = $input->getArgument('file');
-        if (file_exists($file) && is_file($file) &&  pathinfo($file)['extension'] == 'csv') {
+        if (file_exists($file) && is_file($file) && pathinfo($file)['extension'] == 'csv') {
 
             $csv = Reader::createFromPath($file);
             $csv->setHeaderOffset(0);
             $csv->setDelimiter(';');
+            $count = $csv->count();
             $records = $csv->getRecords();
 
-            $batchSize = 25;
+            $batchSize = 15;
             $currentSize = 0;
+            $progress = new ProgressBar($output, $count);
+            $progress->start();
             foreach ($records as $row) {
 
                 //finds the course(matricula)
-                $qb = $this->em->createQueryBuilder();
-                $qb
-                    ->select('m', 'c')
-                    ->from('School\MatriculaBundle\Entity\Matricula', 'm')
-                    ->leftJoin('m.curso', 'c')
-                    ->where('c.idImported = :id')
-                    ->setParameter('id', $row['course_id']);
+                try {
+                    $qb = $this->em->createQueryBuilder();
+                    $qb
+                        ->select('m', 'c')
+                        ->from('School\MatriculaBundle\Entity\Matricula', 'm')
+                        ->leftJoin('m.curso', 'c')
+                        ->where('c.idImported = :id')
+                        ->setParameter('id', $row['course_id']);
 
-                $matricula = $qb->getQuery()->getSingleResult();
-                if (is_null($matricula)) {
+                    $matricula = $qb->getQuery()->getSingleResult();
+                } catch (NoResultException $exception) {
+                    $progress->advance();
                     continue;
                 }
 
                 //finds the studnet
-                $aluno = $this->em->getRepository('SchoolAlunoBundle:Aluno')
-                    ->findOneBy([
-                        'idImported' => $row['student_id'],
-                    ]);
+                $aluno = $this->em->getRepository('SchoolAlunoBundle:Aluno')->findOneBy([
+                    'idImported' => $row['student_id'],
+                ]);
                 if (is_null($aluno)) {
+                    $progress->advance();
                     continue;
                 }
                 $matriculaAluno = (new MatriculaAluno())
@@ -91,17 +98,18 @@ class ImportMatriculasCommand extends Command
                     ->setMatricula($matricula);
                 $this->em->persist($matriculaAluno);
                 $currentSize++;
-                if (( $currentSize % $batchSize) === 0) {
+                if (($currentSize % $batchSize) === 0) {
                     $this->em->flush();
                     $this->em->clear(); // Detaches all objects from Doctrine!
                 }
+                $progress->advance();
             }
 
             $this->em->flush(); //Persist objects that did not make up an entire batch
             $this->em->clear();
+            $progress->finish();
             $io->success('Registrations imported!');
-        }
-        else{
+        } else {
             $io->error("No such a csv file");
         }
     }

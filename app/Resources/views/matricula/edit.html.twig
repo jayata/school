@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Editar matricula{% endblock %}
+{% block title %}Editar matrícula{% endblock %}
      {% block stylesheets %}
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
      {% endblock %}
@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <a href="{{ path('matricula_index') }}"><img src="{{ asset('svg/arrow-left.svg') }}"> Back to the list</a>
+            <a href="{{ path('matricula_index') }}"><img src="{{ asset('svg/arrow-left.svg') }}"> Volta à listagem</a>
             <h3>Matricula edit</h3>
             <form action="{{ path('matricula_edit',{ 'id': matricula.id}) }}" method="POST">
                 {{ form_row(edit_form._token) }}
