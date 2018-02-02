@@ -12,7 +12,7 @@
             <form action="{{ path('matricula_edit',{ 'id': matricula.id}) }}" method="POST">
                 {{ form_row(edit_form._token) }}
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Ano leitivo<code class="highlighter-red">*</code></label>
+                    <label for="exampleInputEmail1" class="col-md-3">Ano letivo<code class="highlighter-red">*</code></label>
                     {{ form_widget(edit_form.ano, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ano'|trans } }) }}
                     {% if form_errors(edit_form.ano)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">

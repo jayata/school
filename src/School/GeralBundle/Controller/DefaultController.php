@@ -99,7 +99,7 @@ class DefaultController extends Controller
     /**
      * @Route("/admin/remove/user/{id}", name="remove_user")
      */
-    public function removeUserAction($id)
+    public function removeUserAction(Request $request,$id)
     {
 
         $userManager = $this->get('fos_user.user_manager');
@@ -111,11 +111,20 @@ class DefaultController extends Controller
         $userManager->deleteUser($user);
 
         // okay, generate $okayResponse
-        $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
-        $alunos = $aluno_rep->findAll();
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        $qb
+            ->select('a')
+            ->from('School\AlunoBundle\Entity\Aluno', 'a');
 
+        $query = $qb->getQuery();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('SchoolAlunoBundle:Default:user_list_admin.html.twig',
-            array('alunos' => $alunos));
+            array('alunos' => $pagination));
 
     }
 
@@ -211,7 +220,7 @@ class DefaultController extends Controller
             $rg = $request->request->get('rg');
             $telefone = $request->request->get('telefone');
 
-            if ($success) {
+            if (!$success) {
                 $this->addFlash("error-input-cpf", "Entre un CPF valido");
                 $ok = false;
             }

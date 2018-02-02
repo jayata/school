@@ -12,8 +12,8 @@
             <form action="{{ path('matricula_new') }}" method="POST">
                 {{ form_row(form._token) }}
                 <div class="form-group row">
-                    <label for="exampleInputEmail1" class="col-md-3">Ano leitivo<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.ano, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the ano'|trans } }) }}
+                    <label for="exampleInputEmail1" class="col-md-3">Ano letivo<code class="highlighter-red">*</code></label>
+                    {{ form_widget(form.ano, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Digite o ano'|trans } }) }}
                     {% if form_errors(form.ano)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.ano) }}
@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Curso<code class="highlighter-red">*</code></label>
-                    {{ form_widget(form.curso, { 'attr': {'class': 'form-control col-md-9', 'placeholder': 'Enter the amount to pay monthly'|trans } }) }}
+                    {{ form_widget(form.curso, { 'attr': {'class': 'form-control col-md-9', 'placeholder': ''|trans } }) }}
                     {% if form_errors(form.curso)  %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.curso) }}
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="exampleInputEmail1" class="col-md-3">Ativa</label>
-                    {{ form_widget(form.ativa, { 'attr': {'class': 'form-control col-sm-1', 'placeholder': 'Enter the amount to pay to enroll this course'|trans } }) }}
+                    {{ form_widget(form.ativa, { 'attr': {'class': 'form-control col-sm-1', 'placeholder': ''|trans } }) }}
                     {% if form_errors(form.ativa)   %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ form_errors(form.ativa)  }}
