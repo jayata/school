@@ -87,3 +87,7 @@ fos_user:
     profile:
         form:
             type:  School\AlunoBundle\Form\ProfileFormType
+
+knp_paginator:
+    template:
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'

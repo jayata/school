@@ -2,38 +2,13 @@
 {% block title %}Resultados da pesquisa{% endblock %}
 {% block body %}
     <div class="row">
+        {% if matriculas %}
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-6">
                     <h3>Resultados da pesquisa </h3></div>
                 <div class="col-md-6">
-                    <div class="row">
-                        <form action="{{ path('filter') }}" method="POST" id="filter_form">
-                            <div class="form-row">
-                                <div class="col-md-5 filter-div">
-                                    <label class="inline_label" for="filter_pago">
-                                        <span>Pagamento pendiente</span>
-                                        <input type="checkbox" class="form-control" name="filter_pago" id="filter_pago">
-                                    </label>
-                                </div>
-                                <div class="col-md-3">
-                                    <select name="filter_curso" id="filter_curso" class="custom-select">
-                                        <option value="">Curso</option>
-                                        {% for curso in cursos %}
-                                            <option value="{{ curso.id }}">{{ curso.nome }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" name="filter_aluno" id="filter_aluno"
-                                           class="form-control" placeholder="Aluno">
-                                </div>
-                                <button type="submit" class="btn" id="filter_submit"><img
-                                            src="{{ asset('svg/search.svg') }}"></button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
             <table class="table">
@@ -76,16 +51,25 @@
                                         src="{{ asset('svg/pencil.svg') }}" alt="icon name"></a>
                         </td>
                     </tr>
-                {% else %}
-                    <div class="alert alert-secondary" role="alert">
-                        Nenhum resultado encontrado
-                    </div>
+
                 {% endfor %}
                 </tbody>
             </table>
-            <a href="{{ path('matricular_form',{'id':-1}) }}"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Matricular novo aluno</a>
+            <a href="{{ path('matricular_form',{'id':-1}) }}" style="float: right"><img src="{{ asset('svg/plus.svg') }}"> Matricular novo aluno</a>
+            <div class="navigation">
+                {{ knp_pagination_render(matriculas) }}
+            </div>
         </div>
         <div class="col-md-1"></div>
+        {% else %}
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="alert alert-secondary" role="alert">
+                Nenhum resultado encontrado
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        {% endif %}
     </div>
     <div class="modal fade" id="empty_submit" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

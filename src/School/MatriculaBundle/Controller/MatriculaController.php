@@ -26,14 +26,24 @@ class MatriculaController extends Controller
     {
         $all = $request->query->get('all');
         $em = $this->getDoctrine()->getManager();
-        $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findAll();
         $cursos = $em->getRepository('SchoolCursoBundle:Curso')->findAll();
-        $total = count($matriculas);
+
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        $qb
+            ->select('matriculas')
+            ->from('School\MatriculaBundle\Entity\Matricula', 'matriculas');
+        $query = $qb->getQuery();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
         if ($all != 1) {
             $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findBy(array('ativa' => 1));
         }
         return $this->render('matricula/index.html.twig', array(
-            'matriculas' => $matriculas, 'all' => $all, 'total' => $total,'cursos' =>$cursos
+            'matriculas' => $pagination, 'all' => $all,'cursos' =>$cursos
         ));
     }
 

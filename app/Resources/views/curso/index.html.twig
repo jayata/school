@@ -38,8 +38,11 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <a href="{{ path('curso_new') }}">
+            <a href="{{ path('curso_new') }}" style="float: right">
                 <img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Criar novo curso</a>
+            <div class="navigation">
+                {{ knp_pagination_render(cursos) }}
+            </div>
         </div>
         <div class="col-md-1"></div>
     </div>

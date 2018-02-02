@@ -9,7 +9,7 @@
                     <h3>Cursos com inscrições abertas </h3></div>
                 <div class="col-md-6">
                     <div class="row">
-                        <form action="{{ path('filter') }}" method="POST" id="filter_form">
+                        <form action="{{ path('filter') }}" method="GET" id="filter_form">
                             <div class="form-row">
                                 <div class="col-md-5 filter-div">
                                     <label class="inline_label" for="filter_pago">
@@ -34,11 +34,11 @@
                             </div>
                         </form>
                     </div>
-                    <small class="small-right">(Total {{ total }} |
+                    <small class="small-right">
                     {% if all %}
-                        <a href="{{ path('matricula_index') }}"> Veja apenas os ativos </a>)
+                        <a href="{{ path('matricula_index') }}"> Veja apenas os ativos </a>
                     {% else %}
-                        <a href="{{ path('matricula_index',{'all':true}) }}"> Veja todas </a>)
+                        <a href="{{ path('matricula_index',{'all':true}) }}"> Veja todas </a>
                     {% endif %}
                     </small>
                 </div>
@@ -81,8 +81,11 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <a href="{{ path('matricula_new') }}"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Abrir nova
+            <a href="{{ path('matricula_new') }}" style="float: right;"><img src="{{ asset('svg/plus.svg') }}" alt="icon name"> Abrir nova
                 matrícula</a>
+            <div class="navigation">
+                {{ knp_pagination_render(matriculas) }}
+            </div>
         </div>
         <div class="col-md-1"></div>
     </div>

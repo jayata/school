@@ -11,13 +11,11 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Usuário</th>
                     <th scope="col">Data de nascimento</th>
                     <th scope="col">CPF</th>
                     <th scope="col">RG</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Telefone</th>
-                    <th scope="col">Role</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -26,13 +24,11 @@
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ aluno.name }}</td>
-                        <td>{{ aluno.username }}</td>
                         <td>{{ aluno.dataNascimento |date("Y-m-d") }} </td>
                         <td>{{ aluno.cpf }}</td>
                         <td>{{ aluno.rg }}</td>
                         <td>{{ aluno.email }}</td>
                         <td>{{ aluno.telefone }}</td>
-                        <td>{% if aluno.hasRole("ROLE_SUPER_ADMIN") %}Admin {% else %} Aluno {% endif %}</td>
                         <td>
                             {% if aluno.hasRole("ROLE_SUPER_ADMIN") %}
                                 <img src="{{ asset('svg/trashcan.svg') }}">
@@ -67,7 +63,9 @@
                 {% endfor %}
                 </tbody>
             </table>
-
+            <div class="navigation">
+                {{ knp_pagination_render(alunos) }}
+            </div>
         </div>
         <div class="col-md-1"></div>
     </div>

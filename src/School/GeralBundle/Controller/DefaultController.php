@@ -37,7 +37,7 @@ class DefaultController extends Controller
     {
         $curso_rep = $this->getDoctrine()->getRepository(Curso::class);
         $cursos = $curso_rep->findAll();
-        $percentage=null;
+        $percentage = null;
         if (count($cursos) > 0) {
             $counter = 0;
             foreach ($cursos as $item) {
@@ -56,7 +56,7 @@ class DefaultController extends Controller
 
         $matriculaAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
         $matriculaAlunos = $matriculaAluno_rep->findAll();
-        $percentagePaga=null;
+        $percentagePaga = null;
 
         if (count($matriculaAlunos) > 0) {
             $counterMatriculasAlumno = 0;
@@ -76,13 +76,23 @@ class DefaultController extends Controller
     /**
      * @Route("/admin/user/list", name="admin_user_list")
      */
-    public function usersListAction()
+    public function usersListAction(Request $request)
     {
-        $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
-        $alunos = $aluno_rep->findAll();
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        $qb
+            ->select('alunos')
+            ->from('School\AlunoBundle\Entity\Aluno', 'alunos');
+        $query = $qb->getQuery();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
 
         return $this->render('SchoolAlunoBundle:Default:user_list_admin.html.twig',
-            array('alunos' => $alunos));
+            array('alunos' => $pagination));
     }
 
     /**
@@ -128,62 +138,59 @@ class DefaultController extends Controller
      */
     public function filterAction(Request $request)
     {
-        if ($request->getMethod() == 'POST') {
-            $pago = $request->request->get('filter_pago');
-            $curso_id = $request->request->get('filter_curso');
-            $aluno_nome = $request->request->get('filter_aluno');
+        $pago = $request->query->get('filter_pago');
+        $curso_id = $request->query->get('filter_curso');
+        $aluno_nome = $request->query->get('filter_aluno');
 
-            $criteria = array();
+        $criteria = array();
 
-            if ($pago) {
-                $criteria['paga'] = 0;
-            }
-            if ($curso_id) {
-                $criteria['curso'] = $curso_id;
-            }
-
-            if ($aluno_nome) {
-                $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
-                $aluno = $aluno_rep->findOneByName($aluno_nome);
-                if (!is_null($aluno)) {
-                    $criteria['aluno'] = $aluno;
-                } else {
-                    $criteria['aluno'] = null;
-                }
-            }
-            $em = $this->getDoctrine()->getManager();
-            $mat = $em->getRepository('SchoolMatriculaBundle:Matricula')->findAll();
-            $cursos = $em->getRepository('SchoolCursoBundle:Curso')->findAll();
-            $total = count($mat);
-
-            if (count($criteria) > 0) {
-                $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
-                $qb
-                    ->select('ma')
-                    ->from('School\MatriculaBundle\Entity\MatriculaAluno', 'ma');
-
-                foreach ($criteria as $field => $value) {
-                    if ($field == 'curso') {
-                        $qb->innerJoin('ma.matricula', 'm')
-                            ->andWhere('m.curso = :curso');
-                    }
-                    if ($field == 'paga') {
-                        $qb->andWhere('ma.paga = :paga');
-                    }
-                    if ($field == 'aluno') {
-                        $qb->andWhere('ma.aluno = :aluno');
-                    }
-                }
-                $qb->setParameters($criteria);
-            }
-//                var_dump($criteria);
-//                echo $qb->getDQL();die();
-            $matriculas = $qb->getQuery()->getResult();
-            return $this->render('SchoolGeralBundle:Default:search_results.html.twig',
-                array('matriculas' => $matriculas, 'total' => $total, 'cursos' => $cursos));
-
+        if ($pago) {
+            $criteria['paga'] = 0;
         }
-        return $this->redirectToRoute('dashboard_admin');
+        if ($curso_id) {
+            $criteria['curso'] = $curso_id;
+        }
+        if ($aluno_nome) {
+            $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
+            $aluno = $aluno_rep->findOneByName($aluno_nome);
+            if (!is_null($aluno)) {
+                $criteria['aluno'] = $aluno;
+            } else {
+                $criteria['aluno'] = null;
+            }
+        }
+        if (count($criteria)>0) {
+            $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+            $qb
+                ->select('ma')
+                ->from('School\MatriculaBundle\Entity\MatriculaAluno', 'ma');
+
+            foreach ($criteria as $field => $value) {
+                if ($field == 'curso') {
+                    $qb->innerJoin('ma.matricula', 'm')
+                        ->andWhere('m.curso = :curso');
+                }
+                if ($field == 'paga') {
+                    $qb->andWhere('ma.paga = :paga');
+                }
+                if ($field == 'aluno') {
+                    $qb->andWhere('ma.aluno = :aluno');
+                }
+            }
+            $qb->setParameters($criteria);
+
+            $query = $qb->getQuery();
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query,
+                $request->query->getInt('page', 1),
+                10
+            );
+            return $this->render('SchoolGeralBundle:Default:search_results.html.twig',
+                array('matriculas' => $pagination,));
+        }
+        return $this->render('SchoolGeralBundle:Default:search_results.html.twig',
+            array('matriculas' => null,));
     }
 
     /**
@@ -206,25 +213,58 @@ class DefaultController extends Controller
     public function adminRegisterAction(Request $request)
     {
         if ($request->getMethod() == 'POST') {
+            $ok = true;
+            $blankMessage = 'This value should not be blank';
             $pattern = '/^(\d{3}\.\d{3}\.\d{3}\-\d{2})$/';
             $success = preg_match($pattern, $request->request->get('cpf'), $match);
+
+            $nome = $request->request->get('name');
+            $password = $request->request->get('plainPassword');
+            $username = $request->request->get('username');
+            $rg = $request->request->get('rg');
+            $telefone = $request->request->get('telefone');
+
             if ($success) {
+                $this->addFlash("error-input-cpf", "Entre un CPF valido");
+                $ok = false;
+            }
+            if (trim($nome) === "") {
+                $this->addFlash("error-input-name", $blankMessage);
+                $ok = false;
+            }
+            if (trim($username) == "") {
+                $this->addFlash("error-input-username", "Please enter a username");
+                $ok = false;
+            }
+            if (trim($rg) === "") {
+                $this->addFlash("error-input-rg", $blankMessage);
+                $ok = false;
+            }
+            if (trim($rg) === "") {
+                $this->addFlash("error-input-telefone", $blankMessage);
+                $ok = false;
+            }
+            if (strlen($password) < 4) {
+                $this->addFlash("error-input-plainPassword", "The password is too short");
+                $ok = false;
+            }
+
+            if ($ok) {
                 $em = $this->getDoctrine()->getManager();
                 $aluno = (new Aluno())
-                    ->setName($request->request->get('name'))
+                    ->setName($nome)
                     ->setEnabled(true)
-                    ->setPlainPassword($request->request->get('plainPassword'))
-                    ->setUsername($request->request->get('username'))
+                    ->setPlainPassword($password)
+                    ->setUsername($username)
                     ->setEmail($request->request->get('email'))
                     ->setCpf($request->request->get('cpf'))
-                    ->setRg($request->request->get('rg'))
-                    ->setTelefone($request->request->get('telefone'))
+                    ->setRg($rg)
+                    ->setTelefone($telefone)
                     ->setDataNascimento(new \DateTime($request->request->get('dataNascimento')));
                 $em->persist($aluno);
                 $em->flush();
                 return $this->redirectToRoute('admin_user_list');
             } else {
-                $this->addFlash("error-input-cpf", "Entre un CPF valido");
                 return $this->redirectToRoute('admin_user_registration_form');
             }
         }

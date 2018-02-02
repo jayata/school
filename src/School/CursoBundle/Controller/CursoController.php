@@ -21,14 +21,22 @@ class CursoController extends Controller
      * @Route("/", name="curso_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $cursos = $em->getRepository('SchoolCursoBundle:Curso')->findAll();
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        $qb
+            ->select('cursos')
+            ->from('School\CursoBundle\Entity\Curso', 'cursos');
+        $query = $qb->getQuery();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('curso/index.html.twig', array(
-            'cursos' => $cursos,
+            'cursos' => $pagination,
         ));
     }
 

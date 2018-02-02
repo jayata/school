@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new School\PagamentoBundle\SchoolPagamentoBundle(),
             new School\GeralBundle\SchoolGeralBundle(),
             new School\FOSchildBundle\SchoolFOSchildBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
