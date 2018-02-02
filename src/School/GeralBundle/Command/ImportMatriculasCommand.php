@@ -20,13 +20,15 @@ use Symfony\Component\Console\Input\InputArgument;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Symfony\Component\DependencyInjection\Container;
 
 class ImportMatriculasCommand extends Command
 {
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Container $container)
     {
         parent::__construct();
         $this->em = $em;
+        $this->container = $container;
     }
 
     protected function configure()
@@ -56,6 +58,10 @@ class ImportMatriculasCommand extends Command
         $io->title("Atempting to upload the registrations");
 
         $file = $input->getArgument('file');
+        if (is_null($file)){
+            $appPath = $this->container->getParameter('kernel.root_dir');
+            $file= $appPath.'/../src/School/GeralBundle/Data/students_file.csv';
+        }
         if (file_exists($file) && is_file($file) && pathinfo($file)['extension'] == 'csv') {
 
             $csv = Reader::createFromPath($file);

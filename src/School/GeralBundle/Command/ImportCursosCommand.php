@@ -19,20 +19,22 @@ use League\Csv\Reader;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Symfony\Component\DependencyInjection\Container;
 
 class ImportCursosCommand extends Command
 {
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Container $container)
     {
         parent::__construct();
         $this->em = $em;
+        $this->container = $container;
     }
 
     protected function configure()
     {
         $this
             ->setName('school:import:courses')
-            ->addArgument('file', InputArgument::REQUIRED, 'The file to input')
+            ->addArgument('file', InputArgument::OPTIONAL, 'The file to input')
             ->setDescription('Imports courses from csv')
             ->setHelp('This command allows you to import courses to the system');
     }
@@ -43,6 +45,10 @@ class ImportCursosCommand extends Command
         $io->title("Atempting to upload the courses");
 
         $file = $input->getArgument('file');
+        if (is_null($file)){
+            $appPath = $this->container->getParameter('kernel.root_dir');
+            $file= $appPath.'/../src/School/GeralBundle/Data/courses_file.csv';
+        }
         if (file_exists($file) && is_file($file) && pathinfo($file)['extension'] == 'csv') {
 
             $csv = Reader::createFromPath($file);

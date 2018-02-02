@@ -47,6 +47,7 @@ services:
         class: School\GeralBundle\Command\ImportAlunosCommand
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@service_container"
         tags:
             # the value of the 'command' attribute is the name of the command
             # (which is what the user needs to type in to execute it)
@@ -56,6 +57,7 @@ services:
         class: School\GeralBundle\Command\ImportCursosCommand
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@service_container"
         tags:
             # the value of the 'command' attribute is the name of the command
             # (which is what the user needs to type in to execute it)
@@ -65,6 +67,7 @@ services:
         class: School\GeralBundle\Command\ImportMatriculasCommand
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@service_container"
         tags:
             # the value of the 'command' attribute is the name of the command
             # (which is what the user needs to type in to execute it)
