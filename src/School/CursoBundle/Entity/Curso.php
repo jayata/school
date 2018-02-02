@@ -9,8 +9,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Curso
  *
- * @ORM\Table(name="curso")
+ * @ORM\Table(name="curso",uniqueConstraints={@ORM\UniqueConstraint(name="IDX_NOMBRE_PERIODO", columns={"nome", "periodo"})}))
  * @ORM\Entity(repositoryClass="School\CursoBundle\Repository\CursoRepository")
+ * * @UniqueEntity(fields={"nome", "periodo"})
  */
 class Curso
 {

@@ -4,12 +4,14 @@ namespace School\MatriculaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * MatriculaAluno
  *
- * @ORM\Table(name="matricula_aluno")
+ * @ORM\Table(name="matricula_aluno",uniqueConstraints={@ORM\UniqueConstraint(name="IDX_ALUNO_MATRICULA", columns={"aluno_id", "matricula_id"})})
  * @ORM\Entity(repositoryClass="School\MatriculaBundle\Repository\MatriculaAlunoRepository")
+ * @UniqueEntity(fields={"aluno", "matricula"})
  */
 class MatriculaAluno
 {

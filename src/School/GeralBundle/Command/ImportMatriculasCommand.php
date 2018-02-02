@@ -19,6 +19,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Input\InputArgument;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class ImportMatriculasCommand extends Command
 {
@@ -68,8 +69,15 @@ class ImportMatriculasCommand extends Command
             $progress = new ProgressBar($output, $count);
             $progress->start();
             foreach ($records as $row) {
+                $aluno = $this->em->getRepository('SchoolAlunoBundle:Aluno')->findOneBy([
+                    'idImported' => $row['student_id'],
+                ]);
 
-                //finds the course(matricula)
+                if (is_null($aluno)) {
+                    $progress->advance();
+                    continue;
+                }
+
                 try {
                     $qb = $this->em->createQueryBuilder();
                     $qb
@@ -85,32 +93,39 @@ class ImportMatriculasCommand extends Command
                     continue;
                 }
 
-                //finds the studnet
-                $aluno = $this->em->getRepository('SchoolAlunoBundle:Aluno')->findOneBy([
-                    'idImported' => $row['student_id'],
-                ]);
-                if (is_null($aluno)) {
-                    $progress->advance();
+                try {
+                    $matriculaAluno = (new MatriculaAluno())
+                        ->setAluno($aluno)
+                        ->setMatricula($matricula);
+                    $this->em->persist($matriculaAluno);
+                    $currentSize++;
+                    if (($currentSize % $batchSize) === 0) {
+                        $this->em->flush();
+                    }
+                } catch (UniqueConstraintViolationException $exception) {
+                    $this->checkEm();
                     continue;
-                }
-                $matriculaAluno = (new MatriculaAluno())
-                    ->setAluno($aluno)
-                    ->setMatricula($matricula);
-                $this->em->persist($matriculaAluno);
-                $currentSize++;
-                if (($currentSize % $batchSize) === 0) {
-                    $this->em->flush();
-                    $this->em->clear(); // Detaches all objects from Doctrine!
                 }
                 $progress->advance();
             }
+                try {
+                    $this->checkEm();
+                    $this->em->flush();
+                    $this->em->clear();
+                } catch (UniqueConstraintViolationException $exception) {}
 
-            $this->em->flush(); //Persist objects that did not make up an entire batch
-            $this->em->clear();
             $progress->finish();
+            $io->newLine();
             $io->success('Registrations imported!');
         } else {
             $io->error("No such a csv file");
+        }
+    }
+    public function checkEm()
+    {
+        if (!$this->em->isOpen()) {
+            $this->em = $this->em->create(
+                $this->em->getConnection(), $this->em->getConfiguration());
         }
     }
 }

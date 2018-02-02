@@ -96,7 +96,7 @@
                             <span class="alert-success">Todas as mensalidades pagas</span>
                         {% endif %}
                     {% else %}
-                        <span class="alert-info">Pague a matrícula para acceder a las mensalidades</span>
+                        <span class="alert-info">Pague a matrícula para aceder ao pagamento das mensalidades</span>
                     {% endif %}
                 </ul>
                 {% for message in app.flashes('error-mensual') %}
@@ -129,7 +129,7 @@
                         <input type="hidden" value="{{ matricula.id }}" name="matricula_id" id="matricula_id"/>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Pagar</button>
                     </div>
                 </form>
@@ -154,7 +154,7 @@
                         <input type="hidden" value="{{ matricula.id }}" name="matricula_id"/>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Pagar</button>
                     </div>
                 </form>

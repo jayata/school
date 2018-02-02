@@ -17,7 +17,7 @@
                                 src="{{ asset('svg/book.svg') }}"> Matricular aluno neste curso</a></li>
                 <li class="list-group-item">
                     <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="text-danger"><img
-                                src="{{ asset('svg/trashcan.svg') }}"> Eliminar</a>
+                                src="{{ asset('svg/trashcan.svg') }}"> Eliminar matrícula</a>
                 </li>
             </ul>
         </div>
@@ -34,10 +34,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Tem certeza de que deseja eliminar?
+                    Tem certeza de que deseja eliminar esta matrícula?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     {{ form_start(delete_form) }}
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                     {{ form_end(delete_form) }}
@@ -61,7 +61,7 @@
                     Ativar para inscrever alunos.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>

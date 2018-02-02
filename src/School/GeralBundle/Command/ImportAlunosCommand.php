@@ -70,11 +70,7 @@ class ImportAlunosCommand extends Command
                         $username = str_replace(".", "", $username);
                         $username = str_replace("-", "", $username);
                         try {
-                            if (!$this->em->isOpen()) {
-                                $this->em = $this->em->create(
-                                    $this->em->getConnection(), $this->em->getConfiguration());
-                            }
-
+                            $this->checkEm();
                             $aluno = (new Aluno())
                                 ->setName($row['name'])
                                 ->setEnabled(true)
@@ -102,13 +98,25 @@ class ImportAlunosCommand extends Command
                 }
                 $progress->advance();
             }
+            try {
+                $this->checkEm();
+                $this->em->flush();
+            } catch (UniqueConstraintViolationException $exception) {}
             unset($cpfs);
-            $this->em->flush();
             $this->em->clear();
             $progress->finish();
+            $io->newLine();
             $io->success('Students imported!');
         } else {
             $io->error("No such a csv file");
+        }
+    }
+
+    public function checkEm()
+    {
+        if (!$this->em->isOpen()) {
+            $this->em = $this->em->create(
+                $this->em->getConnection(), $this->em->getConfiguration());
         }
     }
 }

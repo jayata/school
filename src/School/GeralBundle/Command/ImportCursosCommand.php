@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class ImportCursosCommand extends Command
 {
@@ -42,7 +43,7 @@ class ImportCursosCommand extends Command
         $io->title("Atempting to upload the courses");
 
         $file = $input->getArgument('file');
-        if (file_exists($file) && is_file($file) &&  pathinfo($file)['extension'] == 'csv') {
+        if (file_exists($file) && is_file($file) && pathinfo($file)['extension'] == 'csv') {
 
             $csv = Reader::createFromPath($file);
             $csv->setHeaderOffset(0);
@@ -52,45 +53,48 @@ class ImportCursosCommand extends Command
 
             $progress = new ProgressBar($output, $count);
             $progress->start();
-            //create courses
             foreach ($records as $key => $row) {
-                $curso = (new Curso())
-                    ->setNome($row['course_name'])
-                    ->setMensualidade($row['monthly_amount'])
-                    ->setValorMatricula($row['registration_tax'])
-                    ->setPeriodo($row['period'])
-                    ->setMesesDuracao(1)
-                    ->setIdImported($row['id'])
-                    ->setDescripcao("Imported via command");
-                $this->em->persist($curso);
-                if (($key % 15) === 0) {
+                try {
+                    $curso = (new Curso())
+                        ->setNome($row['course_name'])
+                        ->setMensualidade($row['monthly_amount'])
+                        ->setValorMatricula($row['registration_tax'])
+                        ->setPeriodo($row['period'])
+                        ->setMesesDuracao(1)
+                        ->setIdImported($row['id'])
+                        ->setDescripcao("Imported via command");
+                    $this->em->persist($curso);
                     $this->em->flush();
-                    $this->em->clear(); // Detaches all objects from Doctrine!
+                } catch (UniqueConstraintViolationException $exception) {
+                    $this->checkEm();
+                    continue;
+                }
+                try {
+                    $matricula = (new Matricula())
+                        ->setCurso($curso)
+                        ->setAtiva(true)
+                        ->setAno(new \DateTime('now'));
+                    $this->em->persist($matricula);
+                    $this->em->flush();
+                } catch (UniqueConstraintViolationException $exception) {
+                    $this->checkEm();
+                    continue;
                 }
                 $progress->advance();
             }
-
-            $this->em->flush(); //Persist objects that did not make up an entire batch
-            $this->em->clear();
-            //opens a matricula for each course
-            //active but not payed
-            $cursos = $this->em->getRepository('SchoolCursoBundle:Curso')->findAll();
-            foreach ($cursos as $key => $curso1) {
-                $matricula = (new Matricula())
-                    ->setCurso($curso1)
-                    ->setAtiva(true)
-                    ->setAno(new \DateTime('now'));
-                $this->em->persist($matricula);
-                if (($key % 25) === 0) {
-                    $this->em->flush();
-                }
-            }
-            $this->em->flush(); //Persist objects that did not make up an entire batch
-            $this->em->clear();
             $progress->finish();
+            $io->newLine();
             $io->success('Cursos imported!');
-        }else{
+        } else {
             $io->error("No such a csv file");
+        }
+    }
+
+    public function checkEm()
+    {
+        if (!$this->em->isOpen()) {
+            $this->em = $this->em->create(
+                $this->em->getConnection(), $this->em->getConfiguration());
         }
     }
 }
