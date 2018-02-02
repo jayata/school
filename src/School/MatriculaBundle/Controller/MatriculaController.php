@@ -32,6 +32,11 @@ class MatriculaController extends Controller
         $qb
             ->select('matriculas')
             ->from('School\MatriculaBundle\Entity\Matricula', 'matriculas');
+
+        if (!$all) {
+            $qb->where('matriculas.ativa =:a')
+                ->setParameter('a','1');
+        }
         $query = $qb->getQuery();
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -39,9 +44,6 @@ class MatriculaController extends Controller
             $request->query->getInt('page', 1),
             10
         );
-        if ($all != 1) {
-            $matriculas = $em->getRepository('SchoolMatriculaBundle:Matricula')->findBy(array('ativa' => 1));
-        }
         return $this->render('matricula/index.html.twig', array(
             'matriculas' => $pagination, 'all' => $all,'cursos' =>$cursos
         ));
