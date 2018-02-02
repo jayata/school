@@ -16,7 +16,7 @@ class DefaultController extends Controller
     /**
      * @Route("/dashboard", name="dashboard_aluno")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
@@ -36,9 +36,14 @@ class DefaultController extends Controller
                 unset($matriculasAtivas[$key]);
             }
         }
-
+        $paginator = $this->get('knp_paginator');
+        $matriculasA = $paginator->paginate(
+            $matriculasAtivas,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('SchoolAlunoBundle:Default:dashboard_aluno.html.twig',
-            array('matricula' => $matriculaAluno, 'cursos' => $matriculasAtivas));
+            array('matricula' => $matriculaAluno, 'cursos' => $matriculasA));
     }
 
     /**

@@ -6,7 +6,7 @@
         <div class="col-md-6">
 
             <a href="{{ path('curso_index') }}"><img src="{{ asset('svg/arrow-left.svg') }}"> Voltar à listagem</a>
-            <h1>Curso edit</h1>
+            <h1>Editar curso</h1>
             <form action="{{ path('curso_edit',{ 'id': curso.id}) }}" method="POST">
                 {{ form_row(edit_form._token) }}
                     <div class="form-group row">

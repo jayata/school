@@ -51,7 +51,6 @@ $(function () {
             .fail(function (reason) {
                 console.log(reason)
             });
-        // }
     });
 
     $( "#filter_form" ).submit(function( e ) {
@@ -75,42 +74,6 @@ $(function () {
             this.submit();
         }
     });
-
-
-
-    // $('#filter_aluno').typeahead({
-    //     source: [{ id: 1, name: 'John'}, { id: 2, name: 'Alex'}, { id: 3, name: 'Terry'}]
-    // });
-
-    $("#filter_aluno").typeahead({
-        onSelect: function(item) {
-            console.log(item);
-        },
-        ajax: {
-            url: "/admin/typeahead/aluno",
-            timeout: 500,
-            displayField: "name",
-            triggerLength: 1,
-            method: "get",
-            loadingClass: "loading-circle",
-            preDispatch: function (query) {
-                // showLoadingMask(true);
-                return {
-                    search: query
-                }
-            },
-            preProcess: function (data) {
-                // showLoadingMask(false);
-                if (data.success === false) {
-                    // Hide the list, there was some error
-                    return false;
-                }
-                // We good!
-                return data;
-            }
-        }
-    });
-
 
 //construye la cokie para las peticiones post
     function getCookie(name) {

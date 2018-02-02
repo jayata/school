@@ -38,38 +38,39 @@ class DefaultController extends Controller
         $curso_rep = $this->getDoctrine()->getRepository(Curso::class);
         $cursos = $curso_rep->findAll();
         $percentage = null;
-        if (count($cursos) > 0) {
+        $countCursos = count($cursos);
+        if ($countCursos > 0) {
             $counter = 0;
             foreach ($cursos as $item) {
                 if (count($item->getMatriculasAbiertas()) > 0) {
                     $counter++;
                 }
             }
-            $percentage = ($counter * 100) / count($cursos);
+            $percentage = ($counter * 100) / $countCursos;
         }
 
-        $matricula_rep = $this->getDoctrine()->getRepository(Matricula::class);
-        $matriculas = $matricula_rep->findAll();
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
 
-        $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
-        $alunos = $aluno_rep->findAll();
+        $qb->select('count(alunos.id)');
+        $qb->from('School\AlunoBundle\Entity\Aluno','alunos');
+        $alunos = $qb->getQuery()->getSingleScalarResult();
 
         $matriculaAluno_rep = $this->getDoctrine()->getRepository(MatriculaAluno::class);
         $matriculaAlunos = $matriculaAluno_rep->findAll();
-        $percentagePaga = null;
 
-        if (count($matriculaAlunos) > 0) {
+        $percentagePaga = null;
+        $count=count($matriculaAlunos);
+        if ($count > 0) {
             $counterMatriculasAlumno = 0;
             foreach ($matriculaAlunos as $item) {
                 if ($item->getPaga()) {
                     $counterMatriculasAlumno++;
                 }
             }
-            $percentagePaga = ($counterMatriculasAlumno * 100) / count($matriculaAlunos);
+            $percentagePaga = ($counterMatriculasAlumno * 100) / $count;
         }
-//        echo ($percentagePaga);die();
         return $this->render('SchoolAlunoBundle:Default:dashboard_admin.html.twig',
-            array('cursos' => $cursos, 'matriculas' => $matriculas, 'matriculasAlunos' => $matriculaAlunos, 'alunos' => $alunos,
+            array('cursos' => $cursos,   'matriculasAlunos' => $count, 'alunos' => $alunos,
                 'percentage' => $percentage, 'percentagePaga' => $percentagePaga));
     }
 
@@ -85,28 +86,14 @@ class DefaultController extends Controller
         $query = $qb->getQuery();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+            $query,
+            $request->query->getInt('page', 1),
+            10
         );
 
 
         return $this->render('SchoolAlunoBundle:Default:user_list_admin.html.twig',
             array('alunos' => $pagination));
-    }
-
-    /**
-     * @Route("/admin/typeahead/aluno", name="admin_typeahead_aluno")
-     */
-    public function typeaheadAlunoAction()
-    {
-        $aluno_rep = $this->getDoctrine()->getRepository(Aluno::class);
-        $alunos = $aluno_rep->findAll();
-        $response = new JsonResponse();
-//        echo "<pre>";print_r(array('data' => 123));die();
-        $response->setData(array('name' => 123));
-        return $response;
-
     }
 
     /**
@@ -159,7 +146,7 @@ class DefaultController extends Controller
                 $criteria['aluno'] = null;
             }
         }
-        if (count($criteria)>0) {
+        if (count($criteria) > 0) {
             $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
             $qb
                 ->select('ma')

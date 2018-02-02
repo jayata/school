@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <input type="text" name="filter_aluno" id="filter_aluno"
-                                           class="form-control" placeholder="Aluno">
+                                           class="form-control" placeholder="Aluno" autocomplete="off">
                                 </div>
                                 <button type="submit" class="btn" id="filter_submit"><img
                                             src="{{ asset('svg/search.svg') }}"></button>
@@ -94,7 +94,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Informacion</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Informação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -111,5 +111,5 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/bootstrap-typeahead.js') }}"></script>
+
 {% endblock %}

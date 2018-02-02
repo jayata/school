@@ -37,7 +37,7 @@ class DefaultController extends Controller
         } elseif ($valorMatricula < $value) {
             $change = $this->change($value - $valorMatricula);
         }else{
-            $this->addFlash("error-taxa", "O valor a ser pago deve ser maior ou igual à taxa inscripcao");
+            $this->addFlash("error-taxa", "O valor a ser pago deve ser maior ou igual à taxa inscrição");
             return $this->redirectToRoute('marticula_detalle',array('id'=>$matricula->getId()));
         }
         $matricula->setPaga(true);
@@ -72,7 +72,7 @@ class DefaultController extends Controller
         } elseif ($mensualidad < $value) {
             $change = $this->change($value - $mensualidad);
         }else{
-            $this->addFlash("error-mensual", "O valor a pagar deve ser maior ou igual ao valor da menualidade");
+            $this->addFlash("error-mensual", "O valor a pagar deve ser maior ou igual ao valor da mensalidade");
             return $this->redirectToRoute('marticula_detalle',array('id'=>$matricula->getId()));
         }
         $matricula->setMesesPagos($matricula->getMesesPagos()+1);
